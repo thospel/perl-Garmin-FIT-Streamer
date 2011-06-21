@@ -2,8 +2,11 @@ Changes
 MANIFEST
 MANIFEST.SKIP
 Makefile.PL
+Profile.html
 README
 lib/Garmin/FIT/Streamer.pm
 lib/Garmin/FIT/Streamer/Package.pm
-t/00_load.t
+lib/Garmin/FIT/Streamer/Profile.pm
 md5-versions
+profile_from_html
+t/00_load.t

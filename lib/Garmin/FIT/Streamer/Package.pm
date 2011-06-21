@@ -8,7 +8,7 @@ use strict;
 use warnings;
 use vars qw($VERSION $release_time %history);
 $VERSION = "1.000";
-$release_time = 1308608025;	## no critic (ProhibitUselessNoCritic ProhibitMagicNumbers)
+$release_time = 1308691997;	## no critic (ProhibitUselessNoCritic ProhibitMagicNumbers)
 %history = (
   'Changes' => {
     '1.000' => '1.000'
@@ -22,6 +22,9 @@ $release_time = 1308608025;	## no critic (ProhibitUselessNoCritic ProhibitMagicN
   'Makefile.PL' => {
     '1.000' => '1.000'
   },
+  'Profile.html' => {
+    '1.000' => '1.000'
+  },
   'README' => {
     '1.000' => '1.000'
   },
@@ -31,10 +34,16 @@ $release_time = 1308608025;	## no critic (ProhibitUselessNoCritic ProhibitMagicN
   'lib/Garmin/FIT/Streamer/Package.pm' => {
     '1.000' => '1.000'
   },
+  'lib/Garmin/FIT/Streamer/Profile.pm' => {
+    '1.000' => '1.000'
+  },
   'lib/Garmin/Fit.pm' => {
     '1.000' => '1.000'
   },
   'lib/Garmin/Fit/Package.pm' => {
+    '1.000' => '1.000'
+  },
+  'profile_from_html' => {
     '1.000' => '1.000'
   },
   't/00_load.t' => {

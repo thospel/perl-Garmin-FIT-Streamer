@@ -1,0 +1,153 @@
+#!/usr/bin/perl -w
+use strict;
+use warnings;
+
+our $VERSION = "1.000";
+
+use Data::Dumper;
+$Data::Dumper::Indent = 1;
+$Data::Dumper::Sortkeys = 1;
+
+my %keep_tag = map(($_ => 1), qw(body h1 h2 h3 h4 h5 h6 table tr td));
+
+sub get_context {
+    # A context should be a consistent single column row
+    my $context;
+    my $i = 0;
+    my $rows = shift;
+    for my $row (@$rows) {
+        $i++;
+        next if $row eq "";
+        die "Not a context row '@$rows'" if defined $context;
+        $context = $row;
+        if (defined $_[0]) {
+            $_[0] == $i || die "Inconsistent context column $_[0] vs @$rows";
+        } else {
+            $_[0] = $i;
+        }
+    }
+    return $context;
+}
+
+sub spew {
+    my ($file, $content) = @_;
+    my $new = "$file.new";
+    open(my $fh, ">", $new) || die "Could not open '$new': $!";
+    eval {
+        print($fh $content) || die "Error writing to '$new': $!";
+        close($fh) || die "Could not close '$new': $!";
+        rename($new, $file) || die "Could not rename '$new' to '$file' $!";
+    };
+    if ($@) {
+        $fh = undef;
+        unlink($new) || die "Could not unlink '$new': $! after $@";
+        die $@;
+    }
+}
+
+# Do a basic parse of the HTML file into a perl data structure
+sub sheets_from_html {
+    my ($html_file) = @_;
+
+    open(my $ifh, "<", $html_file) || die "Could not open '$html_file': $!";
+    my $html = do { local $/; <$ifh> };
+    close($ifh) || die "Could not close '$html_file': $!";
+
+    # Normalize attributes
+    $html =~ s{<(/?)(\w+).*?(/?)>}{$keep_tag{lc $2} ? "<$1\L$2$3>" : ""}eg;
+    my (%sheets, $sheet_name);
+    while ($html =~ s{(.*?)<h(\d+)>Sheet\s+\d+:\s*([^<]*?)</h\2>}{}s) {
+        $sheets{$sheet_name} = $1 if defined $sheet_name;
+        $sheet_name = lc $3;
+        die "Already have a sheet named '$sheet_name'" if $sheets{$sheet_name};
+    }
+    defined $sheet_name || die "Found no sheets";
+    $sheets{$sheet_name} = $html;
+
+    for my $sheet_name (sort keys %sheets) {
+        eval {
+            my ($html) = $sheets{$sheet_name} =~ m{<table>\s*(.*)</table>}s or
+            die "Could not find <table> ... </table>";
+            my (@rows, $nr_cols);
+            while ($html =~ m{<tr>(.*?)</tr>}sg) {
+                my @row = $1 =~ m{<td>\s*(.*?)\s*</td>}sg;
+                # html unescape
+                for (@row) {
+                    s/&lt;/</g;
+                    s/&gt;/>/g;
+                    s/&quot;/"/g;
+                    s/&amp;/&/g;
+                }
+                if (defined $nr_cols) {
+                    $nr_cols == @row || die "Inconsistent number of rows";
+                } else {
+                    $nr_cols = @row;
+                }
+                push @rows, \@row;
+            }
+            my $headers = shift @rows || die "No headers";
+            my %headers;
+            for my $header (@$headers) {
+                $header =~ s/#/nr/g;
+                $header =~ s/\s+/_/g;
+                $header = lc $header;
+                die "Dumplicate header '$header'" if $headers{$header};
+            }
+            my (%tables, $table, $context, $context_index, $offset);
+            for my $row (@rows) {
+                if ($row->[0] eq "") {
+                    if (!defined $table) {
+                        $context = get_context($row, $context_index);
+                    } elsif ($table) {
+                        push @$table, \my %props;
+                        my $data;
+                        for my $i ($offset..$#$row) {
+                            next if $row->[$i] eq "";
+                            $props{$headers->[$i]} = $row->[$i] =~ /^0x[0-9a-fA-F]+\z/ ? hex $row->[$i] : $row->[$i];
+                            $data ||= 1;
+                        }
+                        if (!$data) {
+                            # We assume an empty line finishes the table
+                            pop @$table;
+                            $table = undef;
+                        }
+                    } else {
+                        die "Row outside table: @$row";
+                    }
+                } else {
+                    my $table_name = $row->[0];
+                    $table = [];
+                    $tables{$table_name} = {
+                        table	=> $table,
+                        defined $context ? (context	=> $context) : (),
+                    };
+                    $offset = 1;
+                    while ($row->[$offset] ne "") {
+                        $tables{$table_name}{$headers->[$offset]} = $row->[$offset];
+                        $offset++;
+                    }
+                    # Extra attributes (typically a table comment)
+                    for my $i ($offset+1..$#$row) {
+                        $tables{$table_name}{$headers->[$i]} = $row->[$i] if
+                            $row->[$i] ne "";
+                    }
+                }
+            }
+            $sheets{$sheet_name} = \%tables;
+        };
+        die "Sheet $sheet_name: $@" if $@;
+    }
+    return \%sheets;
+}
+
+sub profile_from_sheets {
+    my ($sheets) = @_;
+}
+
+@ARGV == 3 ||
+    die "Syntax: profile_from_html profile_file profile_dump html_file\n";
+my ($profile_file, $profile_dump, $html_file) = @ARGV;
+my $sheets = sheets_from_html($html_file);
+spew($profile_dump, Dumper($sheets));
+my $profile = profile_from_sheets($sheets)
+# print STDERR Dumper($profile);
