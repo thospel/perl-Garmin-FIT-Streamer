@@ -8,6 +8,112 @@ use Data::Dumper;
 $Data::Dumper::Indent = 1;
 $Data::Dumper::Sortkeys = 1;
 
+my %base_types = (
+    0x00	=> {
+        name	=> "enum",
+        size	=> 1,
+        decoder	=> ["C", "C"],
+        invalid	=> 0xff,
+        notice	=> 1,
+    },
+    0x01	=> {
+        name	=> "sint8",
+        size	=> 1,
+        decoder	=> ["c", "c"],
+        invalid	=> 0x7f,
+        notice	=> 1,
+    },
+    0x02	=> {
+        name	=> "uint8",
+        size	=> 1,
+        decoder	=> ["C", "C"],
+        invalid	=> 0xff,
+        notice	=> 1,
+    },
+    0x83	=> {
+        name	=> "sint16",
+        size	=> 2,
+        decoder	=> ["v!", "n!"],
+        invalid	=> 0x7fff,
+        notice	=> 1,
+    },
+    0x84	=> {
+        name	=> "uint16",
+        size	=> 2,
+        decoder	=> ["v", "n"],
+        invalid	=> 0xffff,
+        notice	=> 1,
+    },
+    0x85	=> {
+        name	=> "sint32",
+        size	=> 4,
+        decoder	=> ["V!", "N!"],
+        invalid	=> 0x7fffffff,
+        notice	=> 1,
+    },
+    0x86	=> {
+        name	=> "uint32",
+        size	=> 4,
+        decoder	=> ["V", "N"],
+        invalid	=> 0xffffffff,
+        notice	=> 1,
+    },
+    0x07	=> {
+        name	=> "string",
+        size	=> 0,
+        decoder	=> ["Z", "Z"],
+        invalid	=> "",
+        notice	=> 1,
+    },
+    0x88	=> {
+        name	=> "float32",
+        size	=> 4,
+        decoder	=> ["f<", "f>"],
+        invalid	=> 0xffffffff,
+        notice	=> 1,
+    },
+    0x89	=> {
+        name	=> "float64",
+        size	=> 4,
+        decoder	=> ["d<", "d>"],
+        invalid	=> 0xffffffffffffffff,
+        notice	=> 1,
+    },
+    0x0A	=> {
+        name	=> "uint8z",
+        size	=> 1,
+        decoder	=> ["C", "C"],
+        invalid	=> 0x00,
+        notice	=> 1,
+    },
+    0x8B	=> {
+        name	=> "uint16z",
+        size	=> 2,
+        decoder	=> ["v", "n"],
+        invalid	=> 0x0000,
+        notice	=> 1,
+    },
+    0x8C	=> {
+        name	=> "uint32z",
+        size	=> 4,
+        decoder	=> ["V", "N"],
+        invalid	=> 0x00000000,
+        notice	=> 1,
+    },
+    0x0D	=> {
+        name	=> "byte",
+        size	=> 0,
+        decoder	=> ["a", "a"],
+        invalid	=> 0xff,
+        notice	=> 1,
+    },
+);
+for my $num (keys %base_types) {
+    my $base_type = $base_types{$num};
+    $base_type->{number} = $num+0;
+    $base_types{lc $base_type->{name}} = $base_type;
+}
+
 my %keep_tag = map(($_ => 1), qw(body h1 h2 h3 h4 h5 h6 table tr td));
 
 sub get_context {
@@ -142,12 +248,110 @@ sub sheets_from_html {
 
 sub profile_from_sheets {
     my ($sheets) = @_;
+    my %profile;
+
+    my $messages = $sheets->{messages} || die "No messages sheet";
+    my $types	 = $sheets->{types} || die "No types sheet";
+    for my $type_name (sort keys %$types) {
+        eval {
+            my $type = $types->{$type_name};
+            die "Already have values" if $type->{values};
+            $type->{values} = \my %values;
+            for my $row (@{$type->{table}}) {
+                my $value_name = lc($row->{value_name} || die "No value_name");
+                die "Multiple values named '$value_name'" if
+                    $values{$value_name};
+                $values{$value_name} = $row;
+            }
+        };
+        die "Type '$type_name': $@" if $@;
+    }
+
+    my $message_numbers = $types->{mesg_num} || die "No mesg_num type";
+    $message_numbers = $message_numbers->{values};
+    for my $message_name (sort keys %$messages) {
+        eval {
+            my $message = $messages->{$message_name};
+            die "is a number" if $message_name =~ /^[0-9]+\z/;
+            my $message_number = $message_numbers->{lc $message_name} ||
+                die "No corresponding mesg_num";
+            defined($message_number = $message_number->{value}) ||
+                die "No message number value";
+            $message_number =~ /^[1-9][0-9]*\z|^0\z/ ||
+                die "message number '$message_number' is not a number";
+
+            my %fields;
+            for my $row (@{$message->{table}}) {
+                defined(my $field_number = $row->{field_def_nr}) || next;
+                $field_number =~ /^[1-9][0-9]*\z|^0\z/ ||
+                    die "Field number '$field_number' is not a number";
+                defined(my $field_name = $row->{field_name}) ||
+                    die "Missing field_name";
+                die "Field '$field_name' is a number" if
+                    $field_name =~ /^[0-9]+\z/;
+                my %field = (
+                    name	=> $field_name,
+                    number	=> $field_number+0
+                   );
+                die "Multiple fields called $field_name" if
+                    $fields{lc $field_name};
+                die "Multiple fields numbered $field_number" if
+                    $fields{$field_number};
+                $fields{lc $field_name} = $fields{$field_number} = \%field;
+            }
+            %fields || die "No usable rows";
+
+            die "Multiple named profiles" if $profile{lc $message_name};
+            die "Multiple numbered profiles" if $profile{$message_number};
+            $profile{lc $message_name} = $profile{$message_number} = {
+                name	=> $message_name,
+                number	=> $message_number+0,
+                defined $message->{context} ? (context => $message->{context}) : (),
+                defined $message->{comment} ? (comment => $message->{comment}) : (),
+                fields	=> \%fields,
+            };
+        };
+        die "Message '$message_name': $@" if $@;
+    }
+    return \%profile;
 }
 
 @ARGV == 3 ||
     die "Syntax: profile_from_html profile_file profile_dump html_file\n";
 my ($profile_file, $profile_dump, $html_file) = @ARGV;
+
+# First convert the html to a usable perl data structure
 my $sheets = sheets_from_html($html_file);
 spew($profile_dump, Dumper($sheets));
-my $profile = profile_from_sheets($sheets)
-# print STDERR Dumper($profile);
+
+# Next construct a usable profile out of the perl data structure
+my $profile = profile_from_sheets($sheets);
+$profile = do {
+    local $Data::Dumper::Varname = "profile";
+    local $Data::Dumper::Purity = 1;
+    Data::Dumper->Dump([\%base_types, $profile], [qw(base_types profile)]);
+};
+chomp $profile;
+
+open(my $fh, "<", $profile_file) || die "Could not open '$profile_file': $!";
+my $profile_content = do { local $/; <$fh> };
+close($fh) || die "Could not close '$profile_file': $!";
+
+$profile_content =~ /\n=cut\s*\z/ ||
+    die "File '$profile_file' does not end on =cut";
+
+$profile_content =~ s{
+    \n
+    \# [^\S\n]* BEGIN [^\S\n]+ GENERATED [^\S\n]* \n
+    (.*\n)*
+    \# [^\S\n]* END [^\S\n]+ GENERATED [^\S\n]*
+    \n
+}{
+# BEGIN GENERATED
+my (\$base_types, \$profile);
+
+$profile
+# END GENERATED
+}x || die "Could not find GENERATED marks";
+
+spew($profile_file, $profile_content);

@@ -16,7 +16,7 @@ WriteMakefile
          PM_FILTER	=> '$(PERL) -p -e1',
      ) : (),
      clean		=> {
-         FILES => '$(DISTNAME).ppd ppm cover_db',
+         FILES => '$(DISTNAME).ppd ppm cover_db Profile.dump',
      },
 );
 

@@ -9,12 +9,13 @@ use warnings;
 
 our $VERSION = "1.000";
 
-use Test::More tests => 7;
+use Test::More tests => 8;
 
 for my $module
     qw(
-       Garmin::FIT::Streamer
        Garmin::FIT::Streamer::Package
+       Garmin::FIT::Streamer::Profile
+       Garmin::FIT::Streamer
 ) {
         use_ok($module) || BAIL_OUT("Cannot even use $module");
 }
