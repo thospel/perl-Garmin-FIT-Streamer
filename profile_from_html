@@ -252,6 +252,23 @@ sub profile_from_sheets {
 
     my $messages = $sheets->{messages} || die "No messages sheet";
     my $types	 = $sheets->{types} || die "No types sheet";
+
+    # Fake a bool type
+    die "Already have type bool" if $types->{bool};
+    $types->{bool} = {
+      'base_type' => 'enum',
+      'table' => [
+        {
+          'value' => '0',
+          'value_name' => 'no'
+        },
+        {
+          'value' => '1',
+          'value_name' => 'yes'
+        }
+      ]
+       };
+
     for my $type_name (sort keys %$types) {
         eval {
             my $type = $types->{$type_name};
@@ -289,9 +306,25 @@ sub profile_from_sheets {
                     die "Missing field_name";
                 die "Field '$field_name' is a number" if
                     $field_name =~ /^[0-9]+\z/;
+                defined(my $field_type = $row->{field_type}) ||
+                   die "Missing field_type";
+                my $base_type = $base_types{lc $field_type};
+                if (!$base_type) {
+                    my $type = $types->{lc $field_type} ||
+                        die "Unknown type '$field_type'";
+                    $base_type = $type->{base_type} ||
+                        die "No basetype for type '$field_type'";
+                    $base_type = $base_types{lc $base_type} ||
+                        die "Unknown base_type '$base_type'";
+                }
+
                 my %field = (
                     name	=> $field_name,
-                    number	=> $field_number+0
+                    number	=> $field_number+0,
+                    base_type	=> $base_type,
+                    defined $row->{scale}  ? (scale  => $row->{scale}) : (),
+                    defined $row->{offset} ? (offset => $row->{offset}) : (),
+                    defined $row->{units}  ? (units  => $row->{units}) : (),
                    );
                 die "Multiple fields called $field_name" if
                     $fields{lc $field_name};
@@ -348,7 +381,23 @@ $profile_content =~ s{
     \n
 }{
 # BEGIN GENERATED
-my (\$base_types, \$profile);
+# Generated from file '$html_file' by program '$0'
+
+sub PROFILE_MAJOR() {   1 }
+sub PROFILE_MINOR() {  20 }
+sub PROFILE_SCALE() { 100 }
+
+sub PROTOCOL_MAJOR() {  1 }
+sub PROTOCOL_MINOR() {  0 }
+sub PROTOCOL_SCALE() { 16 }
+
+sub PROFILE_VERSION() {
+    return PROFILE_MAJOR() * PROFILE_SCALE() + PROFILE_MINOR();
+}
+
+sub PROTOCOL_VERSION() {
+    return PROTOCOL_MAJOR() * PROTOCOL_SCALE() + PROTOCOL_MINOR();
+}
 
 $profile
 # END GENERATED

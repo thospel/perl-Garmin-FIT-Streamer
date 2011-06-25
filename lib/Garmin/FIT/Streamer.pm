@@ -5,8 +5,15 @@ use warnings;
 our $VERSION = '1.000';
 
 use Carp;
+use Scalar::Util qw(weaken);
+use Digest::CRC qw(crc16);
 
 use Garmin::FIT::Streamer::Profile;
+use Garmin::FIT::Streamer::Definition;
+
+our @CARP_NOT =
+    qw(Garmin::FIT::Streamer::Definition
+       Garmin::FIT::Streamer::Profile);
 
 use Data::Dumper;
 $Data::Dumper::Indent = 1;
@@ -15,22 +22,73 @@ $Data::Dumper::Sortkeys = 1;
 my $profile = Garmin::FIT::Streamer::Profile->profile;
 my $base_types = Garmin::FIT::Streamer::Profile->base_types;
 
+use constant {
+    HEADER_SIZE	=> 12,
+};
+
 sub new {
     my ($class, %params) = @_;
     my $fit = bless {
     }, $class;
+
     croak "Unknown parameter ", join(", ", keys %params) if %params;
-    $fit->reset;
+
+    $fit->in_reset;
+    $fit->out_reset;
     return $fit;
 }
 
-sub reset {
+sub in_reset {
     my ($fit) = @_;
+
     $fit->{in_buffer} = "";
-    $fit->{in_want} = 12;
-    $fit->{in_need} = 12;
+    $fit->{in_want} = HEADER_SIZE;
+    $fit->{in_need} = HEADER_SIZE;
     $fit->{in_state} = "get_header";
+    $fit->{in_crc} = Digest::CRC->new(type => "crc16");
     $fit->{in_types} = [];
+}
+
+sub out_reset {
+    my ($fit) = @_;
+
+    $fit->{out_buffer} =
+        pack("CCvVa4",
+             HEADER_SIZE,
+             Garmin::FIT::Streamer::Profile->PROTOCOL_VERSION,
+             Garmin::FIT::Streamer::Profile->PROFILE_VERSION,
+             0,	# Body size
+             ".FIT");
+    $fit->{out_definitions} = [];
+    $fit->{out_definition_ids} = {};
+}
+
+sub out {
+    my ($fit) = @_;
+
+    substr($fit->{out_buffer}, 4, 4,
+           pack("V", length($fit->{out_buffer}) - HEADER_SIZE));
+    return $fit->{out_buffer} . pack("v", crc16($fit->{out_buffer}));
+}
+
+sub to_handle {
+    my ($fit, $fh) = @_;
+
+    substr($fit->{out_buffer}, 4, 4,
+           pack("V", length($fit->{out_buffer}) - HEADER_SIZE));
+    local $\;
+    print($fh $fit->{out_buffer}) || croak "Write error: $!";
+    print($fh pack("v", crc16($fit->{out_buffer}))) || croak "Write error: $!";
+}
+
+sub to_file {
+    my ($fit, $file) = @_;
+
+    open(my $fh, ">", $file) ||
+        croak "Could not open file '$file' for write: $!";
+    binmode($fh);
+    $fit->to_handle($fh);
+    close($fh) || croak "Could not close file '$file': $!";
 }
 
 sub get_header {
@@ -43,8 +101,8 @@ sub get_header {
     # 2 more bytes for the CRC
     $fit->{in_want} = $size + 2;
     # Would like a record header
-    $fit->{in_need} = 1;
     $fit->{in_state} = "get_record_header";
+    $fit->{in_need} = 1;
 }
 
 sub get_record_header {
@@ -123,7 +181,7 @@ sub get_define_fields {
         $fit->{in_need} = 1;
         $fit->{in_state} = "get_record_header";
     } elsif ($fit->{in_want} == 2) {
-        $fit->{in_need} = 1;
+        $fit->{in_need} = 2;
         $fit->{in_state} = "get_crc";
     } else {
         die "Unexpected EOF";
@@ -146,7 +204,7 @@ sub get_data {
         $fit->{in_need} = 1;
         $fit->{in_state} = "get_record_header";
     } elsif ($fit->{in_want} == 2) {
-        $fit->{in_need} = 1;
+        $fit->{in_need} = 2;
         $fit->{in_state} = "get_crc";
     } else {
         die "Unexpected EOF";
@@ -155,6 +213,9 @@ sub get_data {
 
 sub get_crc {
     my $fit = shift;
+    # Skip test if the file CRC is 0
+    # Calculating CRC over message including the CRC should always be 0
+    shift eq "\x00\x00" || $fit->{in_crc}->digest == 0 || croak "Invalid CRC16";
     $fit->{in_need} = 1e99;
     $fit->{in_state} = "done";
 }
@@ -165,7 +226,9 @@ sub add_bytes {
     while (length $fit->{in_buffer} >= $fit->{in_need}) {
         my $method = $fit->{in_state} || croak "Assertion: No method";
         $fit->{in_want} -= $fit->{in_need};
-        $fit->$method(substr($fit->{in_buffer}, 0, $fit->{in_need}, ""));
+        my $bytes = substr($fit->{in_buffer}, 0, $fit->{in_need}, "");
+        $fit->{in_crc}->add($bytes);
+        $fit->$method($bytes);
     }
     return $fit->{in_want} - length $fit->{in_buffer};
 }
@@ -196,12 +259,61 @@ sub from_file {
     close($fh) || croak "Error closing '$file': $!";
 }
 
+sub make_sender {
+    my ($fit, $message, $fields) = @_;
+    my @fetch;
+    for my $i (0..@$fields/2-1) {
+        my $field = $fields->[$i *=2];
+        push @fetch, $field->{nr};
+    }
+    return {
+        fetch	=> \@fetch,
+    };
+}
+
+sub define {
+    my $fit = shift;
+    my $definition = Garmin::FIT::Streamer::Definition->new(
+        message	=> shift,
+        fields	=> \@_,
+        );
+    return $definition;
+}
+
+sub put {
+    my $fit = shift;
+    my $definition = shift;
+    my $id = $definition->id;
+    my $local_id = $fit->{out_definition_ids}{$id};
+    if (!defined $local_id) {
+        # Not defined yet
+        # Select a number
+        $local_id = @{$fit->{out_definitions}};
+        if ($local_id >= 16) {
+            # All numbers are in use
+            # bump a random one
+            $local_id = int rand 16;
+            delete $fit->{out_definition_ids}{$fit->{out_definitions}[$local_id]->id} || die "Assertion: Did not have the bumbed id";
+        }
+        $fit->{out_definitions}[$local_id] = $definition;
+        $fit->{out_definition_ids}{$id} = $local_id;
+        # define message header
+        $fit->{out_buffer} .= $definition->define_string($local_id);
+    }
+    $fit->{out_buffer} .= $definition->encode($local_id, @_);
+}
+
 sub protocol {
     return shift->{protocol};
 }
 
 sub profile {
     return shift->{profile};
+}
+
+sub base_type {
+    defined $_[1] || croak "No base_type argument";
+    return $base_types->{lc $_[1]} || croak "Unknown base_type '$_[1]'";
 }
 
 1;

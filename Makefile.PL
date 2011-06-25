@@ -7,7 +7,9 @@ WriteMakefile
      VERSION_FROM	=> 'lib/Garmin/FIT/Streamer/Package.pm',
      PREREQ_PM		=> {
          # Only for the tests
-	 "Test::More"			=> "0.01",
+	 "Test::More"	=> "0.01",
+         # Want the version compatible with other Digest modules
+         "Digest::CRC"	=> "0.10",
      },
      ABSTRACT_FROM	=> 'lib/Garmin/FIT/Streamer.pm',
      AUTHOR		=> 'Ton Hospel <Ton Hospel <Garmin-FIT-Streamer@ton.iguana.be>',
