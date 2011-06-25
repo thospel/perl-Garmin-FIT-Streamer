@@ -20,6 +20,11 @@ use Test::More "no_plan";
 
 use Garmin::FIT::Streamer;
 
+use constant {
+    # Some message number not in the global profile
+    UNKNOWN	=> 1000,
+};
+
 my $dir = tempdir(CLEANUP => 1);
 
 my $fit = Garmin::FIT::Streamer->new;
@@ -39,47 +44,190 @@ is(unpack("H*", $content),
 
 $fit = Garmin::FIT::Streamer->new;
 my %definition;
+# unnamed entries
 $definition{file_id} = $fit->define(
     0,	# file_id
     {
         number		=> 0,	# type
-        base_type	=> "enum",
+        type	=> "enum",
     }, {
         number		=> 1,	# manufacturer
-        base_type	=> "uint16",
+        type	=> "uint16",
     }, {
         number		=> 2,	# product
-        base_type	=> "uint16",
+        type	=> "uint16",
     }, {
         number		=> 3,	# serial_number
-        base_type	=> "uint32z",
+        type	=> "uint32z",
     }, {
         number		=> 4,	# time_created
-        base_type	=> "uint32",
+        type	=> "uint32",
     },
 );
+# Named and numbered entries
 $definition{record} = $fit->define(
-    20,			# record
+    "record",
+    "heart_rate",
+    4,		# cadence
     {
-        number		=> 3,	# heart_rate
-        base_type	=> "uint8",
-    }, {
-        number		=> 4,	# cadence
-        base_type	=> "uint8",
-    }, {
         number		=> 5,	# distance
-        base_type	=> "uint32",
+        type	=> "uint32",
+    }, "speed",
+);
+$definition{unknown_id} = $fit->define(
+    UNKNOWN,	# Some id not in the profile
+    {
+        number		=> 0,
+        type		=> "enum",
     }, {
-        number		=> 6,	# speed
-        base_type	=> "uint16",
+        number		=> 255,
+        type		=> "uint16",
     },
 );
 $fit->put($definition{file_id}, 4, 15, 22, 1234, 621463080);
 $fit->put($definition{record}, 140, 88,  510, 2800);
 $fit->put($definition{record}, 143, 90, 2080, 2920);
 $fit->put($definition{record}, 144, 92, 3710, 3050);
+$fit->put($definition{unknown_id}, 124, 68);
+$fit->put($definition{unknown_id}, undef, undef);
 $out = $fit->out;
 is(unpack("H*", $out),
-   "0c107800500000002e46495440000000000500010001028402028403048c04048600040f001600d204000028c60a25410000140004030102040102050486060284018c58fe010000f00a018f5a20080000680b01905c7e0e0000ea0bec90",
+   "0c107800640000002e46495440000000000500010001028402028403048c04048600040f001600d204000028c60a25410000140004030102040102050486060284018c58fe010000f00a018f5a20080000680b01905c7e0e0000ea0b420000e80302000100ff0284027c440002ffffff7b36",
    "Expected byte sequence");
 # $fit->add_bytes($out);
+
+# All kinds of error
+$fit = Garmin::FIT::Streamer->new;
+
+eval {
+    $fit->define();
+};
+like($@, qr{^\QNo message parameter at }, "Expected error message");
+
+eval {
+    $fit->define(undef);
+};
+like($@, qr{^\QNo message parameter at }, "Expected error message");
+
+eval {
+    $fit->define("Waf", {
+        number		=> 0,
+        type		=> "uint16",
+    });
+};
+like($@, qr{^\QInvalid message parameter 'Waf' at }, "Expected error message");
+
+eval {
+    $fit->define(20);
+};
+like($@, qr{^\QNo fields being defined at }, "Expected error message");
+
+eval {
+    $fit->define(0, ({
+        number		=> 0,
+        type		=> "enum",
+    }) x 256);
+};
+like($@, qr{^\QToo many fields (at most 255) at }, "Expected error message");
+
+eval {
+    $fit->define(0, ({
+        number		=> 0,
+        type		=> "enum",
+    }) x 255);
+};
+like($@,
+     qr{^\QField '0': Multiple uses of field number 0 at },
+     "Expected error message");
+
+eval {
+    $fit->define(200, {
+        number		=> 0,
+    });
+};
+like($@,
+     qr{^\QField '0': No field type at },
+     "Expected error message");
+
+eval {
+    $fit->define(0, {
+        number		=> 0,
+        type		=> "uint16",
+    });
+};
+like($@,
+     qr{^\QField '0': Inconsistent base_type. Field uses 'uint16' but profile expects 'enum' at },
+     "Expected error message");
+
+eval {
+    $fit->define(0, {
+        number		=> 0,
+        type		=> "enum",
+        size		=> 2,
+    });
+};
+like($@,
+     qr{^\QField '0': Inconsistent field size '2' for base type 'enum' (size 1) at },
+     "Expected error message");
+
+eval {
+    $fit->define(UNKNOWN, {
+        number		=> 0,
+        type		=> "string",
+        size		=> 0,
+    });
+};
+like($@,
+     qr{^\QField '0': Field size may not be '0' at },
+     "Expected error message");
+
+eval {
+    $fit->define(UNKNOWN, {
+        number		=> 0,
+        type		=> "string",
+        size		=> "big",
+    });
+};
+like($@,
+     qr{^\QField '0': Field size may not be 'big' at },
+     "Expected error message");
+
+eval {
+    $fit->define(UNKNOWN, {
+        number		=> 0,
+        type		=> "string",
+    });
+};
+like($@,
+     qr{^\QField '0': Base type 'string' without field size at },
+     "Expected error message");
+
+eval {
+    $fit->define(0, undef);
+};
+like($@,
+     qr{^\QUndefined field at },
+     "Expected error message");
+
+eval {
+    $fit->define(UNKNOWN, "waf");
+};
+like($@,
+     qr{^\QField 'waf': Unknown because message '1000' is not in the global profile at },
+     "Expected error message");
+
+eval {
+    $fit->define(0, "waf");
+};
+like($@,
+     qr{^\QField 'waf': Unknown because message '0' has no such field in the global profile at },
+     "Expected error message");
+
+eval {
+    $fit->define(0, {
+        number	=> 256,
+    });
+};
+like($@,
+     qr{^\QField '256': Field number '256' is too high (at most 255) at },
+     "Expected error message");

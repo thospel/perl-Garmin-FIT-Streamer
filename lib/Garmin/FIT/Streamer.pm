@@ -19,8 +19,9 @@ use Data::Dumper;
 $Data::Dumper::Indent = 1;
 $Data::Dumper::Sortkeys = 1;
 
-my $profile = Garmin::FIT::Streamer::Profile->profile;
-my $base_types = Garmin::FIT::Streamer::Profile->base_types;
+my $base_types	= Garmin::FIT::Streamer::Profile->base_types;
+my $types	= Garmin::FIT::Streamer::Profile->types;
+my $profile	= Garmin::FIT::Streamer::Profile->profile;
 
 use constant {
     HEADER_SIZE	=> 12,
@@ -155,19 +156,18 @@ sub get_define_fields {
     my $decoder = "";
     $in_type->{fields} = \my @fields;
     while (my ($field_nr, $size, $base_type) = splice(@definition, 0, 3)) {
-        my $type = $base_types->{$base_type} || die "Unknown type $base_type";
-        print STDERR "Type $base_type\n" if $type->{notice};
-        if ($type->{size}) {
-            $type->{size} == $size || die "Unexpected size $size for base_type $base_type ($type->{name})";
-            $decoder .= $type->{decoder}[$in_type->{big_endian}];
+        my $base_type = $fit->base_type($base_type);
+        print STDERR "Type $base_type->{name}\n" if $base_type->{notice};
+        if ($base_type->{size}) {
+            $base_type->{size} == $size || die "Unexpected size $size for base_type $base_type ($base_type->{name})";
+            $decoder .= $base_type->{decoder}[$in_type->{big_endian}];
         } else {
-            $decoder .= $type->{decoder}[$in_type->{big_endian}];
+            $decoder .= $base_type->{decoder}[$in_type->{big_endian}];
             $decoder .= $size;
         }
         $total_size += $size;
         push @fields, {
             base_type	=> $base_type,
-            type	=> $type,
             size	=> $size,
             field_nr	=> $field_nr,
             $meta->{$field_nr} ? (meta	=> $meta->{$field_nr}) : (),
@@ -192,11 +192,13 @@ sub get_data {
     my $fit = shift;
     my @fields = @{$fit->{in_type}{fields}};
     my @data = unpack($fit->{in_type}{decoder}, shift);
-    my $global_name = $fit->{in_type}{global_type}{name};
+    my $global_name = $fit->{in_type}{global_type}{name} || "<unknown>";
     print STDERR "DATA:\n";
     for my $data (@data) {
-        print STDERR "  '$data'	($global_name: $fields[0]{meta}{name} $fields[0]{type}{name} \[$fields[0]{field_nr}\])\n";
-        $data = undef if $data eq $fields[0]{type}{invalid};
+        my $meta_name = $fields[0]{meta} ?
+            $fields[0]{meta}{name} : "<$fields[0]{field_nr}>";
+        print STDERR "  '$data'	($global_name: $meta_name $fields[0]{base_type}{name} \[$fields[0]{field_nr}\])\n";
+        $data = undef if $data eq $fields[0]{base_type}{invalid};
         $data = [$data, shift @fields];
     }
     # print STDERR Dumper(\@data);
@@ -314,6 +316,21 @@ sub profile {
 sub base_type {
     defined $_[1] || croak "No base_type argument";
     return $base_types->{lc $_[1]} || croak "Unknown base_type '$_[1]'";
+}
+
+sub type {
+    defined $_[1] || croak "No type argument";
+    return $types->{lc $_[1]} || croak "Unknown type '$_[1]'";
+}
+
+sub message_from_id {
+    defined $_[1] || croak "No message_id argument";
+    return $base_types->{lc $_[1]} || croak "Unknown message_id '$_[1]'";
+}
+
+sub try_message_from_id {
+    defined $_[1] || croak "No message_id argument";
+    return $profile->{lc $_[1]};
 }
 
 1;

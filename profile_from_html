@@ -14,13 +14,14 @@ my %base_types = (
         size	=> 1,
         decoder	=> ["C", "C"],
         invalid	=> 0xff,
-        notice	=> 1,
+        regex	=> '^[0-9]+\z',
     },
     0x01	=> {
         name	=> "sint8",
         size	=> 1,
         decoder	=> ["c", "c"],
         invalid	=> 0x7f,
+        regex	=> '^[+-]?[0-9]+\z',
         notice	=> 1,
     },
     0x02	=> {
@@ -28,13 +29,14 @@ my %base_types = (
         size	=> 1,
         decoder	=> ["C", "C"],
         invalid	=> 0xff,
-        notice	=> 1,
+        regex	=> '^[0-9]+\z',
     },
     0x83	=> {
         name	=> "sint16",
         size	=> 2,
         decoder	=> ["v!", "n!"],
         invalid	=> 0x7fff,
+        regex	=> '^[+-]?[0-9]+\z',
         notice	=> 1,
     },
     0x84	=> {
@@ -42,13 +44,14 @@ my %base_types = (
         size	=> 2,
         decoder	=> ["v", "n"],
         invalid	=> 0xffff,
-        notice	=> 1,
+        regex	=> '^[0-9]+\z',
     },
     0x85	=> {
         name	=> "sint32",
         size	=> 4,
         decoder	=> ["V!", "N!"],
         invalid	=> 0x7fffffff,
+        regex	=> '^[+-]?[0-9]+\z',
         notice	=> 1,
     },
     0x86	=> {
@@ -56,7 +59,7 @@ my %base_types = (
         size	=> 4,
         decoder	=> ["V", "N"],
         invalid	=> 0xffffffff,
-        notice	=> 1,
+        regex	=> '^[0-9]+\z',
     },
     0x07	=> {
         name	=> "string",
@@ -70,6 +73,7 @@ my %base_types = (
         size	=> 4,
         decoder	=> ["f<", "f>"],
         invalid	=> 0xffffffff,
+        regex	=> '^[+-]?[0-9]+(?:\.[0-9]*)?(?:[eE][+-]?[0-9]+)?\z',
         notice	=> 1,
     },
     0x89	=> {
@@ -77,6 +81,7 @@ my %base_types = (
         size	=> 4,
         decoder	=> ["d<", "d>"],
         invalid	=> 0xffffffffffffffff,
+        regex	=> '^[+-]?[0-9]+(?:\.[0-9]*)?(?:[eE][+-]?[0-9]+)\z',
         notice	=> 1,
     },
     0x0A	=> {
@@ -84,6 +89,7 @@ my %base_types = (
         size	=> 1,
         decoder	=> ["C", "C"],
         invalid	=> 0x00,
+        regex	=> '^[0-9]+\z',
         notice	=> 1,
     },
     0x8B	=> {
@@ -91,6 +97,7 @@ my %base_types = (
         size	=> 2,
         decoder	=> ["v", "n"],
         invalid	=> 0x0000,
+        regex	=> '^[0-9]+\z',
         notice	=> 1,
     },
     0x8C	=> {
@@ -98,19 +105,22 @@ my %base_types = (
         size	=> 4,
         decoder	=> ["V", "N"],
         invalid	=> 0x00000000,
-        notice	=> 1,
+        regex	=> '^[0-9]+\z',
     },
     0x0D	=> {
         name	=> "byte",
         size	=> 0,
         decoder	=> ["a", "a"],
         invalid	=> 0xff,
+        regex	=> '^[0-9]+\z',
         notice	=> 1,
     },
 );
+my @base_types;
 for my $num (keys %base_types) {
     my $base_type = $base_types{$num};
-    $base_type->{number} = $num+0;
+    push @base_types, $base_type;
+    $base_type->{number} = int($num);
     $base_types{lc $base_type->{name}} = $base_type;
 }
 
@@ -223,18 +233,19 @@ sub sheets_from_html {
                 } else {
                     my $table_name = $row->[0];
                     $table = [];
-                    $tables{$table_name} = {
+                    $tables{lc $table_name} = {
+                        name	=> $table_name,
                         table	=> $table,
                         defined $context ? (context	=> $context) : (),
                     };
                     $offset = 1;
                     while ($row->[$offset] ne "") {
-                        $tables{$table_name}{$headers->[$offset]} = $row->[$offset];
+                        $tables{lc $table_name}{$headers->[$offset]} = $row->[$offset];
                         $offset++;
                     }
                     # Extra attributes (typically a table comment)
                     for my $i ($offset+1..$#$row) {
-                        $tables{$table_name}{$headers->[$i]} = $row->[$i] if
+                        $tables{lc $table_name}{$headers->[$i]} = $row->[$i] if
                             $row->[$i] ne "";
                     }
                 }
@@ -246,44 +257,71 @@ sub sheets_from_html {
     return \%sheets;
 }
 
-sub profile_from_sheets {
+sub types_from_sheets {
     my ($sheets) = @_;
-    my %profile;
 
-    my $messages = $sheets->{messages} || die "No messages sheet";
-    my $types	 = $sheets->{types} || die "No types sheet";
+    my $types = $sheets->{types} || die "No types sheet";
 
     # Fake a bool type
     die "Already have type bool" if $types->{bool};
     $types->{bool} = {
-      'base_type' => 'enum',
-      'table' => [
-        {
-          'value' => '0',
-          'value_name' => 'no'
-        },
-        {
-          'value' => '1',
-          'value_name' => 'yes'
-        }
-      ]
-       };
+        name		=> "bool",
+        base_type	=> 'enum',
+        table => [{
+            value	=> "0",
+            value_name	=> 'no',
+        }, {
+            value	=> "1",
+            value_name	=> 'yes',
+        }],
+    };
 
     for my $type_name (sort keys %$types) {
         eval {
             my $type = $types->{$type_name};
             die "Already have values" if $type->{values};
             $type->{values} = \my %values;
-            for my $row (@{$type->{table}}) {
+            for my $row (@{delete $type->{table}}) {
                 my $value_name = lc($row->{value_name} || die "No value_name");
+                die "Numeric value name '$row->{value_name}'" if
+                    $row->{value_name} =~ /^-?[0-9]+\z/;
                 die "Multiple values named '$value_name'" if
                     $values{$value_name};
-                $values{$value_name} = $row;
+                defined(my $number = $row->{value}) ||
+                    die "Row '$row->{value_name}': No value";
+                $number =~ /^(-?[0-9]+)\z/ ||
+                    die "Row '$row->{value_name}': '$number' is not an integer";
+                $values{$value_name} = $values{$1+0} = {
+                    name	=> $row->{value_name},
+                    number	=> int($1),
+                    defined($row->{comment}) ? (comment => $row->{comment}):(),
+                };
             }
+            my $base_type = $type->{base_type} || die "No base_type";
+            $type->{base_type} = $base_types{lc $base_type} ||
+                die "Unknown base_type '$base_type'";
         };
         die "Type '$type_name': $@" if $@;
     }
 
+    # Now fake the base_types as more complex types
+    for my $base_type (@base_types) {
+        die "Already have type $base_type->{name}" if
+            $types->{lc $base_type->{name}};
+        $types->{lc $base_type->{name}} = {
+            name	=> $base_type->{name},
+            base_type	=> $base_type,
+            values	=> {},
+        };
+    }
+    return $types;
+}
+
+sub profile_from_sheets {
+    my ($sheets, $types) = @_;
+    my %profile;
+
+    my $messages = $sheets->{messages} || die "No messages sheet";
     my $message_numbers = $types->{mesg_num} || die "No mesg_num type";
     $message_numbers = $message_numbers->{values};
     for my $message_name (sort keys %$messages) {
@@ -292,7 +330,7 @@ sub profile_from_sheets {
             die "is a number" if $message_name =~ /^[0-9]+\z/;
             my $message_number = $message_numbers->{lc $message_name} ||
                 die "No corresponding mesg_num";
-            defined($message_number = $message_number->{value}) ||
+            defined($message_number = $message_number->{number}) ||
                 die "No message number value";
             $message_number =~ /^[1-9][0-9]*\z|^0\z/ ||
                 die "message number '$message_number' is not a number";
@@ -308,24 +346,35 @@ sub profile_from_sheets {
                     $field_name =~ /^[0-9]+\z/;
                 defined(my $field_type = $row->{field_type}) ||
                    die "Missing field_type";
-                my $base_type = $base_types{lc $field_type};
-                if (!$base_type) {
-                    my $type = $types->{lc $field_type} ||
-                        die "Unknown type '$field_type'";
-                    $base_type = $type->{base_type} ||
-                        die "No basetype for type '$field_type'";
-                    $base_type = $base_types{lc $base_type} ||
-                        die "Unknown base_type '$base_type'";
-                }
+                my $type = $types->{lc $field_type} ||
+                    die "Unknown type '$field_type'";
 
                 my %field = (
                     name	=> $field_name,
-                    number	=> $field_number+0,
-                    base_type	=> $base_type,
-                    defined $row->{scale}  ? (scale  => $row->{scale}) : (),
-                    defined $row->{offset} ? (offset => $row->{offset}) : (),
-                    defined $row->{units}  ? (units  => $row->{units}) : (),
+                    number	=> int($field_number),
+                    type	=> $type,
+                    defined($row->{scale} && $row->{scale} ne "1") ? (scale  => $row->{scale}) : (),
+                    $row->{offset} ? (offset => $row->{offset}) : (),
+                    defined $row->{units} ? (units  => $row->{units}) : (),
+                    $row->{bits} ? (bits => $row->{bits}) : (),
+                    $row->{accumulate} ? (accumulate => $row->{accumulate}) : (),
                    );
+                if (defined $row->{array}) {
+                    $row->{array} =~ /^\[(.+)\]\z/ ||
+                        die "Could not parse array specification '$row->{array}'";
+                    $fields{array} = $1;
+                }
+                my $splits;
+                for my $name (qw(bits scale offset units accumulate)) {
+                    defined $field{$name} && $field{$name} =~ /,/ || next;
+                    $field{$name} = [split /\s*,\s*/, $field{$name}];
+                    if (defined $splits) {
+                        $splits == @{$field{$name}} ||
+                            die "Inconsistent number of splits";
+                    } else {
+                        $splits = @{$field{$name}};
+                    }
+                }
                 die "Multiple fields called $field_name" if
                     $fields{lc $field_name};
                 die "Multiple fields numbered $field_number" if
@@ -338,7 +387,7 @@ sub profile_from_sheets {
             die "Multiple numbered profiles" if $profile{$message_number};
             $profile{lc $message_name} = $profile{$message_number} = {
                 name	=> $message_name,
-                number	=> $message_number+0,
+                number	=> int($message_number),
                 defined $message->{context} ? (context => $message->{context}) : (),
                 defined $message->{comment} ? (comment => $message->{comment}) : (),
                 fields	=> \%fields,
@@ -347,6 +396,12 @@ sub profile_from_sheets {
         die "Message '$message_name': $@" if $@;
     }
     return \%profile;
+}
+
+sub unslash {
+    my ($str) = @_;
+    $str =~ s/\\\\/\\/g;
+    return $str;
 }
 
 @ARGV == 3 ||
@@ -358,13 +413,16 @@ my $sheets = sheets_from_html($html_file);
 spew($profile_dump, Dumper($sheets));
 
 # Next construct a usable profile out of the perl data structure
-my $profile = profile_from_sheets($sheets);
+my $types   = types_from_sheets($sheets);
+my $profile = profile_from_sheets($sheets, $types);
 $profile = do {
     local $Data::Dumper::Varname = "profile";
     local $Data::Dumper::Purity = 1;
-    Data::Dumper->Dump([\%base_types, $profile], [qw(base_types profile)]);
+    Data::Dumper->Dump([ \%base_types, $types, $profile],
+                       [qw(base_types   types   profile)]);
 };
 chomp $profile;
+$profile =~ s{('regex'\s*=>\s*)'(.*)'(,)}{"$1qr{" . unslash($2) . "}$3"}eg;
 
 open(my $fh, "<", $profile_file) || die "Could not open '$profile_file': $!";
 my $profile_content = do { local $/; <$fh> };
