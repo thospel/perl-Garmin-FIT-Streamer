@@ -9,11 +9,13 @@ use warnings;
 
 our $VERSION = "1.000";
 
-use Test::More tests => 9;
+use Test::More tests => 11;
 
 for my $module
     qw(
        Garmin::FIT::Streamer::Package
+       Garmin::FIT::Streamer::BaseType
+       Garmin::FIT::Streamer::Type
        Garmin::FIT::Streamer::Definition
        Garmin::FIT::Streamer::Profile
        Garmin::FIT::Streamer

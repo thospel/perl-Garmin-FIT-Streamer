@@ -5,11 +5,14 @@ use warnings;
 
 our $VERSION = "1.000";
 
-our ($base_types, $types, $profile);
+package Garmin::FIT::Streamer::BaseType;
+our $base_types;
 
-sub base_types {
-    return $base_types;
-}
+package Garmin::FIT::Streamer::Type;
+our $types;
+
+package Garmin::FIT::Streamer::Profile;
+our $profile;
 
 sub types {
     return $types;
@@ -39,7 +42,7 @@ sub PROTOCOL_VERSION() {
 }
 
 $base_types = {
-  '0' => {
+  '0' => bless( {
     'decoder' => [
       'C',
       'C'
@@ -49,8 +52,8 @@ $base_types = {
     'number' => 0,
     'regex' => qr{^[0-9]+\z},
     'size' => 1
-  },
-  '1' => {
+  }, 'Garmin::FIT::Streamer::BaseType' ),
+  '1' => bless( {
     'decoder' => [
       'c',
       'c'
@@ -61,8 +64,8 @@ $base_types = {
     'number' => 1,
     'regex' => qr{^[+-]?[0-9]+\z},
     'size' => 1
-  },
-  '10' => {
+  }, 'Garmin::FIT::Streamer::BaseType' ),
+  '10' => bless( {
     'decoder' => [
       'C',
       'C'
@@ -73,8 +76,8 @@ $base_types = {
     'number' => 10,
     'regex' => qr{^[0-9]+\z},
     'size' => 1
-  },
-  '13' => {
+  }, 'Garmin::FIT::Streamer::BaseType' ),
+  '13' => bless( {
     'decoder' => [
       'a',
       'a'
@@ -83,10 +86,9 @@ $base_types = {
     'name' => 'byte',
     'notice' => 1,
     'number' => 13,
-    'regex' => qr{^[0-9]+\z},
     'size' => 0
-  },
-  '131' => {
+  }, 'Garmin::FIT::Streamer::BaseType' ),
+  '131' => bless( {
     'decoder' => [
       'v!',
       'n!'
@@ -97,8 +99,8 @@ $base_types = {
     'number' => 131,
     'regex' => qr{^[+-]?[0-9]+\z},
     'size' => 2
-  },
-  '132' => {
+  }, 'Garmin::FIT::Streamer::BaseType' ),
+  '132' => bless( {
     'decoder' => [
       'v',
       'n'
@@ -108,8 +110,8 @@ $base_types = {
     'number' => 132,
     'regex' => qr{^[0-9]+\z},
     'size' => 2
-  },
-  '133' => {
+  }, 'Garmin::FIT::Streamer::BaseType' ),
+  '133' => bless( {
     'decoder' => [
       'V!',
       'N!'
@@ -120,8 +122,8 @@ $base_types = {
     'number' => 133,
     'regex' => qr{^[+-]?[0-9]+\z},
     'size' => 4
-  },
-  '134' => {
+  }, 'Garmin::FIT::Streamer::BaseType' ),
+  '134' => bless( {
     'decoder' => [
       'V',
       'N'
@@ -131,8 +133,8 @@ $base_types = {
     'number' => 134,
     'regex' => qr{^[0-9]+\z},
     'size' => 4
-  },
-  '136' => {
+  }, 'Garmin::FIT::Streamer::BaseType' ),
+  '136' => bless( {
     'decoder' => [
       'f<',
       'f>'
@@ -143,20 +145,20 @@ $base_types = {
     'number' => 136,
     'regex' => qr{^[+-]?[0-9]+(?:\.[0-9]*)?(?:[eE][+-]?[0-9]+)?\z},
     'size' => 4
-  },
-  '137' => {
+  }, 'Garmin::FIT::Streamer::BaseType' ),
+  '137' => bless( {
     'decoder' => [
       'd<',
       'd>'
     ],
-    'invalid' => '18446744073709551615',
+    'invalid' => '1.84467440737096e+19',
     'name' => 'float64',
     'notice' => 1,
     'number' => 137,
     'regex' => qr{^[+-]?[0-9]+(?:\.[0-9]*)?(?:[eE][+-]?[0-9]+)\z},
     'size' => 4
-  },
-  '139' => {
+  }, 'Garmin::FIT::Streamer::BaseType' ),
+  '139' => bless( {
     'decoder' => [
       'v',
       'n'
@@ -167,8 +169,8 @@ $base_types = {
     'number' => 139,
     'regex' => qr{^[0-9]+\z},
     'size' => 2
-  },
-  '140' => {
+  }, 'Garmin::FIT::Streamer::BaseType' ),
+  '140' => bless( {
     'decoder' => [
       'V',
       'N'
@@ -178,8 +180,8 @@ $base_types = {
     'number' => 140,
     'regex' => qr{^[0-9]+\z},
     'size' => 4
-  },
-  '2' => {
+  }, 'Garmin::FIT::Streamer::BaseType' ),
+  '2' => bless( {
     'decoder' => [
       'C',
       'C'
@@ -189,18 +191,18 @@ $base_types = {
     'number' => 2,
     'regex' => qr{^[0-9]+\z},
     'size' => 1
-  },
-  '7' => {
+  }, 'Garmin::FIT::Streamer::BaseType' ),
+  '7' => bless( {
     'decoder' => [
       'Z',
       'Z'
     ],
-    'invalid' => '',
+    'invalid' => 0,
     'name' => 'string',
     'notice' => 1,
     'number' => 7,
     'size' => 0
-  },
+  }, 'Garmin::FIT::Streamer::BaseType' ),
   'byte' => {},
   'enum' => {},
   'float32' => {},

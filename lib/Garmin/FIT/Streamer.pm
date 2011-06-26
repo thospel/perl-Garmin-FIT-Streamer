@@ -19,7 +19,6 @@ use Data::Dumper;
 $Data::Dumper::Indent = 1;
 $Data::Dumper::Sortkeys = 1;
 
-my $base_types	= Garmin::FIT::Streamer::Profile->base_types;
 my $types	= Garmin::FIT::Streamer::Profile->types;
 my $profile	= Garmin::FIT::Streamer::Profile->profile;
 
@@ -192,7 +191,7 @@ sub get_data {
     my $fit = shift;
     my @fields = @{$fit->{in_type}{fields}};
     my @data = unpack($fit->{in_type}{decoder}, shift);
-    my $global_name = $fit->{in_type}{global_type}{name} || "<unknown>";
+    my $global_name = $fit->{in_type}{global_type}{name} || "<unknown $fit->{in_type}{global_nr}>";
     print STDERR "DATA:\n";
     for my $data (@data) {
         my $meta_name = $fields[0]{meta} ?
@@ -313,11 +312,6 @@ sub profile {
     return shift->{profile};
 }
 
-sub base_type {
-    defined $_[1] || croak "No base_type argument";
-    return $base_types->{lc $_[1]} || croak "Unknown base_type '$_[1]'";
-}
-
 sub type {
     defined $_[1] || croak "No type argument";
     return $types->{lc $_[1]} || croak "Unknown type '$_[1]'";
@@ -325,7 +319,7 @@ sub type {
 
 sub message_from_id {
     defined $_[1] || croak "No message_id argument";
-    return $base_types->{lc $_[1]} || croak "Unknown message_id '$_[1]'";
+    return $profile->{lc $_[1]} || croak "Unknown message_id '$_[1]'";
 }
 
 sub try_message_from_id {

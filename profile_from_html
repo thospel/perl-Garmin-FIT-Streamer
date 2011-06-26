@@ -4,125 +4,140 @@ use warnings;
 
 our $VERSION = "1.000";
 
+# Avoid loading Garmin::FIT::Streamer::Profile
+$INC{"Garmin/FIT/Streamer/Profile.pm"} = "dummy";
+
+use lib "lib";
+require Garmin::FIT::Streamer::BaseType;
+
 use Data::Dumper;
 $Data::Dumper::Indent = 1;
 $Data::Dumper::Sortkeys = 1;
 
-my %base_types = (
-    0x00	=> {
+my @base_types = (
+    Garmin::FIT::Streamer::BaseType->new(
         name	=> "enum",
+        number	=> 0x00,
         size	=> 1,
         decoder	=> ["C", "C"],
         invalid	=> 0xff,
         regex	=> '^[0-9]+\z',
-    },
-    0x01	=> {
+       ),
+    Garmin::FIT::Streamer::BaseType->new(
         name	=> "sint8",
+        number	=> 0x01,
         size	=> 1,
         decoder	=> ["c", "c"],
         invalid	=> 0x7f,
         regex	=> '^[+-]?[0-9]+\z',
         notice	=> 1,
-    },
-    0x02	=> {
+       ),
+    Garmin::FIT::Streamer::BaseType->new(
         name	=> "uint8",
+        number	=> 0x02,
         size	=> 1,
         decoder	=> ["C", "C"],
         invalid	=> 0xff,
         regex	=> '^[0-9]+\z',
-    },
-    0x83	=> {
+       ),
+    Garmin::FIT::Streamer::BaseType->new(
         name	=> "sint16",
+        number	=> 0x83,
         size	=> 2,
         decoder	=> ["v!", "n!"],
         invalid	=> 0x7fff,
         regex	=> '^[+-]?[0-9]+\z',
         notice	=> 1,
-    },
-    0x84	=> {
+       ),
+    Garmin::FIT::Streamer::BaseType->new(
         name	=> "uint16",
+        number	=> 0x84,
         size	=> 2,
         decoder	=> ["v", "n"],
         invalid	=> 0xffff,
         regex	=> '^[0-9]+\z',
-    },
-    0x85	=> {
+       ),
+    Garmin::FIT::Streamer::BaseType->new(
         name	=> "sint32",
+        number	=> 0x85,
         size	=> 4,
         decoder	=> ["V!", "N!"],
         invalid	=> 0x7fffffff,
         regex	=> '^[+-]?[0-9]+\z',
         notice	=> 1,
-    },
-    0x86	=> {
+       ),
+    Garmin::FIT::Streamer::BaseType->new(
         name	=> "uint32",
+        number	=> 0x86,
         size	=> 4,
         decoder	=> ["V", "N"],
         invalid	=> 0xffffffff,
         regex	=> '^[0-9]+\z',
-    },
-    0x07	=> {
+       ),
+    Garmin::FIT::Streamer::BaseType->new(
         name	=> "string",
+        number	=> 0x07,
         size	=> 0,
         decoder	=> ["Z", "Z"],
-        invalid	=> "",
+        invalid	=> 0x00,
         notice	=> 1,
-    },
-    0x88	=> {
+       ),
+    Garmin::FIT::Streamer::BaseType->new(
         name	=> "float32",
+        number	=> 0x88,
         size	=> 4,
         decoder	=> ["f<", "f>"],
         invalid	=> 0xffffffff,
         regex	=> '^[+-]?[0-9]+(?:\.[0-9]*)?(?:[eE][+-]?[0-9]+)?\z',
         notice	=> 1,
-    },
-    0x89	=> {
+       ),
+    Garmin::FIT::Streamer::BaseType->new(
         name	=> "float64",
+        number	=> 0x89,
         size	=> 4,
         decoder	=> ["d<", "d>"],
         invalid	=> 0xffffffffffffffff,
         regex	=> '^[+-]?[0-9]+(?:\.[0-9]*)?(?:[eE][+-]?[0-9]+)\z',
         notice	=> 1,
-    },
-    0x0A	=> {
+       ),
+    Garmin::FIT::Streamer::BaseType->new(
         name	=> "uint8z",
+        number	=> 0x0A,
         size	=> 1,
         decoder	=> ["C", "C"],
         invalid	=> 0x00,
         regex	=> '^[0-9]+\z',
         notice	=> 1,
-    },
-    0x8B	=> {
+       ),
+    Garmin::FIT::Streamer::BaseType->new(
         name	=> "uint16z",
+        number	=> 0x8B,
         size	=> 2,
         decoder	=> ["v", "n"],
         invalid	=> 0x0000,
         regex	=> '^[0-9]+\z',
         notice	=> 1,
-    },
-    0x8C	=> {
+       ),
+    Garmin::FIT::Streamer::BaseType->new(
         name	=> "uint32z",
+        number	=> 0x8C,
         size	=> 4,
         decoder	=> ["V", "N"],
         invalid	=> 0x00000000,
         regex	=> '^[0-9]+\z',
-    },
-    0x0D	=> {
+       ),
+    Garmin::FIT::Streamer::BaseType->new(
         name	=> "byte",
+        number	=> 0x0D,
         size	=> 0,
         decoder	=> ["a", "a"],
         invalid	=> 0xff,
-        regex	=> '^[0-9]+\z',
+        # regex	=> '^[0-9]+\z',
         notice	=> 1,
-    },
-);
-my @base_types;
-for my $num (keys %base_types) {
-    my $base_type = $base_types{$num};
-    push @base_types, $base_type;
-    $base_type->{number} = int($num);
-    $base_types{lc $base_type->{name}} = $base_type;
-}
+       ),
+   );
+
+my $base_types = Garmin::FIT::Streamer::BaseType->base_types;
 
 my %keep_tag = map(($_ => 1), qw(body h1 h2 h3 h4 h5 h6 table tr td));
 
@@ -298,7 +313,7 @@ sub types_from_sheets {
                 };
             }
             my $base_type = $type->{base_type} || die "No base_type";
-            $type->{base_type} = $base_types{lc $base_type} ||
+            $type->{base_type} = $base_types->{lc $base_type} ||
                 die "Unknown base_type '$base_type'";
         };
         die "Type '$type_name': $@" if $@;
@@ -418,7 +433,7 @@ my $profile = profile_from_sheets($sheets, $types);
 $profile = do {
     local $Data::Dumper::Varname = "profile";
     local $Data::Dumper::Purity = 1;
-    Data::Dumper->Dump([ \%base_types, $types, $profile],
+    Data::Dumper->Dump([  $base_types, $types, $profile],
                        [qw(base_types   types   profile)]);
 };
 chomp $profile;

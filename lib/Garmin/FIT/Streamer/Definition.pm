@@ -7,7 +7,8 @@ our $VERSION = '1.000';
 use Carp;
 use Scalar::Util qw(refaddr);
 
-use Garmin::FIT::Streamer::Profile;
+require Garmin::FIT::Streamer::BaseType;
+require Garmin::FIT::Streamer::Profile;
 
 our @CARP_NOT = qw(Garmin::FIT::Streamer);
 
@@ -72,13 +73,15 @@ sub new {
 
             my $type = $field->{type};
             if (defined($type)) {
-                if (ref $type eq "HASH") {
-                    $base_type = $type->{base_type};
-                    ref $base_type eq "HASH" && defined $base_type->{name} && $base_type == Garmin::FIT::Streamer->base_type($base_type->{name}) ||
-                        croak "Corrupt type";
-                } else {
+                if (ref $type eq "") {
                     $type = Garmin::FIT::Streamer->type($type);
                     $base_type = $type->{base_type};
+                } else {
+                    $base_type = $type->{base_type};
+                    eval { $base_type->isa("Garmin::FIT::Streamer::BaseType")}&&
+                        defined $base_type->{name} &&
+                        $base_type == Garmin::FIT::Streamer::BaseType->from_id($base_type->{name}) ||
+                        croak "Corrupt type";
                 }
                 $message_field == $dummy_fields ||
                     $message_field->{type}{base_type} == $base_type ||
