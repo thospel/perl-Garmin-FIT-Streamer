@@ -233,7 +233,7 @@ $base_types->{'uint32z'} = $base_types->{'140'};
 $base_types->{'uint8'} = $base_types->{'2'};
 $base_types->{'uint8z'} = $base_types->{'10'};
 $types = {
-  'activity' => {
+  'activity' => bless( {
     'base_type' => {},
     'name' => 'activity',
     'values' => {
@@ -248,8 +248,8 @@ $types = {
       'auto_multi_sport' => {},
       'manual' => {}
     }
-  },
-  'activity_class' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'activity_class' => bless( {
     'base_type' => {},
     'name' => 'activity_class',
     'values' => {
@@ -270,8 +270,8 @@ $types = {
       'level' => {},
       'level_max' => {}
     }
-  },
-  'autolap_trigger' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'autolap_trigger' => bless( {
     'base_type' => {},
     'name' => 'autolap_trigger',
     'values' => {
@@ -311,8 +311,8 @@ $types = {
       'position_waypoint' => {},
       'time' => {}
     }
-  },
-  'battery_status' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'battery_status' => bless( {
     'base_type' => {},
     'name' => 'battery_status',
     'values' => {
@@ -342,8 +342,8 @@ $types = {
       'new' => {},
       'ok' => {}
     }
-  },
-  'bool' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'bool' => bless( {
     'base_type' => {},
     'name' => 'bool',
     'values' => {
@@ -358,8 +358,8 @@ $types = {
       'no' => {},
       'yes' => {}
     }
-  },
-  'bp_status' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'bp_status' => bless( {
     'base_type' => {},
     'name' => 'bp_status',
     'values' => {
@@ -389,13 +389,12 @@ $types = {
       'error_no_measurement' => {},
       'no_error' => {}
     }
-  },
-  'byte' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'byte' => bless( {
     'base_type' => {},
-    'name' => 'byte',
-    'values' => {}
-  },
-  'course_capabilities' => {
+    'name' => 'byte'
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'course_capabilities' => bless( {
     'base_type' => {},
     'name' => 'course_capabilities',
     'values' => {
@@ -450,8 +449,8 @@ $types = {
       'training' => {},
       'valid' => {}
     }
-  },
-  'course_point' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'course_point' => bless( {
     'base_type' => {},
     'name' => 'course_point',
     'values' => {
@@ -551,8 +550,8 @@ $types = {
       'valley' => {},
       'water' => {}
     }
-  },
-  'date_time' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'date_time' => bless( {
     'base_type' => {},
     'comment' => 'seconds since UTC 00:00 Dec 31 1989',
     'name' => 'date_time',
@@ -564,8 +563,8 @@ $types = {
       },
       'min' => {}
     }
-  },
-  'device_index' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'device_index' => bless( {
     'base_type' => {},
     'name' => 'device_index',
     'values' => {
@@ -576,8 +575,8 @@ $types = {
       },
       'creator' => {}
     }
-  },
-  'device_type' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'device_type' => bless( {
     'base_type' => {},
     'name' => 'device_type',
     'values' => {
@@ -642,8 +641,8 @@ $types = {
       'stride_speed_distance' => {},
       'weight_scale' => {}
     }
-  },
-  'display_heart' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'display_heart' => bless( {
     'base_type' => {},
     'name' => 'display_heart',
     'values' => {
@@ -663,8 +662,8 @@ $types = {
       'max' => {},
       'reserve' => {}
     }
-  },
-  'display_measure' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'display_measure' => bless( {
     'base_type' => {},
     'name' => 'display_measure',
     'values' => {
@@ -679,8 +678,8 @@ $types = {
       'metric' => {},
       'statute' => {}
     }
-  },
-  'display_position' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'display_position' => bless( {
     'base_type' => {},
     'name' => 'display_position',
     'values' => {
@@ -937,8 +936,8 @@ $types = {
       'utm_ups_grid' => {},
       'west_malayan' => {}
     }
-  },
-  'display_power' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'display_power' => bless( {
     'base_type' => {},
     'name' => 'display_power',
     'values' => {
@@ -953,13 +952,12 @@ $types = {
       'percent_ftp' => {},
       'watts' => {}
     }
-  },
-  'enum' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'enum' => bless( {
     'base_type' => {},
-    'name' => 'enum',
-    'values' => {}
-  },
-  'event' => {
+    'name' => 'enum'
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'event' => bless( {
     'base_type' => {},
     'name' => 'event',
     'values' => {
@@ -1120,8 +1118,8 @@ $types = {
       'workout' => {},
       'workout_step' => {}
     }
-  },
-  'event_type' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'event_type' => bless( {
     'base_type' => {},
     'name' => 'event_type',
     'values' => {
@@ -1176,8 +1174,8 @@ $types = {
       'stop_disable' => {},
       'stop_disable_all' => {}
     }
-  },
-  'file' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'file' => bless( {
     'base_type' => {},
     'name' => 'file',
     'values' => {
@@ -1248,8 +1246,8 @@ $types = {
       'weight' => {},
       'workout' => {}
     }
-  },
-  'file_flags' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'file_flags' => bless( {
     'base_type' => {},
     'name' => 'file_flags',
     'values' => {
@@ -1269,8 +1267,8 @@ $types = {
       'read' => {},
       'write' => {}
     }
-  },
-  'fitness_equipment_state' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'fitness_equipment_state' => bless( {
     'base_type' => {},
     'comment' => 'fitness equipment event data',
     'name' => 'fitness_equipment_state',
@@ -1297,18 +1295,16 @@ $types = {
       'ready' => {},
       'unknown' => {}
     }
-  },
-  'float32' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'float32' => bless( {
     'base_type' => {},
-    'name' => 'float32',
-    'values' => {}
-  },
-  'float64' => {
+    'name' => 'float32'
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'float64' => bless( {
     'base_type' => {},
-    'name' => 'float64',
-    'values' => {}
-  },
-  'garmin_product' => {
+    'name' => 'float64'
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'garmin_product' => bless( {
     'base_type' => {},
     'name' => 'garmin_product',
     'values' => {
@@ -1411,8 +1407,8 @@ $types = {
       'sdm4' => {},
       'training_center' => {}
     }
-  },
-  'gender' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'gender' => bless( {
     'base_type' => {},
     'name' => 'gender',
     'values' => {
@@ -1427,8 +1423,8 @@ $types = {
       'female' => {},
       'male' => {}
     }
-  },
-  'goal' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'goal' => bless( {
     'base_type' => {},
     'name' => 'goal',
     'values' => {
@@ -1458,8 +1454,8 @@ $types = {
       'steps' => {},
       'time' => {}
     }
-  },
-  'goal_recurrence' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'goal_recurrence' => bless( {
     'base_type' => {},
     'name' => 'goal_recurrence',
     'values' => {
@@ -1494,8 +1490,8 @@ $types = {
       'weekly' => {},
       'yearly' => {}
     }
-  },
-  'hr_type' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'hr_type' => bless( {
     'base_type' => {},
     'name' => 'hr_type',
     'values' => {
@@ -1510,8 +1506,8 @@ $types = {
       'irregular' => {},
       'normal' => {}
     }
-  },
-  'hr_zone_calc' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'hr_zone_calc' => bless( {
     'base_type' => {},
     'name' => 'hr_zone_calc',
     'values' => {
@@ -1531,8 +1527,8 @@ $types = {
       'percent_hrr' => {},
       'percent_max_hr' => {}
     }
-  },
-  'intensity' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'intensity' => bless( {
     'base_type' => {},
     'name' => 'intensity',
     'values' => {
@@ -1557,8 +1553,8 @@ $types = {
       'rest' => {},
       'warmup' => {}
     }
-  },
-  'language' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'language' => bless( {
     'base_type' => {},
     'name' => 'language',
     'values' => {
@@ -1698,8 +1694,8 @@ $types = {
       'turkish' => {},
       'ukrainian' => {}
     }
-  },
-  'lap_trigger' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'lap_trigger' => bless( {
     'base_type' => {},
     'name' => 'lap_trigger',
     'values' => {
@@ -1749,14 +1745,13 @@ $types = {
       'session_end' => {},
       'time' => {}
     }
-  },
-  'local_date_time' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'local_date_time' => bless( {
     'base_type' => {},
     'comment' => 'seconds since 00:00 Dec 31 1989 in local time zone',
-    'name' => 'local_date_time',
-    'values' => {}
-  },
-  'manufacturer' => {
+    'name' => 'local_date_time'
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'manufacturer' => bless( {
     'base_type' => {},
     'name' => 'manufacturer',
     'values' => {
@@ -1927,8 +1922,8 @@ $types = {
       'xelic' => {},
       'zephyr' => {}
     }
-  },
-  'mesg_count' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'mesg_count' => bless( {
     'base_type' => {},
     'name' => 'mesg_count',
     'values' => {
@@ -1948,8 +1943,8 @@ $types = {
       'max_per_file_type' => {},
       'num_per_file' => {}
     }
-  },
-  'mesg_num' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'mesg_num' => bless( {
     'base_type' => {},
     'name' => 'mesg_num',
     'values' => {
@@ -2121,8 +2116,8 @@ $types = {
       'workout_step' => {},
       'zones_target' => {}
     }
-  },
-  'message_index' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'message_index' => bless( {
     'base_type' => {},
     'name' => 'message_index',
     'values' => {
@@ -2145,8 +2140,8 @@ $types = {
       'reserved' => {},
       'selected' => {}
     }
-  },
-  'pwr_zone_calc' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'pwr_zone_calc' => bless( {
     'base_type' => {},
     'name' => 'pwr_zone_calc',
     'values' => {
@@ -2161,8 +2156,8 @@ $types = {
       'custom' => {},
       'percent_ftp' => {}
     }
-  },
-  'session_trigger' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'session_trigger' => bless( {
     'base_type' => {},
     'name' => 'session_trigger',
     'values' => {
@@ -2190,23 +2185,20 @@ $types = {
       'fitness_equipment' => {},
       'manual' => {}
     }
-  },
-  'sint16' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'sint16' => bless( {
     'base_type' => {},
-    'name' => 'sint16',
-    'values' => {}
-  },
-  'sint32' => {
+    'name' => 'sint16'
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'sint32' => bless( {
     'base_type' => {},
-    'name' => 'sint32',
-    'values' => {}
-  },
-  'sint8' => {
+    'name' => 'sint32'
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'sint8' => bless( {
     'base_type' => {},
-    'name' => 'sint8',
-    'values' => {}
-  },
-  'sport' => {
+    'name' => 'sint8'
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'sport' => bless( {
     'base_type' => {},
     'name' => 'sport',
     'values' => {
@@ -2248,8 +2240,8 @@ $types = {
       'swimming' => {},
       'transition' => {}
     }
-  },
-  'sport_bits_0' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'sport_bits_0' => bless( {
     'base_type' => {},
     'comment' => 'Bit field corresponding to sport enum type (1 << sport).',
     'name' => 'sport_bits_0',
@@ -2286,13 +2278,12 @@ $types = {
       'swimming' => {},
       'transition' => {}
     }
-  },
-  'string' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'string' => bless( {
     'base_type' => {},
-    'name' => 'string',
-    'values' => {}
-  },
-  'sub_sport' => {
+    'name' => 'string'
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'sub_sport' => bless( {
     'base_type' => {},
     'name' => 'sub_sport',
     'values' => {
@@ -2415,8 +2406,8 @@ $types = {
       'trail' => {},
       'treadmill' => {}
     }
-  },
-  'timer_trigger' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'timer_trigger' => bless( {
     'base_type' => {},
     'comment' => 'timer event data',
     'name' => 'timer_trigger',
@@ -2437,38 +2428,32 @@ $types = {
       'fitness_equipment' => {},
       'manual' => {}
     }
-  },
-  'uint16' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'uint16' => bless( {
     'base_type' => {},
-    'name' => 'uint16',
-    'values' => {}
-  },
-  'uint16z' => {
+    'name' => 'uint16'
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'uint16z' => bless( {
     'base_type' => {},
-    'name' => 'uint16z',
-    'values' => {}
-  },
-  'uint32' => {
+    'name' => 'uint16z'
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'uint32' => bless( {
     'base_type' => {},
-    'name' => 'uint32',
-    'values' => {}
-  },
-  'uint32z' => {
+    'name' => 'uint32'
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'uint32z' => bless( {
     'base_type' => {},
-    'name' => 'uint32z',
-    'values' => {}
-  },
-  'uint8' => {
+    'name' => 'uint32z'
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'uint8' => bless( {
     'base_type' => {},
-    'name' => 'uint8',
-    'values' => {}
-  },
-  'uint8z' => {
+    'name' => 'uint8'
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'uint8z' => bless( {
     'base_type' => {},
-    'name' => 'uint8z',
-    'values' => {}
-  },
-  'user_local_id' => {
+    'name' => 'uint8z'
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'user_local_id' => bless( {
     'base_type' => {},
     'name' => 'user_local_id',
     'values' => {
@@ -2503,8 +2488,8 @@ $types = {
       'stationary_max' => {},
       'stationary_min' => {}
     }
-  },
-  'weight' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'weight' => bless( {
     'base_type' => {},
     'name' => 'weight',
     'values' => {
@@ -2514,8 +2499,8 @@ $types = {
       },
       'calculating' => {}
     }
-  },
-  'wkt_step_duration' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'wkt_step_duration' => bless( {
     'base_type' => {},
     'name' => 'wkt_step_duration',
     'values' => {
@@ -2600,8 +2585,8 @@ $types = {
       'repeat_until_time' => {},
       'time' => {}
     }
-  },
-  'wkt_step_target' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'wkt_step_target' => bless( {
     'base_type' => {},
     'name' => 'wkt_step_target',
     'values' => {
@@ -2641,8 +2626,8 @@ $types = {
       'resistance' => {},
       'speed' => {}
     }
-  },
-  'workout_capabilities' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'workout_capabilities' => bless( {
     'base_type' => {},
     'name' => 'workout_capabilities',
     'values' => {
@@ -2725,8 +2710,8 @@ $types = {
       'speed' => {},
       'tcx' => {}
     }
-  },
-  'workout_hr' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'workout_hr' => bless( {
     'base_type' => {},
     'comment' => '0 - 100 indicates% of maz hr; >100 indicates bpm (255 max) plus 100',
     'name' => 'workout_hr',
@@ -2737,8 +2722,8 @@ $types = {
       },
       'bpm_offset' => {}
     }
-  },
-  'workout_power' => {
+  }, 'Garmin::FIT::Streamer::Type' ),
+  'workout_power' => bless( {
     'base_type' => {},
     'comment' => '0 - 1000 indicates % of functional threshold power; >1000 indicates watts plus 1000.',
     'name' => 'workout_power',
@@ -2749,7 +2734,7 @@ $types = {
       },
       'watts_offset' => {}
     }
-  }
+  }, 'Garmin::FIT::Streamer::Type' )
 };
 $types->{'activity'}{'base_type'} = $base_types->{'0'};
 $types->{'activity'}{'values'}{'auto_multi_sport'} = $types->{'activity'}{'values'}{'1'};

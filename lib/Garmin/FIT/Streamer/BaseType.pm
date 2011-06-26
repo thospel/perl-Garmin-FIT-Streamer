@@ -34,6 +34,8 @@ sub new {
         defined($base_type{regex} = delete $params{regex}) ||
             croak "Missing parameter 'regex'";
     }
+    my $comment = delete $params{comment};
+    $base_type{comment} = $comment if defined $comment;
 
     croak "Unknown parameter ", join(", ", keys %params) if %params;
 
@@ -70,5 +72,8 @@ sub from_id {
     return $base_types->{lc $_[1]} || croak "Unknown base_type id '$_[1]'";
 }
 
+sub regex {
+    return shift->{regex};
+}
 
 1;
