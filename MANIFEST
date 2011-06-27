@@ -6,7 +6,8 @@ Profile.html
 README
 lib/Garmin/FIT/Streamer.pm
 lib/Garmin/FIT/Streamer/BaseType.pm
-lib/Garmin/FIT/Streamer/Definition.pm
+lib/Garmin/FIT/Streamer/Message.pm
+lib/Garmin/FIT/Streamer/Field.pm
 lib/Garmin/FIT/Streamer/Package.pm
 lib/Garmin/FIT/Streamer/Profile.pm
 lib/Garmin/FIT/Streamer/Type.pm

@@ -9,10 +9,10 @@ use Scalar::Util qw(weaken);
 use Digest::CRC qw(crc16);
 
 use Garmin::FIT::Streamer::Profile;
-use Garmin::FIT::Streamer::Definition;
+use Garmin::FIT::Streamer::Message;
 
 our @CARP_NOT =
-    qw(Garmin::FIT::Streamer::Definition
+    qw(Garmin::FIT::Streamer::Message
        Garmin::FIT::Streamer::Profile);
 
 use Data::Dumper;
@@ -59,8 +59,8 @@ sub out_reset {
              Garmin::FIT::Streamer::Profile->PROFILE_VERSION,
              0,	# Body size
              ".FIT");
-    $fit->{out_definitions} = [];
-    $fit->{out_definition_ids} = {};
+    $fit->{out_messages} = [];
+    $fit->{out_message_ids} = {};
 }
 
 sub out {
@@ -135,7 +135,7 @@ sub get_define_header {
         $architecture == 1 ? $num1 + $num0 * 256 :
         croak "Invalid architecture $architecture";
     $fit->{in_type} = $fit->{in_types}[$fit->{in_type}] = {
-        nr_fields	=> $nr_fields || croak("Definition of 0 fields"),
+        nr_fields	=> $nr_fields || croak("Message of 0 fields"),
         big_endian	=> $architecture,
         global_nr	=> $num,
         global_type	=> $profile->{$num},
@@ -146,7 +146,7 @@ sub get_define_header {
 
 sub get_define_fields {
     my $fit = shift;
-    my @definition = unpack("C*", shift);
+    my @message = unpack("C*", shift);
 
     my $in_type = $fit->{in_type};
     my $meta = ref $in_type->{global_type} eq "HASH" ?
@@ -154,7 +154,7 @@ sub get_define_fields {
     my $total_size = 0;
     my $decoder = "";
     $in_type->{fields} = \my @fields;
-    while (my ($field_nr, $size, $base_type) = splice(@definition, 0, 3)) {
+    while (my ($field_nr, $size, $base_type) = splice(@message, 0, 3)) {
         my $base_type = $fit->base_type($base_type);
         print STDERR "Type $base_type->{name}\n" if $base_type->{notice};
         if ($base_type->{size}) {
@@ -274,34 +274,34 @@ sub make_sender {
 
 sub define {
     my $fit = shift;
-    my $definition = Garmin::FIT::Streamer::Definition->new(
+    my $message = Garmin::FIT::Streamer::Message->new(
         message	=> shift,
         fields	=> \@_,
         );
-    return $definition;
+    return $message;
 }
 
 sub put {
     my $fit = shift;
-    my $definition = shift;
-    my $id = $definition->id;
-    my $local_id = $fit->{out_definition_ids}{$id};
+    my $message = shift;
+    my $id = $message->id;
+    my $local_id = $fit->{out_message_ids}{$id};
     if (!defined $local_id) {
         # Not defined yet
         # Select a number
-        $local_id = @{$fit->{out_definitions}};
+        $local_id = @{$fit->{out_messages}};
         if ($local_id >= 16) {
             # All numbers are in use
             # bump a random one
             $local_id = int rand 16;
-            delete $fit->{out_definition_ids}{$fit->{out_definitions}[$local_id]->id} || die "Assertion: Did not have the bumbed id";
+            delete $fit->{out_message_ids}{$fit->{out_messages}[$local_id]->id} || die "Assertion: Did not have the bumbed id";
         }
-        $fit->{out_definitions}[$local_id] = $definition;
-        $fit->{out_definition_ids}{$id} = $local_id;
+        $fit->{out_messages}[$local_id] = $message;
+        $fit->{out_message_ids}{$id} = $local_id;
         # define message header
-        $fit->{out_buffer} .= $definition->define_string($local_id);
+        $fit->{out_buffer} .= $message->define_string($local_id);
     }
-    $fit->{out_buffer} .= $definition->encode($local_id, @_);
+    $fit->{out_buffer} .= $message->encode($local_id, @_);
 }
 
 sub protocol {

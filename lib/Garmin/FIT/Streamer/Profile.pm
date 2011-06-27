@@ -239,11 +239,11 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'manual',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'auto_multi_sport',
-        'number' => 1
+        'value' => 1
       },
       'auto_multi_sport' => {},
       'manual' => {}
@@ -255,16 +255,16 @@ $types = {
     'values' => {
       '100' => {
         'name' => 'level_max',
-        'number' => 100
+        'value' => 100
       },
       '127' => {
         'comment' => '0 to 100',
         'name' => 'level',
-        'number' => 127
+        'value' => 127
       },
       '128' => {
         'name' => 'athlete',
-        'number' => 128
+        'value' => 128
       },
       'athlete' => {},
       'level' => {},
@@ -277,31 +277,31 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'time',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'distance',
-        'number' => 1
+        'value' => 1
       },
       '2' => {
         'name' => 'position_start',
-        'number' => 2
+        'value' => 2
       },
       '3' => {
         'name' => 'position_lap',
-        'number' => 3
+        'value' => 3
       },
       '4' => {
         'name' => 'position_waypoint',
-        'number' => 4
+        'value' => 4
       },
       '5' => {
         'name' => 'position_marked',
-        'number' => 5
+        'value' => 5
       },
       '6' => {
         'name' => 'off',
-        'number' => 6
+        'value' => 6
       },
       'distance' => {},
       'off' => {},
@@ -318,23 +318,23 @@ $types = {
     'values' => {
       '1' => {
         'name' => 'new',
-        'number' => 1
+        'value' => 1
       },
       '2' => {
         'name' => 'good',
-        'number' => 2
+        'value' => 2
       },
       '3' => {
         'name' => 'ok',
-        'number' => 3
+        'value' => 3
       },
       '4' => {
         'name' => 'low',
-        'number' => 4
+        'value' => 4
       },
       '5' => {
         'name' => 'critical',
-        'number' => 5
+        'value' => 5
       },
       'critical' => {},
       'good' => {},
@@ -349,11 +349,11 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'no',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'yes',
-        'number' => 1
+        'value' => 1
       },
       'no' => {},
       'yes' => {}
@@ -365,23 +365,23 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'no_error',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'error_incomplete_data',
-        'number' => 1
+        'value' => 1
       },
       '2' => {
         'name' => 'error_no_measurement',
-        'number' => 2
+        'value' => 2
       },
       '3' => {
         'name' => 'error_data_out_of_range',
-        'number' => 3
+        'value' => 3
       },
       '4' => {
         'name' => 'error_irregular_heart_rate',
-        'number' => 4
+        'value' => 4
       },
       'error_data_out_of_range' => {},
       'error_incomplete_data' => {},
@@ -400,43 +400,43 @@ $types = {
     'values' => {
       '1' => {
         'name' => 'processed',
-        'number' => 1
+        'value' => 1
       },
       '128' => {
         'name' => 'cadence',
-        'number' => 128
+        'value' => 128
       },
       '16' => {
         'name' => 'position',
-        'number' => 16
+        'value' => 16
       },
       '2' => {
         'name' => 'valid',
-        'number' => 2
+        'value' => 2
       },
       '256' => {
         'name' => 'training',
-        'number' => 256
+        'value' => 256
       },
       '32' => {
         'name' => 'heart_rate',
-        'number' => 32
+        'value' => 32
       },
       '4' => {
         'name' => 'time',
-        'number' => 4
+        'value' => 4
       },
       '512' => {
         'name' => 'navigation',
-        'number' => 512
+        'value' => 512
       },
       '64' => {
         'name' => 'power',
-        'number' => 64
+        'value' => 64
       },
       '8' => {
         'name' => 'distance',
-        'number' => 8
+        'value' => 8
       },
       'cadence' => {},
       'distance' => {},
@@ -456,79 +456,79 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'generic',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'summit',
-        'number' => 1
+        'value' => 1
       },
       '10' => {
         'name' => 'fourth_category',
-        'number' => 10
+        'value' => 10
       },
       '11' => {
         'name' => 'third_category',
-        'number' => 11
+        'value' => 11
       },
       '12' => {
         'name' => 'second_category',
-        'number' => 12
+        'value' => 12
       },
       '13' => {
         'name' => 'first_category',
-        'number' => 13
+        'value' => 13
       },
       '14' => {
         'name' => 'hors_category',
-        'number' => 14
+        'value' => 14
       },
       '15' => {
         'name' => 'sprint',
-        'number' => 15
+        'value' => 15
       },
       '16' => {
         'name' => 'left_fork',
-        'number' => 16
+        'value' => 16
       },
       '17' => {
         'name' => 'right_fork',
-        'number' => 17
+        'value' => 17
       },
       '18' => {
         'name' => 'middle_fork',
-        'number' => 18
+        'value' => 18
       },
       '2' => {
         'name' => 'valley',
-        'number' => 2
+        'value' => 2
       },
       '3' => {
         'name' => 'water',
-        'number' => 3
+        'value' => 3
       },
       '4' => {
         'name' => 'food',
-        'number' => 4
+        'value' => 4
       },
       '5' => {
         'name' => 'danger',
-        'number' => 5
+        'value' => 5
       },
       '6' => {
         'name' => 'left',
-        'number' => 6
+        'value' => 6
       },
       '7' => {
         'name' => 'right',
-        'number' => 7
+        'value' => 7
       },
       '8' => {
         'name' => 'straight',
-        'number' => 8
+        'value' => 8
       },
       '9' => {
         'name' => 'first_aid',
-        'number' => 9
+        'value' => 9
       },
       'danger' => {},
       'first_aid' => {},
@@ -559,7 +559,7 @@ $types = {
       '268435456' => {
         'comment' => 'if date_time is < 0x10000000 then it is system time (seconds from device power on)',
         'name' => 'min',
-        'number' => 268435456
+        'value' => 268435456
       },
       'min' => {}
     }
@@ -571,7 +571,7 @@ $types = {
       '0' => {
         'comment' => 'Creator of the file is always device index 0.',
         'name' => 'creator',
-        'number' => 0
+        'value' => 0
       },
       'creator' => {}
     }
@@ -582,51 +582,51 @@ $types = {
     'values' => {
       '1' => {
         'name' => 'antfs',
-        'number' => 1
+        'value' => 1
       },
       '11' => {
         'name' => 'bike_power',
-        'number' => 11
+        'value' => 11
       },
       '119' => {
         'name' => 'weight_scale',
-        'number' => 119
+        'value' => 119
       },
       '12' => {
         'name' => 'environment_sensor',
-        'number' => 12
+        'value' => 12
       },
       '120' => {
         'name' => 'heart_rate',
-        'number' => 120
+        'value' => 120
       },
       '121' => {
         'name' => 'bike_speed_cadence',
-        'number' => 121
+        'value' => 121
       },
       '122' => {
         'name' => 'bike_cadence',
-        'number' => 122
+        'value' => 122
       },
       '123' => {
         'name' => 'bike_speed',
-        'number' => 123
+        'value' => 123
       },
       '124' => {
         'name' => 'stride_speed_distance',
-        'number' => 124
+        'value' => 124
       },
       '15' => {
         'name' => 'multi_sport_speed_distance',
-        'number' => 15
+        'value' => 15
       },
       '17' => {
         'name' => 'fitness_equipment',
-        'number' => 17
+        'value' => 17
       },
       '18' => {
         'name' => 'blood_pressure',
-        'number' => 18
+        'value' => 18
       },
       'antfs' => {},
       'bike_cadence' => {},
@@ -648,15 +648,15 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'bpm',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'max',
-        'number' => 1
+        'value' => 1
       },
       '2' => {
         'name' => 'reserve',
-        'number' => 2
+        'value' => 2
       },
       'bpm' => {},
       'max' => {},
@@ -669,11 +669,11 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'metric',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'statute',
-        'number' => 1
+        'value' => 1
       },
       'metric' => {},
       'statute' => {}
@@ -686,212 +686,212 @@ $types = {
       '0' => {
         'comment' => 'dd.dddddd',
         'name' => 'degree',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'comment' => 'dddmm.mmm',
         'name' => 'degree_minute',
-        'number' => 1
+        'value' => 1
       },
       '10' => {
         'comment' => 'Indonesian Equatorial LCO',
         'name' => 'indonesian_equatorial',
-        'number' => 10
+        'value' => 10
       },
       '11' => {
         'comment' => 'Indonesian Irian LCO',
         'name' => 'indonesian_irian',
-        'number' => 11
+        'value' => 11
       },
       '12' => {
         'comment' => 'Indonesian Southern LCO',
         'name' => 'indonesian_southern',
-        'number' => 12
+        'value' => 12
       },
       '13' => {
         'comment' => 'India zone 0',
         'name' => 'india_zone_0',
-        'number' => 13
+        'value' => 13
       },
       '14' => {
         'comment' => 'India zone IA',
         'name' => 'india_zone_IA',
-        'number' => 14
+        'value' => 14
       },
       '15' => {
         'comment' => 'India zone IB',
         'name' => 'india_zone_IB',
-        'number' => 15
+        'value' => 15
       },
       '16' => {
         'comment' => 'India zone IIA',
         'name' => 'india_zone_IIA',
-        'number' => 16
+        'value' => 16
       },
       '17' => {
         'comment' => 'India zone IIB',
         'name' => 'india_zone_IIB',
-        'number' => 17
+        'value' => 17
       },
       '18' => {
         'comment' => 'India zone IIIA',
         'name' => 'india_zone_IIIA',
-        'number' => 18
+        'value' => 18
       },
       '19' => {
         'comment' => 'India zone IIIB',
         'name' => 'india_zone_IIIB',
-        'number' => 19
+        'value' => 19
       },
       '2' => {
         'comment' => 'dddmmss',
         'name' => 'degree_minute_second',
-        'number' => 2
+        'value' => 2
       },
       '20' => {
         'comment' => 'India zone IVA',
         'name' => 'india_zone_IVA',
-        'number' => 20
+        'value' => 20
       },
       '21' => {
         'comment' => 'India zone IVB',
         'name' => 'india_zone_IVB',
-        'number' => 21
+        'value' => 21
       },
       '22' => {
         'comment' => 'Irish Transverse Mercator',
         'name' => 'irish_transverse',
-        'number' => 22
+        'value' => 22
       },
       '23' => {
         'comment' => 'Irish Grid',
         'name' => 'irish_grid',
-        'number' => 23
+        'value' => 23
       },
       '24' => {
         'comment' => 'Loran TD',
         'name' => 'loran',
-        'number' => 24
+        'value' => 24
       },
       '25' => {
         'comment' => 'Maidenhead grid system',
         'name' => 'maidenhead_grid',
-        'number' => 25
+        'value' => 25
       },
       '26' => {
         'comment' => 'MGRS grid system',
         'name' => 'mgrs_grid',
-        'number' => 26
+        'value' => 26
       },
       '27' => {
         'comment' => 'New Zealand grid system',
         'name' => 'new_zealand_grid',
-        'number' => 27
+        'value' => 27
       },
       '28' => {
         'comment' => 'New Zealand Transverse Mercator',
         'name' => 'new_zealand_transverse',
-        'number' => 28
+        'value' => 28
       },
       '29' => {
         'comment' => 'Qatar National Grid',
         'name' => 'qatar_grid',
-        'number' => 29
+        'value' => 29
       },
       '3' => {
         'comment' => 'Austrian Grid (BMN)',
         'name' => 'austrian_grid',
-        'number' => 3
+        'value' => 3
       },
       '30' => {
         'comment' => 'Modified RT-90 (Sweden)',
         'name' => 'modified_swedish_grid',
-        'number' => 30
+        'value' => 30
       },
       '31' => {
         'comment' => 'RT-90 (Sweden)',
         'name' => 'swedish_grid',
-        'number' => 31
+        'value' => 31
       },
       '32' => {
         'comment' => 'South African Grid',
         'name' => 'south_african_grid',
-        'number' => 32
+        'value' => 32
       },
       '33' => {
         'comment' => 'Swiss CH-1903 grid',
         'name' => 'swiss_grid',
-        'number' => 33
+        'value' => 33
       },
       '34' => {
         'comment' => 'Taiwan Grid',
         'name' => 'taiwan_grid',
-        'number' => 34
+        'value' => 34
       },
       '35' => {
         'comment' => 'United States National Grid',
         'name' => 'united_states_grid',
-        'number' => 35
+        'value' => 35
       },
       '36' => {
         'comment' => 'UTM/UPS grid system',
         'name' => 'utm_ups_grid',
-        'number' => 36
+        'value' => 36
       },
       '37' => {
         'comment' => 'West Malayan RSO',
         'name' => 'west_malayan',
-        'number' => 37
+        'value' => 37
       },
       '38' => {
         'comment' => 'Borneo RSO',
         'name' => 'borneo_rso',
-        'number' => 38
+        'value' => 38
       },
       '39' => {
         'comment' => 'Estonian grid system',
         'name' => 'estonian_grid',
-        'number' => 39
+        'value' => 39
       },
       '4' => {
         'comment' => 'British National Grid',
         'name' => 'british_grid',
-        'number' => 4
+        'value' => 4
       },
       '40' => {
         'comment' => 'Latvian Transverse Mercator',
         'name' => 'latvian_grid',
-        'number' => 40
+        'value' => 40
       },
       '41' => {
         'comment' => 'Reference Grid 99 TM (Swedish)',
         'name' => 'swedish_ref_99_grid',
-        'number' => 41
+        'value' => 41
       },
       '5' => {
         'comment' => 'Dutch grid system',
         'name' => 'dutch_grid',
-        'number' => 5
+        'value' => 5
       },
       '6' => {
         'comment' => 'Hungarian grid system',
         'name' => 'hungarian_grid',
-        'number' => 6
+        'value' => 6
       },
       '7' => {
         'comment' => 'Finnish grid system Zone3 KKJ27',
         'name' => 'finnish_grid',
-        'number' => 7
+        'value' => 7
       },
       '8' => {
         'comment' => 'Gausss Krueger (German)',
         'name' => 'german_grid',
-        'number' => 8
+        'value' => 8
       },
       '9' => {
         'comment' => 'Icelandic Grid',
         'name' => 'icelandic_grid',
-        'number' => 9
+        'value' => 9
       },
       'austrian_grid' => {},
       'borneo_rso' => {},
@@ -943,11 +943,11 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'watts',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'percent_ftp',
-        'number' => 1
+        'value' => 1
       },
       'percent_ftp' => {},
       'watts' => {}
@@ -964,132 +964,132 @@ $types = {
       '0' => {
         'comment' => 'Group 0.  Start / stop_all',
         'name' => 'timer',
-        'number' => 0
+        'value' => 0
       },
       '10' => {
         'comment' => 'marker',
         'name' => 'course_point',
-        'number' => 10
+        'value' => 10
       },
       '11' => {
         'comment' => 'marker',
         'name' => 'battery',
-        'number' => 11
+        'value' => 11
       },
       '12' => {
         'comment' => 'Group 1. Start at beginning of activity if VP enabled, when VP pace is changed during activity or VP enabled mid activity.  stop_disable when VP disabled.',
         'name' => 'virtual_partner_pace',
-        'number' => 12
+        'value' => 12
       },
       '13' => {
         'comment' => 'Group 0.  Start / stop when in alert condition.',
         'name' => 'hr_high_alert',
-        'number' => 13
+        'value' => 13
       },
       '14' => {
         'comment' => 'Group 0.  Start / stop when in alert condition.',
         'name' => 'hr_low_alert',
-        'number' => 14
+        'value' => 14
       },
       '15' => {
         'comment' => 'Group 0.  Start / stop when in alert condition.',
         'name' => 'speed_high_alert',
-        'number' => 15
+        'value' => 15
       },
       '16' => {
         'comment' => 'Group 0.  Start / stop when in alert condition.',
         'name' => 'speed_low_alert',
-        'number' => 16
+        'value' => 16
       },
       '17' => {
         'comment' => 'Group 0.  Start / stop when in alert condition.',
         'name' => 'cad_high_alert',
-        'number' => 17
+        'value' => 17
       },
       '18' => {
         'comment' => 'Group 0.  Start / stop when in alert condition.',
         'name' => 'cad_low_alert',
-        'number' => 18
+        'value' => 18
       },
       '19' => {
         'comment' => 'Group 0.  Start / stop when in alert condition.',
         'name' => 'power_high_alert',
-        'number' => 19
+        'value' => 19
       },
       '20' => {
         'comment' => 'Group 0.  Start / stop when in alert condition.',
         'name' => 'power_low_alert',
-        'number' => 20
+        'value' => 20
       },
       '21' => {
         'comment' => 'marker',
         'name' => 'recovery_hr',
-        'number' => 21
+        'value' => 21
       },
       '22' => {
         'comment' => 'marker',
         'name' => 'battery_low',
-        'number' => 22
+        'value' => 22
       },
       '23' => {
         'comment' => 'Group 1.  Start if enabled mid activity (not required at start of activity). Stop when duration is reached.  stop_disable if disabled.',
         'name' => 'time_duration_alert',
-        'number' => 23
+        'value' => 23
       },
       '24' => {
         'comment' => 'Group 1.  Start if enabled mid activity (not required at start of activity). Stop when duration is reached.  stop_disable if disabled.',
         'name' => 'distance_duration_alert',
-        'number' => 24
+        'value' => 24
       },
       '25' => {
         'comment' => 'Group 1.  Start if enabled mid activity (not required at start of activity). Stop when duration is reached.  stop_disable if disabled.',
         'name' => 'calorie_duration_alert',
-        'number' => 25
+        'value' => 25
       },
       '26' => {
         'comment' => 'Group 1..  Stop at end of activity.',
         'name' => 'activity',
-        'number' => 26
+        'value' => 26
       },
       '27' => {
         'comment' => 'marker',
         'name' => 'fitness_equipment',
-        'number' => 27
+        'value' => 27
       },
       '3' => {
         'comment' => 'start / stop',
         'name' => 'workout',
-        'number' => 3
+        'value' => 3
       },
       '4' => {
         'comment' => 'Start at beginning of workout.  Stop at end of each step.',
         'name' => 'workout_step',
-        'number' => 4
+        'value' => 4
       },
       '5' => {
         'comment' => 'stop_all group 0',
         'name' => 'power_down',
-        'number' => 5
+        'value' => 5
       },
       '6' => {
         'comment' => 'stop_all group 0',
         'name' => 'power_up',
-        'number' => 6
+        'value' => 6
       },
       '7' => {
         'comment' => 'start / stop group 0',
         'name' => 'off_course',
-        'number' => 7
+        'value' => 7
       },
       '8' => {
         'comment' => 'Stop at end of each session.',
         'name' => 'session',
-        'number' => 8
+        'value' => 8
       },
       '9' => {
         'comment' => 'Stop at end of each lap.',
         'name' => 'lap',
-        'number' => 9
+        'value' => 9
       },
       'activity' => {},
       'battery' => {},
@@ -1125,43 +1125,43 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'start',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'stop',
-        'number' => 1
+        'value' => 1
       },
       '2' => {
         'name' => 'consecutive_depreciated',
-        'number' => 2
+        'value' => 2
       },
       '3' => {
         'name' => 'marker',
-        'number' => 3
+        'value' => 3
       },
       '4' => {
         'name' => 'stop_all',
-        'number' => 4
+        'value' => 4
       },
       '5' => {
         'name' => 'begin_depreciated',
-        'number' => 5
+        'value' => 5
       },
       '6' => {
         'name' => 'end_depreciated',
-        'number' => 6
+        'value' => 6
       },
       '7' => {
         'name' => 'end_all_depreciated',
-        'number' => 7
+        'value' => 7
       },
       '8' => {
         'name' => 'stop_disable',
-        'number' => 8
+        'value' => 8
       },
       '9' => {
         'name' => 'stop_disable_all',
-        'number' => 9
+        'value' => 9
       },
       'begin_depreciated' => {},
       'consecutive_depreciated' => {},
@@ -1182,57 +1182,57 @@ $types = {
       '1' => {
         'comment' => 'Read only, single file. Must be in root directory.',
         'name' => 'device',
-        'number' => 1
+        'value' => 1
       },
       '10' => {
         'comment' => 'Read only, single file. Directory=Totals',
         'name' => 'totals',
-        'number' => 10
+        'value' => 10
       },
       '11' => {
         'comment' => 'Read/write, single file. Directory=Goals',
         'name' => 'goals',
-        'number' => 11
+        'value' => 11
       },
       '14' => {
         'comment' => 'Read only. Directory=Blood Pressure',
         'name' => 'blood_pressure',
-        'number' => 14
+        'value' => 14
       },
       '2' => {
         'comment' => 'Read/write, single file. Directory=Settings',
         'name' => 'settings',
-        'number' => 2
+        'value' => 2
       },
       '20' => {
         'comment' => 'Read/erase, multiple files. Directory=Activities',
         'name' => 'activity_summary',
-        'number' => 20
+        'value' => 20
       },
       '3' => {
         'comment' => 'Read/write, multiple files, file number = sport type. Directory=Sports',
         'name' => 'sport',
-        'number' => 3
+        'value' => 3
       },
       '4' => {
         'comment' => 'Read/erase, multiple files. Directory=Activities',
         'name' => 'activity',
-        'number' => 4
+        'value' => 4
       },
       '5' => {
         'comment' => 'Read/write/erase, multiple files. Directory=Workouts',
         'name' => 'workout',
-        'number' => 5
+        'value' => 5
       },
       '6' => {
         'comment' => 'Read/write/erase, multiple files. Directory=Courses',
         'name' => 'course',
-        'number' => 6
+        'value' => 6
       },
       '9' => {
-        'comment' => 'Read only, single file. Circular buffer. All message definitions at start of file. Directory=Weight',
+        'comment' => 'Read only, single file. Circular buffer. All message messages at start of file. Directory=Weight',
         'name' => 'weight',
-        'number' => 9
+        'value' => 9
       },
       'activity' => {},
       'activity_summary' => {},
@@ -1253,15 +1253,15 @@ $types = {
     'values' => {
       '2' => {
         'name' => 'read',
-        'number' => 2
+        'value' => 2
       },
       '4' => {
         'name' => 'write',
-        'number' => 4
+        'value' => 4
       },
       '8' => {
         'name' => 'erase',
-        'number' => 8
+        'value' => 8
       },
       'erase' => {},
       'read' => {},
@@ -1275,20 +1275,20 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'ready',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'in_use',
-        'number' => 1
+        'value' => 1
       },
       '2' => {
         'name' => 'paused',
-        'number' => 2
+        'value' => 2
       },
       '3' => {
         'comment' => 'lost connection to fitness equipment',
         'name' => 'unknown',
-        'number' => 3
+        'value' => 3
       },
       'in_use' => {},
       'paused' => {},
@@ -1310,83 +1310,83 @@ $types = {
     'values' => {
       '1' => {
         'name' => 'hrm1',
-        'number' => 1
+        'value' => 1
       },
       '10007' => {
         'comment' => 'SDM4 footpod',
         'name' => 'sdm4',
-        'number' => 10007
+        'value' => 10007
       },
       '1011' => {
         'name' => 'dsi_alf01',
-        'number' => 1011
+        'value' => 1011
       },
       '1018' => {
         'comment' => 'Forerunner 310',
         'name' => 'fr310xt',
-        'number' => 1018
+        'value' => 1018
       },
       '1036' => {
         'name' => 'edge500',
-        'number' => 1036
+        'value' => 1036
       },
       '1124' => {
         'comment' => 'Forerunner 110',
         'name' => 'fr110',
-        'number' => 1124
+        'value' => 1124
       },
       '1169' => {
         'name' => 'edge800',
-        'number' => 1169
+        'value' => 1169
       },
       '1253' => {
         'name' => 'chirp',
-        'number' => 1253
+        'value' => 1253
       },
       '2' => {
         'comment' => 'AXH01 HRM chipset',
         'name' => 'axh01',
-        'number' => 2
+        'value' => 2
       },
       '20119' => {
         'name' => 'training_center',
-        'number' => 20119
+        'value' => 20119
       },
       '3' => {
         'name' => 'axb01',
-        'number' => 3
+        'value' => 3
       },
       '4' => {
         'name' => 'axb02',
-        'number' => 4
+        'value' => 4
       },
       '5' => {
         'name' => 'hrm2ss',
-        'number' => 5
+        'value' => 5
       },
       '6' => {
         'name' => 'dsi_alf02',
-        'number' => 6
+        'value' => 6
       },
       '65534' => {
         'comment' => 'Garmin Connect website',
         'name' => 'connect',
-        'number' => 65534
+        'value' => 65534
       },
       '717' => {
         'comment' => 'Forerunner 405',
         'name' => 'fr405',
-        'number' => 717
+        'value' => 717
       },
       '782' => {
         'comment' => 'Forerunner 50',
         'name' => 'fr50',
-        'number' => 782
+        'value' => 782
       },
       '988' => {
         'comment' => 'Forerunner 60',
         'name' => 'fr60',
-        'number' => 988
+        'value' => 988
       },
       'axb01' => {},
       'axb02' => {},
@@ -1414,11 +1414,11 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'female',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'male',
-        'number' => 1
+        'value' => 1
       },
       'female' => {},
       'male' => {}
@@ -1430,23 +1430,23 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'time',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'distance',
-        'number' => 1
+        'value' => 1
       },
       '2' => {
         'name' => 'calories',
-        'number' => 2
+        'value' => 2
       },
       '3' => {
         'name' => 'frequency',
-        'number' => 3
+        'value' => 3
       },
       '4' => {
         'name' => 'steps',
-        'number' => 4
+        'value' => 4
       },
       'calories' => {},
       'distance' => {},
@@ -1461,27 +1461,27 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'off',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'daily',
-        'number' => 1
+        'value' => 1
       },
       '2' => {
         'name' => 'weekly',
-        'number' => 2
+        'value' => 2
       },
       '3' => {
         'name' => 'monthly',
-        'number' => 3
+        'value' => 3
       },
       '4' => {
         'name' => 'yearly',
-        'number' => 4
+        'value' => 4
       },
       '5' => {
         'name' => 'custom',
-        'number' => 5
+        'value' => 5
       },
       'custom' => {},
       'daily' => {},
@@ -1497,11 +1497,11 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'normal',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'irregular',
-        'number' => 1
+        'value' => 1
       },
       'irregular' => {},
       'normal' => {}
@@ -1513,15 +1513,15 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'custom',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'percent_max_hr',
-        'number' => 1
+        'value' => 1
       },
       '2' => {
         'name' => 'percent_hrr',
-        'number' => 2
+        'value' => 2
       },
       'custom' => {},
       'percent_hrr' => {},
@@ -1534,19 +1534,19 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'active',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'rest',
-        'number' => 1
+        'value' => 1
       },
       '2' => {
         'name' => 'warmup',
-        'number' => 2
+        'value' => 2
       },
       '3' => {
         'name' => 'cooldown',
-        'number' => 3
+        'value' => 3
       },
       'active' => {},
       'cooldown' => {},
@@ -1560,111 +1560,111 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'english',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'french',
-        'number' => 1
+        'value' => 1
       },
       '10' => {
         'name' => 'greek',
-        'number' => 10
+        'value' => 10
       },
       '11' => {
         'name' => 'hungarian',
-        'number' => 11
+        'value' => 11
       },
       '12' => {
         'name' => 'norwegian',
-        'number' => 12
+        'value' => 12
       },
       '13' => {
         'name' => 'polish',
-        'number' => 13
+        'value' => 13
       },
       '14' => {
         'name' => 'portuguese',
-        'number' => 14
+        'value' => 14
       },
       '15' => {
         'name' => 'slovakian',
-        'number' => 15
+        'value' => 15
       },
       '16' => {
         'name' => 'slovenian',
-        'number' => 16
+        'value' => 16
       },
       '17' => {
         'name' => 'swedish',
-        'number' => 17
+        'value' => 17
       },
       '18' => {
         'name' => 'russian',
-        'number' => 18
+        'value' => 18
       },
       '19' => {
         'name' => 'turkish',
-        'number' => 19
+        'value' => 19
       },
       '2' => {
         'name' => 'italian',
-        'number' => 2
+        'value' => 2
       },
       '20' => {
         'name' => 'latvian',
-        'number' => 20
+        'value' => 20
       },
       '21' => {
         'name' => 'ukrainian',
-        'number' => 21
+        'value' => 21
       },
       '22' => {
         'name' => 'arabic',
-        'number' => 22
+        'value' => 22
       },
       '23' => {
         'name' => 'farsi',
-        'number' => 23
+        'value' => 23
       },
       '24' => {
         'name' => 'bulgarian',
-        'number' => 24
+        'value' => 24
       },
       '25' => {
         'name' => 'romanian',
-        'number' => 25
+        'value' => 25
       },
       '254' => {
         'name' => 'custom',
-        'number' => 254
+        'value' => 254
       },
       '3' => {
         'name' => 'german',
-        'number' => 3
+        'value' => 3
       },
       '4' => {
         'name' => 'spanish',
-        'number' => 4
+        'value' => 4
       },
       '5' => {
         'name' => 'croatian',
-        'number' => 5
+        'value' => 5
       },
       '6' => {
         'name' => 'czech',
-        'number' => 6
+        'value' => 6
       },
       '7' => {
         'name' => 'danish',
-        'number' => 7
+        'value' => 7
       },
       '8' => {
         'name' => 'dutch',
-        'number' => 8
+        'value' => 8
       },
       '9' => {
         'name' => 'finnish',
-        'number' => 9
+        'value' => 9
       },
       'arabic' => {},
       'bulgarian' => {},
@@ -1701,39 +1701,39 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'manual',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'time',
-        'number' => 1
+        'value' => 1
       },
       '2' => {
         'name' => 'distance',
-        'number' => 2
+        'value' => 2
       },
       '3' => {
         'name' => 'position_start',
-        'number' => 3
+        'value' => 3
       },
       '4' => {
         'name' => 'position_lap',
-        'number' => 4
+        'value' => 4
       },
       '5' => {
         'name' => 'position_waypoint',
-        'number' => 5
+        'value' => 5
       },
       '6' => {
         'name' => 'position_marked',
-        'number' => 6
+        'value' => 6
       },
       '7' => {
         'name' => 'session_end',
-        'number' => 7
+        'value' => 7
       },
       '8' => {
         'name' => 'fitness_equipment',
-        'number' => 8
+        'value' => 8
       },
       'distance' => {},
       'fitness_equipment' => {},
@@ -1757,136 +1757,136 @@ $types = {
     'values' => {
       '1' => {
         'name' => 'garmin',
-        'number' => 1
+        'value' => 1
       },
       '10' => {
         'name' => 'spark_hk',
-        'number' => 10
+        'value' => 10
       },
       '11' => {
         'name' => 'tanita',
-        'number' => 11
+        'value' => 11
       },
       '12' => {
         'name' => 'echowell',
-        'number' => 12
+        'value' => 12
       },
       '13' => {
         'name' => 'dynastream_oem',
-        'number' => 13
+        'value' => 13
       },
       '14' => {
         'name' => 'nautilus',
-        'number' => 14
+        'value' => 14
       },
       '15' => {
         'name' => 'dynastream',
-        'number' => 15
+        'value' => 15
       },
       '16' => {
         'name' => 'timex',
-        'number' => 16
+        'value' => 16
       },
       '17' => {
         'name' => 'metrigear',
-        'number' => 17
+        'value' => 17
       },
       '18' => {
         'name' => 'xelic',
-        'number' => 18
+        'value' => 18
       },
       '19' => {
         'name' => 'beurer',
-        'number' => 19
+        'value' => 19
       },
       '2' => {
         'comment' => 'Do not use.  Used by FR405 for ANTFS man id.',
         'name' => 'garmin_fr405_antfs',
-        'number' => 2
+        'value' => 2
       },
       '20' => {
         'name' => 'cardiosport',
-        'number' => 20
+        'value' => 20
       },
       '21' => {
         'name' => 'a_and_d',
-        'number' => 21
+        'value' => 21
       },
       '22' => {
         'name' => 'hmm',
-        'number' => 22
+        'value' => 22
       },
       '23' => {
         'name' => 'suunto',
-        'number' => 23
+        'value' => 23
       },
       '24' => {
         'name' => 'thita_elektronik',
-        'number' => 24
+        'value' => 24
       },
       '25' => {
         'name' => 'gpulse',
-        'number' => 25
+        'value' => 25
       },
       '26' => {
         'name' => 'clean_mobile',
-        'number' => 26
+        'value' => 26
       },
       '27' => {
         'name' => 'pedal_brain',
-        'number' => 27
+        'value' => 27
       },
       '28' => {
         'name' => 'peaksware',
-        'number' => 28
+        'value' => 28
       },
       '29' => {
         'name' => 'saxonar',
-        'number' => 29
+        'value' => 29
       },
       '3' => {
         'name' => 'zephyr',
-        'number' => 3
+        'value' => 3
       },
       '30' => {
         'name' => 'lemond_fitness',
-        'number' => 30
+        'value' => 30
       },
       '31' => {
         'name' => 'dexcom',
-        'number' => 31
+        'value' => 31
       },
       '32' => {
         'name' => 'wahoo_fitness',
-        'number' => 32
+        'value' => 32
       },
       '33' => {
         'name' => 'octane_fitness',
-        'number' => 33
+        'value' => 33
       },
       '4' => {
         'name' => 'dayton',
-        'number' => 4
+        'value' => 4
       },
       '5' => {
         'name' => 'idt',
-        'number' => 5
+        'value' => 5
       },
       '6' => {
         'name' => 'srm',
-        'number' => 6
+        'value' => 6
       },
       '7' => {
         'name' => 'quarq',
-        'number' => 7
+        'value' => 7
       },
       '8' => {
         'name' => 'ibike',
-        'number' => 8
+        'value' => 8
       },
       '9' => {
         'name' => 'saris',
-        'number' => 9
+        'value' => 9
       },
       'a_and_d' => {},
       'beurer' => {},
@@ -1929,15 +1929,15 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'num_per_file',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'max_per_file',
-        'number' => 1
+        'value' => 1
       },
       '2' => {
         'name' => 'max_per_file_type',
-        'number' => 2
+        'value' => 2
       },
       'max_per_file' => {},
       'max_per_file_type' => {},
@@ -1950,137 +1950,137 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'file_id',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'capabilities',
-        'number' => 1
+        'value' => 1
       },
       '10' => {
         'name' => 'met_zone',
-        'number' => 10
+        'value' => 10
       },
       '12' => {
         'name' => 'sport',
-        'number' => 12
+        'value' => 12
       },
       '15' => {
         'name' => 'goal',
-        'number' => 15
+        'value' => 15
       },
       '18' => {
         'name' => 'session',
-        'number' => 18
+        'value' => 18
       },
       '19' => {
         'name' => 'lap',
-        'number' => 19
+        'value' => 19
       },
       '2' => {
         'name' => 'device_settings',
-        'number' => 2
+        'value' => 2
       },
       '20' => {
         'name' => 'record',
-        'number' => 20
+        'value' => 20
       },
       '21' => {
         'name' => 'event',
-        'number' => 21
+        'value' => 21
       },
       '23' => {
         'name' => 'device_info',
-        'number' => 23
+        'value' => 23
       },
       '26' => {
         'name' => 'workout',
-        'number' => 26
+        'value' => 26
       },
       '27' => {
         'name' => 'workout_step',
-        'number' => 27
+        'value' => 27
       },
       '3' => {
         'name' => 'user_profile',
-        'number' => 3
+        'value' => 3
       },
       '30' => {
         'name' => 'weight_scale',
-        'number' => 30
+        'value' => 30
       },
       '31' => {
         'name' => 'course',
-        'number' => 31
+        'value' => 31
       },
       '32' => {
         'name' => 'course_point',
-        'number' => 32
+        'value' => 32
       },
       '33' => {
         'name' => 'totals',
-        'number' => 33
+        'value' => 33
       },
       '34' => {
         'name' => 'activity',
-        'number' => 34
+        'value' => 34
       },
       '35' => {
         'name' => 'software',
-        'number' => 35
+        'value' => 35
       },
       '37' => {
         'name' => 'file_capabilities',
-        'number' => 37
+        'value' => 37
       },
       '38' => {
         'name' => 'mesg_capabilities',
-        'number' => 38
+        'value' => 38
       },
       '39' => {
         'name' => 'field_capabilities',
-        'number' => 39
+        'value' => 39
       },
       '4' => {
         'name' => 'hrm_profile',
-        'number' => 4
+        'value' => 4
       },
       '49' => {
         'name' => 'file_creator',
-        'number' => 49
+        'value' => 49
       },
       '5' => {
         'name' => 'sdm_profile',
-        'number' => 5
+        'value' => 5
       },
       '51' => {
         'name' => 'blood_pressure',
-        'number' => 51
+        'value' => 51
       },
       '6' => {
         'name' => 'bike_profile',
-        'number' => 6
+        'value' => 6
       },
       '65280' => {
         'comment' => '0xFF00 - 0xFFFE reserved for manufacturer specific messages',
         'name' => 'mfg_range_min',
-        'number' => 65280
+        'value' => 65280
       },
       '65534' => {
         'comment' => '0xFF00 - 0xFFFE reserved for manufacturer specific messages',
         'name' => 'mfg_range_max',
-        'number' => 65534
+        'value' => 65534
       },
       '7' => {
         'name' => 'zones_target',
-        'number' => 7
+        'value' => 7
       },
       '8' => {
         'name' => 'hr_zone',
-        'number' => 8
+        'value' => 8
       },
       '9' => {
         'name' => 'power_zone',
-        'number' => 9
+        'value' => 9
       },
       'activity' => {},
       'bike_profile' => {},
@@ -2124,17 +2124,17 @@ $types = {
       '28672' => {
         'comment' => 'reserved (default 0)',
         'name' => 'reserved',
-        'number' => 28672
+        'value' => 28672
       },
       '32768' => {
         'comment' => 'message is selected if set',
         'name' => 'selected',
-        'number' => 32768
+        'value' => 32768
       },
       '4095' => {
         'comment' => 'index',
         'name' => 'mask',
-        'number' => 4095
+        'value' => 4095
       },
       'mask' => {},
       'reserved' => {},
@@ -2147,11 +2147,11 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'custom',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'percent_ftp',
-        'number' => 1
+        'value' => 1
       },
       'custom' => {},
       'percent_ftp' => {}
@@ -2163,22 +2163,22 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'activity_end',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'comment' => 'User changed sport.',
         'name' => 'manual',
-        'number' => 1
+        'value' => 1
       },
       '2' => {
         'comment' => 'Auto multi-sport feature is enabled and user pressed lap button to advance session.',
         'name' => 'auto_multi_sport',
-        'number' => 2
+        'value' => 2
       },
       '3' => {
         'comment' => 'Auto sport change caused by user linking to fitness equipment.',
         'name' => 'fitness_equipment',
-        'number' => 3
+        'value' => 3
       },
       'activity_end' => {},
       'auto_multi_sport' => {},
@@ -2204,33 +2204,33 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'generic',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'running',
-        'number' => 1
+        'value' => 1
       },
       '2' => {
         'name' => 'cycling',
-        'number' => 2
+        'value' => 2
       },
       '254' => {
         'comment' => 'All is for goals only to include all sports.',
         'name' => 'all',
-        'number' => 254
+        'value' => 254
       },
       '3' => {
         'comment' => 'Mulitsport transition',
         'name' => 'transition',
-        'number' => 3
+        'value' => 3
       },
       '4' => {
         'name' => 'fitness_equipment',
-        'number' => 4
+        'value' => 4
       },
       '5' => {
         'name' => 'swimming',
-        'number' => 5
+        'value' => 5
       },
       'all' => {},
       'cycling' => {},
@@ -2248,28 +2248,28 @@ $types = {
     'values' => {
       '1' => {
         'name' => 'generic',
-        'number' => 1
+        'value' => 1
       },
       '16' => {
         'name' => 'fitness_equipment',
-        'number' => 16
+        'value' => 16
       },
       '2' => {
         'name' => 'running',
-        'number' => 2
+        'value' => 2
       },
       '32' => {
         'name' => 'swimming',
-        'number' => 32
+        'value' => 32
       },
       '4' => {
         'name' => 'cycling',
-        'number' => 4
+        'value' => 4
       },
       '8' => {
         'comment' => 'Mulitsport transition',
         'name' => 'transition',
-        'number' => 8
+        'value' => 8
       },
       'cycling' => {},
       'fitness_equipment' => {},
@@ -2289,101 +2289,101 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'generic',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'comment' => 'Run',
         'name' => 'treadmill',
-        'number' => 1
+        'value' => 1
       },
       '10' => {
         'comment' => 'Cycling',
         'name' => 'recumbent',
-        'number' => 10
+        'value' => 10
       },
       '11' => {
         'comment' => 'Cycling',
         'name' => 'cyclocross',
-        'number' => 11
+        'value' => 11
       },
       '12' => {
         'comment' => 'Cycling',
         'name' => 'hand_cycling',
-        'number' => 12
+        'value' => 12
       },
       '13' => {
         'comment' => 'Cycling',
         'name' => 'track_cycling',
-        'number' => 13
+        'value' => 13
       },
       '14' => {
         'comment' => 'Fitness Equipment',
         'name' => 'indoor_rowing',
-        'number' => 14
+        'value' => 14
       },
       '15' => {
         'comment' => 'Fitness Equipment',
         'name' => 'elliptical',
-        'number' => 15
+        'value' => 15
       },
       '16' => {
         'comment' => 'Fitness Equipment',
         'name' => 'stair_climbing',
-        'number' => 16
+        'value' => 16
       },
       '17' => {
         'comment' => 'Swimming',
         'name' => 'lap_swimming',
-        'number' => 17
+        'value' => 17
       },
       '18' => {
         'comment' => 'Swimming',
         'name' => 'open_water',
-        'number' => 18
+        'value' => 18
       },
       '2' => {
         'comment' => 'Run',
         'name' => 'street',
-        'number' => 2
+        'value' => 2
       },
       '254' => {
         'name' => 'all',
-        'number' => 254
+        'value' => 254
       },
       '3' => {
         'comment' => 'Run',
         'name' => 'trail',
-        'number' => 3
+        'value' => 3
       },
       '4' => {
         'comment' => 'Run',
         'name' => 'track',
-        'number' => 4
+        'value' => 4
       },
       '5' => {
         'comment' => 'Cycling',
         'name' => 'spin',
-        'number' => 5
+        'value' => 5
       },
       '6' => {
         'comment' => 'Cycling',
         'name' => 'indoor_cycling',
-        'number' => 6
+        'value' => 6
       },
       '7' => {
         'comment' => 'Cycling',
         'name' => 'road',
-        'number' => 7
+        'value' => 7
       },
       '8' => {
         'comment' => 'Cycling',
         'name' => 'mountain',
-        'number' => 8
+        'value' => 8
       },
       '9' => {
         'comment' => 'Cycling',
         'name' => 'downhill',
-        'number' => 9
+        'value' => 9
       },
       'all' => {},
       'cyclocross' => {},
@@ -2414,15 +2414,15 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'manual',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'auto',
-        'number' => 1
+        'value' => 1
       },
       '2' => {
         'name' => 'fitness_equipment',
-        'number' => 2
+        'value' => 2
       },
       'auto' => {},
       'fitness_equipment' => {},
@@ -2459,27 +2459,27 @@ $types = {
     'values' => {
       '1' => {
         'name' => 'local_min',
-        'number' => 1
+        'value' => 1
       },
       '15' => {
         'name' => 'local_max',
-        'number' => 15
+        'value' => 15
       },
       '16' => {
         'name' => 'stationary_min',
-        'number' => 16
+        'value' => 16
       },
       '255' => {
         'name' => 'stationary_max',
-        'number' => 255
+        'value' => 255
       },
       '256' => {
         'name' => 'portable_min',
-        'number' => 256
+        'value' => 256
       },
       '65534' => {
         'name' => 'portable_max',
-        'number' => 65534
+        'value' => 65534
       },
       'local_max' => {},
       'local_min' => {},
@@ -2495,7 +2495,7 @@ $types = {
     'values' => {
       '65534' => {
         'name' => 'calculating',
-        'number' => 65534
+        'value' => 65534
       },
       'calculating' => {}
     }
@@ -2506,67 +2506,67 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'time',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'distance',
-        'number' => 1
+        'value' => 1
       },
       '10' => {
         'name' => 'repeat_until_hr_less_than',
-        'number' => 10
+        'value' => 10
       },
       '11' => {
         'name' => 'repeat_until_hr_greater_than',
-        'number' => 11
+        'value' => 11
       },
       '12' => {
         'name' => 'repeat_until_power_less_than',
-        'number' => 12
+        'value' => 12
       },
       '13' => {
         'name' => 'repeat_until_power_greater_than',
-        'number' => 13
+        'value' => 13
       },
       '14' => {
         'name' => 'power_less_than',
-        'number' => 14
+        'value' => 14
       },
       '15' => {
         'name' => 'power_greater_than',
-        'number' => 15
+        'value' => 15
       },
       '2' => {
         'name' => 'hr_less_than',
-        'number' => 2
+        'value' => 2
       },
       '3' => {
         'name' => 'hr_greater_than',
-        'number' => 3
+        'value' => 3
       },
       '4' => {
         'name' => 'calories',
-        'number' => 4
+        'value' => 4
       },
       '5' => {
         'name' => 'open',
-        'number' => 5
+        'value' => 5
       },
       '6' => {
         'name' => 'repeat_until_steps_cmplt',
-        'number' => 6
+        'value' => 6
       },
       '7' => {
         'name' => 'repeat_until_time',
-        'number' => 7
+        'value' => 7
       },
       '8' => {
         'name' => 'repeat_until_distance',
-        'number' => 8
+        'value' => 8
       },
       '9' => {
         'name' => 'repeat_until_calories',
-        'number' => 9
+        'value' => 9
       },
       'calories' => {},
       'distance' => {},
@@ -2592,31 +2592,31 @@ $types = {
     'values' => {
       '0' => {
         'name' => 'speed',
-        'number' => 0
+        'value' => 0
       },
       '1' => {
         'name' => 'heart_rate',
-        'number' => 1
+        'value' => 1
       },
       '2' => {
         'name' => 'open',
-        'number' => 2
+        'value' => 2
       },
       '3' => {
         'name' => 'cadence',
-        'number' => 3
+        'value' => 3
       },
       '4' => {
         'name' => 'power',
-        'number' => 4
+        'value' => 4
       },
       '5' => {
         'name' => 'grade',
-        'number' => 5
+        'value' => 5
       },
       '6' => {
         'name' => 'resistance',
-        'number' => 6
+        'value' => 6
       },
       'cadence' => {},
       'grade' => {},
@@ -2633,67 +2633,67 @@ $types = {
     'values' => {
       '1' => {
         'name' => 'interval',
-        'number' => 1
+        'value' => 1
       },
       '1024' => {
         'comment' => 'Cadence source required for workout step.',
         'name' => 'cadence',
-        'number' => 1024
+        'value' => 1024
       },
       '128' => {
         'comment' => 'Speed source required for workout step.',
         'name' => 'speed',
-        'number' => 128
+        'value' => 128
       },
       '16' => {
         'name' => 'new_leaf',
-        'number' => 16
+        'value' => 16
       },
       '16384' => {
         'name' => 'protected',
-        'number' => 16384
+        'value' => 16384
       },
       '2' => {
         'name' => 'custom',
-        'number' => 2
+        'value' => 2
       },
       '2048' => {
         'comment' => 'Power source required for workout step.',
         'name' => 'power',
-        'number' => 2048
+        'value' => 2048
       },
       '256' => {
         'comment' => 'Heart rate source required for workout step.',
         'name' => 'heart_rate',
-        'number' => 256
+        'value' => 256
       },
       '32' => {
         'comment' => 'For backwards compatibility.  Watch should add missing id fields then clear flag.',
         'name' => 'tcx',
-        'number' => 32
+        'value' => 32
       },
       '4' => {
         'name' => 'fitness_equipment',
-        'number' => 4
+        'value' => 4
       },
       '4096' => {
         'comment' => 'Grade source required for workout step.',
         'name' => 'grade',
-        'number' => 4096
+        'value' => 4096
       },
       '512' => {
         'comment' => 'Distance source required for workout step.',
         'name' => 'distance',
-        'number' => 512
+        'value' => 512
       },
       '8' => {
         'name' => 'firstbeat',
-        'number' => 8
+        'value' => 8
       },
       '8192' => {
         'comment' => 'Resistance source required for workout step.',
         'name' => 'resistance',
-        'number' => 8192
+        'value' => 8192
       },
       'cadence' => {},
       'custom' => {},
@@ -2718,7 +2718,7 @@ $types = {
     'values' => {
       '100' => {
         'name' => 'bpm_offset',
-        'number' => 100
+        'value' => 100
       },
       'bpm_offset' => {}
     }
@@ -2730,7 +2730,7 @@ $types = {
     'values' => {
       '1000' => {
         'name' => 'watts_offset',
-        'number' => 1000
+        'value' => 1000
       },
       'watts_offset' => {}
     }
@@ -3208,36 +3208,36 @@ $profile = {
     'comment' => 'Must be first message in file.',
     'context' => 'COMMON MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'type',
         'number' => 0,
         'type' => {}
-      },
-      '1' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'manufacturer',
         'number' => 1,
         'type' => {}
-      },
-      '2' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'product',
         'number' => 2,
         'type' => {}
-      },
-      '3' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'serial_number',
         'number' => 3,
         'type' => {}
-      },
-      '4' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '4' => bless( {
         'name' => 'time_created',
         'number' => 4,
         'type' => {}
-      },
-      '5' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '5' => bless( {
         'name' => 'number',
         'number' => 5,
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'manufacturer' => {},
       'number' => {},
       'product' => {},
@@ -3251,22 +3251,23 @@ $profile = {
   '1' => {
     'context' => 'DEVICE FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
+        'array' => 'N',
         'name' => 'languages',
         'number' => 0,
         'type' => {}
-      },
-      '1' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
+        'array' => 'N',
         'name' => 'sports',
         'number' => 1,
         'type' => {}
-      },
-      '21' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '21' => bless( {
         'name' => 'workouts_supported',
         'number' => 21,
         'type' => {}
-      },
-      'array' => 'N',
+      }, 'Garmin::FIT::Streamer::Field' ),
       'languages' => {},
       'sports' => {},
       'workouts_supported' => {}
@@ -3277,32 +3278,30 @@ $profile = {
   '10' => {
     'context' => 'SPORT SETTINGS FILE MESSAGES',
     'fields' => {
-      '1' => {
+      '1' => bless( {
         'name' => 'high_bpm',
         'number' => 1,
-        'scale' => '1',
         'type' => {}
-      },
-      '2' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'calories',
         'number' => 2,
-        'scale' => '10',
+        'scale' => 10,
         'type' => {},
-        'units' => 'kcal / min'
-      },
-      '254' => {
+        'unit' => 'kcal / min'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
-        'scale' => '1',
         'type' => {}
-      },
-      '3' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'fat_calories',
         'number' => 3,
-        'scale' => '10',
+        'scale' => 10,
         'type' => {},
-        'units' => 'kcal / min'
-      },
+        'unit' => 'kcal / min'
+      }, 'Garmin::FIT::Streamer::Field' ),
       'calories' => {},
       'fat_calories' => {},
       'high_bpm' => {},
@@ -3314,23 +3313,21 @@ $profile = {
   '12' => {
     'context' => 'SPORT SETTINGS FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'sport',
         'number' => 0,
-        'scale' => '1',
         'type' => {}
-      },
-      '1' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'sub_sport',
         'number' => 1,
-        'scale' => '1',
         'type' => {}
-      },
-      '3' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'name',
         'number' => 3,
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'name' => {},
       'sport' => {},
       'sub_sport' => {}
@@ -3341,74 +3338,66 @@ $profile = {
   '15' => {
     'context' => 'GOALS FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'sport',
         'number' => 0,
-        'scale' => '1',
         'type' => {}
-      },
-      '1' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'sub_sport',
         'number' => 1,
-        'scale' => '1',
         'type' => {}
-      },
-      '10' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '10' => bless( {
         'name' => 'enabled',
         'number' => 10,
-        'scale' => '1',
         'type' => {}
-      },
-      '2' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'start_date',
         'number' => 2,
         'type' => {}
-      },
-      '254' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
-        'scale' => '1',
         'type' => {}
-      },
-      '3' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'end_date',
         'number' => 3,
         'type' => {}
-      },
-      '4' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '4' => bless( {
         'name' => 'type',
         'number' => 4,
         'type' => {}
-      },
-      '5' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '5' => bless( {
         'name' => 'value',
         'number' => 5,
-        'scale' => '1',
         'type' => {}
-      },
-      '6' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '6' => bless( {
         'name' => 'repeat',
         'number' => 6,
         'type' => {}
-      },
-      '7' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '7' => bless( {
         'name' => 'target_value',
         'number' => 7,
-        'scale' => '1',
         'type' => {}
-      },
-      '8' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '8' => bless( {
         'name' => 'recurrence',
         'number' => 8,
-        'scale' => '1',
         'type' => {}
-      },
-      '9' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '9' => bless( {
         'name' => 'recurrence_value',
         'number' => 9,
-        'scale' => '1',
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'enabled' => {},
       'end_date' => {},
       'message_index' => {},
@@ -3428,224 +3417,205 @@ $profile = {
   '18' => {
     'context' => 'ACTIVITY FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'event',
         'number' => 0,
         'type' => {}
-      },
-      '1' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'event_type',
         'number' => 1,
         'type' => {}
-      },
-      '10' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '10' => bless( {
         'name' => 'total_cycles',
         'number' => 10,
-        'scale' => '1',
         'type' => {},
-        'units' => 'cycles'
-      },
-      '11' => {
+        'unit' => 'cycles'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '11' => bless( {
         'name' => 'total_calories',
         'number' => 11,
-        'scale' => '1',
         'type' => {},
-        'units' => 'kcal'
-      },
-      '13' => {
+        'unit' => 'kcal'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '13' => bless( {
         'name' => 'total_fat_calories',
         'number' => 13,
-        'scale' => '1',
         'type' => {},
-        'units' => 'kcal'
-      },
-      '14' => {
+        'unit' => 'kcal'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '14' => bless( {
         'name' => 'avg_speed',
         'number' => 14,
-        'scale' => '1000',
+        'scale' => 1000,
         'type' => {},
-        'units' => 'm/s'
-      },
-      '15' => {
+        'unit' => 'm/s'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '15' => bless( {
         'name' => 'max_speed',
         'number' => 15,
-        'scale' => '1000',
+        'scale' => 1000,
         'type' => {},
-        'units' => 'm/s'
-      },
-      '16' => {
+        'unit' => 'm/s'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '16' => bless( {
         'name' => 'avg_heart_rate',
         'number' => 16,
-        'scale' => '1',
         'type' => {},
-        'units' => 'bpm'
-      },
-      '17' => {
+        'unit' => 'bpm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '17' => bless( {
         'name' => 'max_heart_rate',
         'number' => 17,
-        'scale' => '1',
         'type' => {},
-        'units' => 'bpm'
-      },
-      '18' => {
+        'unit' => 'bpm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '18' => bless( {
         'name' => 'avg_cadence',
         'number' => 18,
-        'scale' => '1',
         'type' => {},
-        'units' => 'rpm'
-      },
-      '19' => {
+        'unit' => 'rpm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '19' => bless( {
         'name' => 'max_cadence',
         'number' => 19,
-        'scale' => '1',
         'type' => {},
-        'units' => 'rpm'
-      },
-      '2' => {
+        'unit' => 'rpm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'start_time',
         'number' => 2,
-        'scale' => '1',
         'type' => {}
-      },
-      '20' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '20' => bless( {
         'name' => 'avg_power',
         'number' => 20,
-        'scale' => '1',
         'type' => {},
-        'units' => 'watts'
-      },
-      '21' => {
+        'unit' => 'watts'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '21' => bless( {
         'name' => 'max_power',
         'number' => 21,
-        'scale' => '1',
         'type' => {},
-        'units' => 'watts'
-      },
-      '22' => {
+        'unit' => 'watts'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '22' => bless( {
         'name' => 'total_ascent',
         'number' => 22,
-        'scale' => '1',
         'type' => {},
-        'units' => 'm'
-      },
-      '23' => {
+        'unit' => 'm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '23' => bless( {
         'name' => 'total_descent',
         'number' => 23,
-        'scale' => '1',
         'type' => {},
-        'units' => 'm'
-      },
-      '24' => {
+        'unit' => 'm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '24' => bless( {
         'name' => 'total_training_effect',
         'number' => 24,
-        'scale' => '10',
+        'scale' => 10,
         'type' => {}
-      },
-      '25' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '25' => bless( {
         'name' => 'first_lap_index',
         'number' => 25,
-        'scale' => '1',
         'type' => {}
-      },
-      '253' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
         'type' => {},
-        'units' => 's'
-      },
-      '254' => {
+        'unit' => 's'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
-        'scale' => '1',
         'type' => {}
-      },
-      '26' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '26' => bless( {
         'name' => 'num_laps',
         'number' => 26,
-        'scale' => '1',
         'type' => {}
-      },
-      '27' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '27' => bless( {
         'name' => 'event_group',
         'number' => 27,
         'type' => {}
-      },
-      '28' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '28' => bless( {
         'name' => 'trigger',
         'number' => 28,
         'type' => {}
-      },
-      '29' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '29' => bless( {
         'name' => 'nec_lat',
         'number' => 29,
         'type' => {},
-        'units' => 'semicircles'
-      },
-      '3' => {
+        'unit' => 'semicircles'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'start_position_lat',
         'number' => 3,
-        'scale' => '1',
         'type' => {},
-        'units' => 'semicircles'
-      },
-      '30' => {
+        'unit' => 'semicircles'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '30' => bless( {
         'name' => 'nec_long',
         'number' => 30,
         'type' => {},
-        'units' => 'semicircles'
-      },
-      '31' => {
+        'unit' => 'semicircles'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '31' => bless( {
         'name' => 'swc_lat',
         'number' => 31,
         'type' => {},
-        'units' => 'semicircles'
-      },
-      '32' => {
+        'unit' => 'semicircles'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '32' => bless( {
         'name' => 'swc_long',
         'number' => 32,
         'type' => {},
-        'units' => 'semicircles'
-      },
-      '4' => {
+        'unit' => 'semicircles'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '4' => bless( {
         'name' => 'start_position_long',
         'number' => 4,
-        'scale' => '1',
         'type' => {},
-        'units' => 'semicircles'
-      },
-      '5' => {
+        'unit' => 'semicircles'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '5' => bless( {
         'name' => 'sport',
         'number' => 5,
-        'scale' => '1',
         'type' => {}
-      },
-      '6' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '6' => bless( {
         'name' => 'sub_sport',
         'number' => 6,
-        'scale' => '1',
         'type' => {}
-      },
-      '7' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '7' => bless( {
         'name' => 'total_elapsed_time',
         'number' => 7,
-        'scale' => '1000',
+        'scale' => 1000,
         'type' => {},
-        'units' => 's'
-      },
-      '8' => {
+        'unit' => 's'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '8' => bless( {
         'name' => 'total_timer_time',
         'number' => 8,
-        'scale' => '1000',
+        'scale' => 1000,
         'type' => {},
-        'units' => 's'
-      },
-      '9' => {
+        'unit' => 's'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '9' => bless( {
         'name' => 'total_distance',
         'number' => 9,
-        'scale' => '100',
+        'scale' => 100,
         'type' => {},
-        'units' => 'm'
-      },
+        'unit' => 'm'
+      }, 'Garmin::FIT::Streamer::Field' ),
       'avg_cadence' => {},
       'avg_heart_rate' => {},
       'avg_power' => {},
@@ -3687,183 +3657,177 @@ $profile = {
   '19' => {
     'context' => 'ACTIVITY FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'event',
         'number' => 0,
         'type' => {}
-      },
-      '1' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'event_type',
         'number' => 1,
         'type' => {}
-      },
-      '10' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '10' => bless( {
         'name' => 'total_cycles',
         'number' => 10,
         'type' => {},
-        'units' => 'cycles'
-      },
-      '11' => {
+        'unit' => 'cycles'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '11' => bless( {
         'name' => 'total_calories',
         'number' => 11,
         'type' => {},
-        'units' => 'kcal'
-      },
-      '12' => {
+        'unit' => 'kcal'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '12' => bless( {
         'name' => 'total_fat_calories',
         'number' => 12,
         'type' => {},
-        'units' => 'kcal'
-      },
-      '13' => {
+        'unit' => 'kcal'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '13' => bless( {
         'name' => 'avg_speed',
         'number' => 13,
-        'scale' => '1000',
+        'scale' => 1000,
         'type' => {},
-        'units' => 'm/s'
-      },
-      '14' => {
+        'unit' => 'm/s'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '14' => bless( {
         'name' => 'max_speed',
         'number' => 14,
-        'scale' => '1000',
+        'scale' => 1000,
         'type' => {},
-        'units' => 'm/s'
-      },
-      '15' => {
+        'unit' => 'm/s'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '15' => bless( {
         'name' => 'avg_heart_rate',
         'number' => 15,
         'type' => {},
-        'units' => 'bpm'
-      },
-      '16' => {
+        'unit' => 'bpm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '16' => bless( {
         'name' => 'max_heart_rate',
         'number' => 16,
         'type' => {},
-        'units' => 'bpm'
-      },
-      '17' => {
+        'unit' => 'bpm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '17' => bless( {
         'name' => 'avg_cadence',
         'number' => 17,
         'type' => {},
-        'units' => 'rpm'
-      },
-      '18' => {
+        'unit' => 'rpm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '18' => bless( {
         'name' => 'max_cadence',
         'number' => 18,
         'type' => {},
-        'units' => 'rpm'
-      },
-      '19' => {
+        'unit' => 'rpm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '19' => bless( {
         'name' => 'avg_power',
         'number' => 19,
         'type' => {},
-        'units' => 'watts'
-      },
-      '2' => {
+        'unit' => 'watts'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'start_time',
         'number' => 2,
-        'scale' => '1',
         'type' => {}
-      },
-      '20' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '20' => bless( {
         'name' => 'max_power',
         'number' => 20,
         'type' => {},
-        'units' => 'watts'
-      },
-      '21' => {
+        'unit' => 'watts'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '21' => bless( {
         'name' => 'total_ascent',
         'number' => 21,
         'type' => {},
-        'units' => 'm'
-      },
-      '22' => {
+        'unit' => 'm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '22' => bless( {
         'name' => 'total_descent',
         'number' => 22,
         'type' => {},
-        'units' => 'm'
-      },
-      '23' => {
+        'unit' => 'm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '23' => bless( {
         'name' => 'intensity',
         'number' => 23,
         'type' => {}
-      },
-      '24' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '24' => bless( {
         'name' => 'lap_trigger',
         'number' => 24,
         'type' => {}
-      },
-      '25' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '25' => bless( {
         'name' => 'sport',
         'number' => 25,
         'type' => {}
-      },
-      '253' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
         'type' => {},
-        'units' => 's'
-      },
-      '254' => {
+        'unit' => 's'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
-        'scale' => '1',
         'type' => {}
-      },
-      '26' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '26' => bless( {
         'name' => 'event_group',
         'number' => 26,
         'type' => {}
-      },
-      '3' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'start_position_lat',
         'number' => 3,
-        'scale' => '1',
         'type' => {},
-        'units' => 'semicircles'
-      },
-      '4' => {
+        'unit' => 'semicircles'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '4' => bless( {
         'name' => 'start_position_long',
         'number' => 4,
-        'scale' => '1',
         'type' => {},
-        'units' => 'semicircles'
-      },
-      '5' => {
+        'unit' => 'semicircles'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '5' => bless( {
         'name' => 'end_position_lat',
         'number' => 5,
-        'scale' => '1',
         'type' => {},
-        'units' => 'semicircles'
-      },
-      '6' => {
+        'unit' => 'semicircles'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '6' => bless( {
         'name' => 'end_position_long',
         'number' => 6,
-        'scale' => '1',
         'type' => {},
-        'units' => 'semicircles'
-      },
-      '7' => {
+        'unit' => 'semicircles'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '7' => bless( {
         'name' => 'total_elapsed_time',
         'number' => 7,
-        'scale' => '1000',
+        'scale' => 1000,
         'type' => {},
-        'units' => 's'
-      },
-      '8' => {
+        'unit' => 's'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '8' => bless( {
         'name' => 'total_timer_time',
         'number' => 8,
-        'scale' => '1000',
+        'scale' => 1000,
         'type' => {},
-        'units' => 's'
-      },
-      '9' => {
+        'unit' => 's'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '9' => bless( {
         'name' => 'total_distance',
         'number' => 9,
-        'scale' => '100',
+        'scale' => 100,
         'type' => {},
-        'units' => 'm'
-      },
+        'unit' => 'm'
+      }, 'Garmin::FIT::Streamer::Field' ),
       'avg_cadence' => {},
       'avg_heart_rate' => {},
       'avg_power' => {},
@@ -3900,11 +3864,11 @@ $profile = {
   '2' => {
     'context' => 'SETTINGS FILE MESSAGES',
     'fields' => {
-      '1' => {
+      '1' => bless( {
         'name' => 'utc_offset',
         'number' => 1,
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'utc_offset' => {}
     },
     'name' => 'device_settings',
@@ -3913,100 +3877,95 @@ $profile = {
   '20' => {
     'context' => 'ACTIVITY FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'position_lat',
         'number' => 0,
-        'scale' => '1',
         'type' => {},
-        'units' => 'semicircles'
-      },
-      '1' => {
+        'unit' => 'semicircles'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'position_long',
         'number' => 1,
-        'scale' => '1',
         'type' => {},
-        'units' => 'semicircles'
-      },
-      '10' => {
+        'unit' => 'semicircles'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '10' => bless( {
         'name' => 'resistance',
         'number' => 10,
-        'scale' => '1',
         'type' => {}
-      },
-      '11' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '11' => bless( {
         'name' => 'time_from_course',
         'number' => 11,
-        'scale' => '1000',
+        'scale' => 1000,
         'type' => {},
-        'units' => 's'
-      },
-      '12' => {
+        'unit' => 's'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '12' => bless( {
         'name' => 'cycle_length',
         'number' => 12,
-        'scale' => '100',
+        'scale' => 100,
         'type' => {},
-        'units' => 'm'
-      },
-      '13' => {
+        'unit' => 'm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '13' => bless( {
         'name' => 'temperature',
         'number' => 13,
         'type' => {},
-        'units' => 'C'
-      },
-      '2' => {
+        'unit' => 'C'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'altitude',
         'number' => 2,
-        'offset' => '500',
-        'scale' => '5',
+        'offset' => 500,
+        'scale' => 5,
         'type' => {},
-        'units' => 'm'
-      },
-      '253' => {
+        'unit' => 'm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
-        'scale' => '1',
         'type' => {},
-        'units' => 's'
-      },
-      '3' => {
+        'unit' => 's'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'heart_rate',
         'number' => 3,
-        'scale' => '1',
         'type' => {},
-        'units' => 'bpm'
-      },
-      '4' => {
+        'unit' => 'bpm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '4' => bless( {
         'name' => 'cadence',
         'number' => 4,
-        'scale' => '1',
         'type' => {},
-        'units' => 'rpm'
-      },
-      '5' => {
+        'unit' => 'rpm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '5' => bless( {
         'name' => 'distance',
         'number' => 5,
-        'scale' => '100',
+        'scale' => 100,
         'type' => {},
-        'units' => 'm'
-      },
-      '6' => {
+        'unit' => 'm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '6' => bless( {
         'name' => 'speed',
         'number' => 6,
-        'scale' => '1000',
+        'scale' => 1000,
         'type' => {},
-        'units' => 'm/s'
-      },
-      '7' => {
+        'unit' => 'm/s'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '7' => bless( {
         'name' => 'power',
         'number' => 7,
         'type' => {},
-        'units' => 'watts'
-      },
-      '8' => {
+        'unit' => 'watts'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '8' => bless( {
         'accumulate' => [
           '0',
           '1'
         ],
+        'array' => '3',
         'bits' => [
           '12',
           '12'
@@ -4018,20 +3977,19 @@ $profile = {
           '16'
         ],
         'type' => {},
-        'units' => [
+        'unit' => [
           'm/s',
           'm'
         ]
-      },
-      '9' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '9' => bless( {
         'name' => 'grade',
         'number' => 9,
-        'scale' => '100',
+        'scale' => 100,
         'type' => {},
-        'units' => '%'
-      },
+        'unit' => '%'
+      }, 'Garmin::FIT::Streamer::Field' ),
       'altitude' => {},
-      'array' => '3',
       'cadence' => {},
       'compressed_speed_distance' => {},
       'cycle_length' => {},
@@ -4053,40 +4011,38 @@ $profile = {
   '21' => {
     'context' => 'ACTIVITY FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'event',
         'number' => 0,
         'type' => {}
-      },
-      '1' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'event_type',
         'number' => 1,
         'type' => {}
-      },
-      '2' => {
-        'bits' => '16',
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
+        'bits' => 16,
         'name' => 'data16',
         'number' => 2,
-        'scale' => '1',
         'type' => {}
-      },
-      '253' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
         'type' => {},
-        'units' => 's'
-      },
-      '3' => {
+        'unit' => 's'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'data',
         'number' => 3,
-        'scale' => '1',
         'type' => {}
-      },
-      '4' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '4' => bless( {
         'name' => 'event_group',
         'number' => 4,
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'data' => {},
       'data16' => {},
       'event' => {},
@@ -4100,75 +4056,67 @@ $profile = {
   '23' => {
     'context' => 'ACTIVITY FILE MESSAGES',
     'fields' => {
-      '0' => {
-        'bits' => '16',
+      '0' => bless( {
+        'bits' => 16,
         'name' => 'device_index',
         'number' => 0,
-        'scale' => '1',
         'type' => {}
-      },
-      '1' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'device_type',
         'number' => 1,
-        'scale' => '1',
         'type' => {}
-      },
-      '10' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '10' => bless( {
         'name' => 'battery_voltage',
         'number' => 10,
-        'scale' => '256',
+        'scale' => 256,
         'type' => {},
-        'units' => 'V'
-      },
-      '11' => {
+        'unit' => 'V'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '11' => bless( {
         'name' => 'battery_status',
         'number' => 11,
         'type' => {}
-      },
-      '2' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'manufacturer',
         'number' => 2,
-        'scale' => '1',
         'type' => {}
-      },
-      '253' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
-        'scale' => '1',
         'type' => {},
-        'units' => 's'
-      },
-      '3' => {
+        'unit' => 's'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'serial_number',
         'number' => 3,
-        'scale' => '1',
         'type' => {}
-      },
-      '4' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '4' => bless( {
         'name' => 'product',
         'number' => 4,
-        'scale' => '1',
         'type' => {}
-      },
-      '5' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '5' => bless( {
         'name' => 'software_version',
         'number' => 5,
-        'scale' => '100',
+        'scale' => 100,
         'type' => {}
-      },
-      '6' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '6' => bless( {
         'name' => 'hardware_version',
         'number' => 6,
-        'scale' => '1',
         'type' => {}
-      },
-      '7' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '7' => bless( {
         'name' => 'cum_operating_time',
         'number' => 7,
-        'scale' => '1',
         'type' => {},
-        'units' => 's'
-      },
+        'unit' => 's'
+      }, 'Garmin::FIT::Streamer::Field' ),
       'battery_status' => {},
       'battery_voltage' => {},
       'cum_operating_time' => {},
@@ -4187,29 +4135,26 @@ $profile = {
   '26' => {
     'context' => 'WORKOUT FILE MESSAGES',
     'fields' => {
-      '4' => {
+      '4' => bless( {
         'name' => 'sport',
         'number' => 4,
-        'scale' => '1',
         'type' => {}
-      },
-      '5' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '5' => bless( {
         'name' => 'capabilities',
         'number' => 5,
         'type' => {}
-      },
-      '6' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '6' => bless( {
         'name' => 'num_valid_steps',
         'number' => 6,
-        'scale' => '1',
         'type' => {}
-      },
-      '8' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '8' => bless( {
         'name' => 'wkt_name',
         'number' => 8,
-        'scale' => '1',
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'capabilities' => {},
       'num_valid_steps' => {},
       'sport' => {},
@@ -4221,59 +4166,51 @@ $profile = {
   '27' => {
     'context' => 'WORKOUT FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'wkt_step_name',
         'number' => 0,
-        'scale' => '1',
         'type' => {}
-      },
-      '1' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'duration_type',
         'number' => 1,
-        'scale' => '1',
         'type' => {}
-      },
-      '2' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'duration_value',
         'number' => 2,
-        'scale' => '1',
         'type' => {}
-      },
-      '254' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
         'type' => {}
-      },
-      '3' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'target_type',
         'number' => 3,
-        'scale' => '1',
         'type' => {}
-      },
-      '4' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '4' => bless( {
         'name' => 'target_value',
         'number' => 4,
-        'scale' => '1',
         'type' => {}
-      },
-      '5' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '5' => bless( {
         'name' => 'custom_target_value_low',
         'number' => 5,
-        'scale' => '1',
         'type' => {}
-      },
-      '6' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '6' => bless( {
         'name' => 'custom_target_value_high',
         'number' => 6,
-        'scale' => '1',
         'type' => {}
-      },
-      '7' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '7' => bless( {
         'name' => 'intensity',
         'number' => 7,
-        'scale' => '1',
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'custom_target_value_high' => {},
       'custom_target_value_low' => {},
       'duration_type' => {},
@@ -4290,145 +4227,128 @@ $profile = {
   '3' => {
     'context' => 'SETTINGS FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'friendly_name',
         'number' => 0,
-        'scale' => '1',
         'type' => {}
-      },
-      '1' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'gender',
         'number' => 1,
-        'scale' => '1',
         'type' => {}
-      },
-      '10' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '10' => bless( {
         'name' => 'default_max_biking_heart_rate',
         'number' => 10,
-        'scale' => '1',
         'type' => {},
-        'units' => 'bpm'
-      },
-      '11' => {
+        'unit' => 'bpm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '11' => bless( {
         'name' => 'default_max_heart_rate',
         'number' => 11,
-        'scale' => '1',
         'type' => {},
-        'units' => 'bpm'
-      },
-      '12' => {
+        'unit' => 'bpm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '12' => bless( {
         'name' => 'hr_setting',
         'number' => 12,
-        'scale' => '1',
         'type' => {}
-      },
-      '13' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '13' => bless( {
         'name' => 'speed_setting',
         'number' => 13,
-        'scale' => '1',
         'type' => {}
-      },
-      '14' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '14' => bless( {
         'name' => 'dist_setting',
         'number' => 14,
-        'scale' => '1',
         'type' => {}
-      },
-      '16' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '16' => bless( {
         'name' => 'power_setting',
         'number' => 16,
-        'scale' => '1',
         'type' => {}
-      },
-      '17' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '17' => bless( {
         'name' => 'activity_class',
         'number' => 17,
-        'scale' => '1',
         'type' => {}
-      },
-      '18' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '18' => bless( {
         'name' => 'position_setting',
         'number' => 18,
-        'scale' => '1',
         'type' => {}
-      },
-      '2' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'age',
         'number' => 2,
-        'scale' => '1',
         'type' => {},
-        'units' => 'years'
-      },
-      '21' => {
+        'unit' => 'years'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '21' => bless( {
         'name' => 'temperature_setting',
         'number' => 21,
-        'scale' => '1',
         'type' => {}
-      },
-      '22' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '22' => bless( {
         'name' => 'local_id',
         'number' => 22,
         'type' => {}
-      },
-      '23' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '23' => bless( {
+        'array' => '6',
         'name' => 'global_id',
         'number' => 23,
         'type' => {}
-      },
-      '254' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
         'type' => {}
-      },
-      '3' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'height',
         'number' => 3,
-        'scale' => '100',
+        'scale' => 100,
         'type' => {},
-        'units' => 'm'
-      },
-      '4' => {
+        'unit' => 'm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '4' => bless( {
         'name' => 'weight',
         'number' => 4,
-        'scale' => '10',
+        'scale' => 10,
         'type' => {},
-        'units' => 'kg'
-      },
-      '5' => {
+        'unit' => 'kg'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '5' => bless( {
         'name' => 'language',
         'number' => 5,
-        'scale' => '1',
         'type' => {}
-      },
-      '6' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '6' => bless( {
         'name' => 'elev_setting',
         'number' => 6,
-        'scale' => '1',
         'type' => {}
-      },
-      '7' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '7' => bless( {
         'name' => 'weight_setting',
         'number' => 7,
-        'scale' => '1',
         'type' => {}
-      },
-      '8' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '8' => bless( {
         'name' => 'resting_heart_rate',
         'number' => 8,
-        'scale' => '1',
         'type' => {},
-        'units' => 'bpm'
-      },
-      '9' => {
+        'unit' => 'bpm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '9' => bless( {
         'name' => 'default_max_running_heart_rate',
         'number' => 9,
-        'scale' => '1',
         'type' => {},
-        'units' => 'bpm'
-      },
+        'unit' => 'bpm'
+      }, 'Garmin::FIT::Streamer::Field' ),
       'activity_class' => {},
       'age' => {},
-      'array' => '6',
       'default_max_biking_heart_rate' => {},
       'default_max_heart_rate' => {},
       'default_max_running_heart_rate' => {},
@@ -4456,93 +4376,89 @@ $profile = {
   '30' => {
     'context' => 'WEIGHT SCALE FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'weight',
         'number' => 0,
-        'scale' => '100',
+        'scale' => 100,
         'type' => {},
-        'units' => 'kg'
-      },
-      '1' => {
+        'unit' => 'kg'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'percent_fat',
         'number' => 1,
-        'scale' => '100',
+        'scale' => 100,
         'type' => {},
-        'units' => '%'
-      },
-      '10' => {
+        'unit' => '%'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '10' => bless( {
         'name' => 'metabolic_age',
         'number' => 10,
-        'scale' => '1',
         'type' => {},
-        'units' => 'years'
-      },
-      '11' => {
+        'unit' => 'years'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '11' => bless( {
         'name' => 'visceral_fat_rating',
         'number' => 11,
-        'scale' => '1',
         'type' => {}
-      },
-      '12' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '12' => bless( {
         'name' => 'user_profile_index',
         'number' => 12,
         'type' => {}
-      },
-      '2' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'percent_hydration',
         'number' => 2,
-        'scale' => '100',
+        'scale' => 100,
         'type' => {},
-        'units' => '%'
-      },
-      '253' => {
+        'unit' => '%'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
-        'scale' => '1',
         'type' => {},
-        'units' => 's'
-      },
-      '3' => {
+        'unit' => 's'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'visceral_fat_mass',
         'number' => 3,
-        'scale' => '100',
+        'scale' => 100,
         'type' => {},
-        'units' => 'kg'
-      },
-      '4' => {
+        'unit' => 'kg'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '4' => bless( {
         'name' => 'bone_mass',
         'number' => 4,
-        'scale' => '100',
+        'scale' => 100,
         'type' => {},
-        'units' => 'kg'
-      },
-      '5' => {
+        'unit' => 'kg'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '5' => bless( {
         'name' => 'muscle_mass',
         'number' => 5,
-        'scale' => '100',
+        'scale' => 100,
         'type' => {},
-        'units' => 'kg'
-      },
-      '7' => {
+        'unit' => 'kg'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '7' => bless( {
         'name' => 'basal_met',
         'number' => 7,
-        'scale' => '4',
+        'scale' => 4,
         'type' => {},
-        'units' => 'kcal/day'
-      },
-      '8' => {
+        'unit' => 'kcal/day'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '8' => bless( {
         'name' => 'physique_rating',
         'number' => 8,
-        'scale' => '1',
         'type' => {}
-      },
-      '9' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '9' => bless( {
         'name' => 'active_met',
         'number' => 9,
-        'scale' => '4',
+        'scale' => 4,
         'type' => {},
-        'units' => 'kcal/day'
-      },
+        'unit' => 'kcal/day'
+      }, 'Garmin::FIT::Streamer::Field' ),
       'active_met' => {},
       'basal_met' => {},
       'bone_mass' => {},
@@ -4563,21 +4479,21 @@ $profile = {
   '31' => {
     'context' => 'COURSE FILE MESSAGES',
     'fields' => {
-      '4' => {
+      '4' => bless( {
         'name' => 'sport',
         'number' => 4,
         'type' => {}
-      },
-      '5' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '5' => bless( {
         'name' => 'name',
         'number' => 5,
         'type' => {}
-      },
-      '6' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '6' => bless( {
         'name' => 'capabilities',
         'number' => 6,
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'capabilities' => {},
       'name' => {},
       'sport' => {}
@@ -4588,49 +4504,45 @@ $profile = {
   '32' => {
     'context' => 'COURSE FILE MESSAGES',
     'fields' => {
-      '1' => {
+      '1' => bless( {
         'name' => 'timestamp',
         'number' => 1,
-        'scale' => '1',
         'type' => {}
-      },
-      '2' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'position_lat',
         'number' => 2,
-        'scale' => '1',
         'type' => {},
-        'units' => 'semicircles'
-      },
-      '254' => {
+        'unit' => 'semicircles'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
         'type' => {}
-      },
-      '3' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'position_long',
         'number' => 3,
-        'scale' => '1',
         'type' => {},
-        'units' => 'semicircles'
-      },
-      '4' => {
+        'unit' => 'semicircles'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '4' => bless( {
         'name' => 'distance',
         'number' => 4,
-        'scale' => '100',
+        'scale' => 100,
         'type' => {},
-        'units' => 'm'
-      },
-      '5' => {
+        'unit' => 'm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '5' => bless( {
         'name' => 'type',
         'number' => 5,
-        'scale' => '1',
         'type' => {}
-      },
-      '6' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '6' => bless( {
         'name' => 'name',
         'number' => 6,
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'distance' => {},
       'message_index' => {},
       'name' => {},
@@ -4645,46 +4557,46 @@ $profile = {
   '33' => {
     'context' => 'TOTALS FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'timer_time',
         'number' => 0,
         'type' => {},
-        'units' => 's'
-      },
-      '1' => {
+        'unit' => 's'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'distance',
         'number' => 1,
         'type' => {},
-        'units' => 'm'
-      },
-      '2' => {
+        'unit' => 'm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'calories',
         'number' => 2,
         'type' => {},
-        'units' => 'kcal'
-      },
-      '253' => {
+        'unit' => 'kcal'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
         'type' => {},
-        'units' => 's'
-      },
-      '254' => {
+        'unit' => 's'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
         'type' => {}
-      },
-      '3' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'sport',
         'number' => 3,
         'type' => {}
-      },
-      '4' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '4' => bless( {
         'name' => 'elapsed_time',
         'number' => 4,
         'type' => {},
-        'units' => 's'
-      },
+        'unit' => 's'
+      }, 'Garmin::FIT::Streamer::Field' ),
       'calories' => {},
       'distance' => {},
       'elapsed_time' => {},
@@ -4699,49 +4611,48 @@ $profile = {
   '34' => {
     'context' => 'ACTIVITY FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'total_timer_time',
         'number' => 0,
-        'scale' => '1000',
+        'scale' => 1000,
         'type' => {},
-        'units' => 's'
-      },
-      '1' => {
+        'unit' => 's'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'num_sessions',
         'number' => 1,
-        'scale' => '1',
         'type' => {}
-      },
-      '2' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'type',
         'number' => 2,
         'type' => {}
-      },
-      '253' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
         'type' => {}
-      },
-      '3' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'event',
         'number' => 3,
         'type' => {}
-      },
-      '4' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '4' => bless( {
         'name' => 'event_type',
         'number' => 4,
         'type' => {}
-      },
-      '5' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '5' => bless( {
         'name' => 'local_timestamp',
         'number' => 5,
         'type' => {}
-      },
-      '6' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '6' => bless( {
         'name' => 'event_group',
         'number' => 6,
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'event' => {},
       'event_group' => {},
       'event_type' => {},
@@ -4757,22 +4668,22 @@ $profile = {
   '35' => {
     'context' => 'DEVICE FILE MESSAGES',
     'fields' => {
-      '254' => {
+      '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
         'type' => {}
-      },
-      '3' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'version',
         'number' => 3,
-        'scale' => '100',
+        'scale' => 100,
         'type' => {}
-      },
-      '5' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '5' => bless( {
         'name' => 'part_number',
         'number' => 5,
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'message_index' => {},
       'part_number' => {},
       'version' => {}
@@ -4783,37 +4694,37 @@ $profile = {
   '37' => {
     'context' => 'DEVICE FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'type',
         'number' => 0,
         'type' => {}
-      },
-      '1' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'flags',
         'number' => 1,
         'type' => {}
-      },
-      '2' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'directory',
         'number' => 2,
         'type' => {}
-      },
-      '254' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
         'type' => {}
-      },
-      '3' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'max_count',
         'number' => 3,
         'type' => {}
-      },
-      '4' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '4' => bless( {
         'name' => 'max_size',
         'number' => 4,
         'type' => {},
-        'units' => 'bytes'
-      },
+        'unit' => 'bytes'
+      }, 'Garmin::FIT::Streamer::Field' ),
       'directory' => {},
       'flags' => {},
       'max_count' => {},
@@ -4827,31 +4738,31 @@ $profile = {
   '38' => {
     'context' => 'DEVICE FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'file',
         'number' => 0,
         'type' => {}
-      },
-      '1' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'mesg_num',
         'number' => 1,
         'type' => {}
-      },
-      '2' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'count_type',
         'number' => 2,
         'type' => {}
-      },
-      '254' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
         'type' => {}
-      },
-      '3' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'count',
         'number' => 3,
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'count' => {},
       'count_type' => {},
       'file' => {},
@@ -4864,31 +4775,31 @@ $profile = {
   '39' => {
     'context' => 'DEVICE FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'file',
         'number' => 0,
         'type' => {}
-      },
-      '1' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'mesg_num',
         'number' => 1,
         'type' => {}
-      },
-      '2' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'field_num',
         'number' => 2,
         'type' => {}
-      },
-      '254' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
         'type' => {}
-      },
-      '3' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'count',
         'number' => 3,
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'count' => {},
       'field_num' => {},
       'file' => {},
@@ -4901,23 +4812,21 @@ $profile = {
   '4' => {
     'context' => 'SETTINGS FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'enabled',
         'number' => 0,
         'type' => {}
-      },
-      '1' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'hrm_ant_id',
         'number' => 1,
-        'scale' => '1',
         'type' => {}
-      },
-      '254' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
-        'scale' => '1',
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'enabled' => {},
       'hrm_ant_id' => {},
       'message_index' => {}
@@ -4928,16 +4837,16 @@ $profile = {
   '49' => {
     'context' => 'COMMON MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'software_version',
         'number' => 0,
         'type' => {}
-      },
-      '1' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'hardware_version',
         'number' => 1,
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'hardware_version' => {},
       'software_version' => {}
     },
@@ -4947,42 +4856,40 @@ $profile = {
   '5' => {
     'context' => 'SETTINGS FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'enabled',
         'number' => 0,
         'type' => {}
-      },
-      '1' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'sdm_ant_id',
         'number' => 1,
-        'scale' => '1',
         'type' => {}
-      },
-      '2' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'sdm_cal_factor',
         'number' => 2,
-        'scale' => '10',
+        'scale' => 10,
         'type' => {},
-        'units' => '%'
-      },
-      '254' => {
+        'unit' => '%'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
-        'scale' => '1',
         'type' => {}
-      },
-      '3' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'odometer',
         'number' => 3,
-        'scale' => '100',
+        'scale' => 100,
         'type' => {},
-        'units' => 'm'
-      },
-      '4' => {
+        'unit' => 'm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '4' => bless( {
         'name' => 'speed_source',
         'number' => 4,
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'enabled' => {},
       'message_index' => {},
       'odometer' => {},
@@ -4996,77 +4903,69 @@ $profile = {
   '51' => {
     'context' => 'WEIGHT SCALE FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'systolic_pressure',
         'number' => 0,
-        'scale' => '1',
         'type' => {},
-        'units' => 'mmHg'
-      },
-      '1' => {
+        'unit' => 'mmHg'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'diastolic_pressure',
         'number' => 1,
-        'scale' => '1',
         'type' => {},
-        'units' => 'mmHg'
-      },
-      '2' => {
+        'unit' => 'mmHg'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'mean_arterial_pressure',
         'number' => 2,
-        'scale' => '1',
         'type' => {},
-        'units' => 'mmHg'
-      },
-      '253' => {
+        'unit' => 'mmHg'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
-        'scale' => '1',
         'type' => {},
-        'units' => 's'
-      },
-      '3' => {
+        'unit' => 's'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'map_3_sample_mean',
         'number' => 3,
-        'scale' => '1',
         'type' => {},
-        'units' => 'mmHg'
-      },
-      '4' => {
+        'unit' => 'mmHg'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '4' => bless( {
         'name' => 'map_morning_values',
         'number' => 4,
-        'scale' => '1',
         'type' => {},
-        'units' => 'mmHg'
-      },
-      '5' => {
+        'unit' => 'mmHg'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '5' => bless( {
         'name' => 'map_evening_values',
         'number' => 5,
-        'scale' => '1',
         'type' => {},
-        'units' => 'mmHg'
-      },
-      '6' => {
+        'unit' => 'mmHg'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '6' => bless( {
         'name' => 'heart_rate',
         'number' => 6,
-        'scale' => '1',
         'type' => {},
-        'units' => 'bpm'
-      },
-      '7' => {
+        'unit' => 'bpm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '7' => bless( {
         'name' => 'heart_rate_type',
         'number' => 7,
         'type' => {}
-      },
-      '8' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '8' => bless( {
         'name' => 'status',
         'number' => 8,
         'type' => {}
-      },
-      '9' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '9' => bless( {
         'name' => 'user_profile_index',
         'number' => 9,
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'diastolic_pressure' => {},
       'heart_rate' => {},
       'heart_rate_type' => {},
@@ -5085,126 +4984,116 @@ $profile = {
   '6' => {
     'context' => 'SETTINGS FILE MESSAGES',
     'fields' => {
-      '0' => {
+      '0' => bless( {
         'name' => 'name',
         'number' => 0,
-        'scale' => '1',
         'type' => {}
-      },
-      '1' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '1' => bless( {
         'name' => 'sport',
         'number' => 1,
-        'scale' => '1',
         'type' => {}
-      },
-      '10' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '10' => bless( {
         'name' => 'bike_weight',
         'number' => 10,
-        'scale' => '10',
+        'scale' => 10,
         'type' => {},
-        'units' => 'kg'
-      },
-      '11' => {
+        'unit' => 'kg'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '11' => bless( {
         'name' => 'power_cal_factor',
         'number' => 11,
-        'scale' => '10',
+        'scale' => 10,
         'type' => {},
-        'units' => '%'
-      },
-      '12' => {
+        'unit' => '%'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '12' => bless( {
         'name' => 'auto_wheel_cal',
         'number' => 12,
-        'scale' => '1',
         'type' => {}
-      },
-      '13' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '13' => bless( {
         'name' => 'auto_power_zero',
         'number' => 13,
-        'scale' => '1',
         'type' => {}
-      },
-      '14' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '14' => bless( {
         'name' => 'id',
         'number' => 14,
         'type' => {}
-      },
-      '15' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '15' => bless( {
         'name' => 'spd_enabled',
         'number' => 15,
         'type' => {}
-      },
-      '16' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '16' => bless( {
         'name' => 'cad_enabled',
         'number' => 16,
         'type' => {}
-      },
-      '17' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '17' => bless( {
         'name' => 'spdcad_enabled',
         'number' => 17,
         'type' => {}
-      },
-      '18' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '18' => bless( {
         'name' => 'power_enabled',
         'number' => 18,
         'type' => {}
-      },
-      '2' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'sub_sport',
         'number' => 2,
-        'scale' => '1',
         'type' => {}
-      },
-      '254' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
-        'scale' => '1',
         'type' => {}
-      },
-      '3' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'odometer',
         'number' => 3,
-        'scale' => '100',
+        'scale' => 100,
         'type' => {},
-        'units' => 'm'
-      },
-      '4' => {
+        'unit' => 'm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '4' => bless( {
         'name' => 'bike_spd_ant_id',
         'number' => 4,
-        'scale' => '1',
         'type' => {}
-      },
-      '5' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '5' => bless( {
         'name' => 'bike_cad_ant_id',
         'number' => 5,
-        'scale' => '1',
         'type' => {}
-      },
-      '6' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '6' => bless( {
         'name' => 'bike_spdcad_ant_id',
         'number' => 6,
-        'scale' => '1',
         'type' => {}
-      },
-      '7' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '7' => bless( {
         'name' => 'bike_power_ant_id',
         'number' => 7,
-        'scale' => '1',
         'type' => {}
-      },
-      '8' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '8' => bless( {
         'name' => 'custom_wheelsize',
         'number' => 8,
-        'scale' => '1000',
+        'scale' => 1000,
         'type' => {},
-        'units' => 'm'
-      },
-      '9' => {
+        'unit' => 'm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '9' => bless( {
         'name' => 'auto_wheelsize',
         'number' => 9,
-        'scale' => '1000',
+        'scale' => 1000,
         'type' => {},
-        'units' => 'm'
-      },
+        'unit' => 'm'
+      }, 'Garmin::FIT::Streamer::Field' ),
       'auto_power_zero' => {},
       'auto_wheel_cal' => {},
       'auto_wheelsize' => {},
@@ -5232,36 +5121,31 @@ $profile = {
   '7' => {
     'context' => 'SPORT SETTINGS FILE MESSAGES',
     'fields' => {
-      '1' => {
+      '1' => bless( {
         'name' => 'max_heart_rate',
         'number' => 1,
-        'scale' => '1',
         'type' => {}
-      },
-      '2' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'threshold_heart_rate',
         'number' => 2,
-        'scale' => '1',
         'type' => {}
-      },
-      '3' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '3' => bless( {
         'name' => 'functional_threshold_power',
         'number' => 3,
-        'scale' => '1',
         'type' => {}
-      },
-      '5' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '5' => bless( {
         'name' => 'hr_calc_type',
         'number' => 5,
-        'scale' => '1',
         'type' => {}
-      },
-      '7' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '7' => bless( {
         'name' => 'pwr_calc_type',
         'number' => 7,
-        'scale' => '1',
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'functional_threshold_power' => {},
       'hr_calc_type' => {},
       'max_heart_rate' => {},
@@ -5274,25 +5158,22 @@ $profile = {
   '8' => {
     'context' => 'SPORT SETTINGS FILE MESSAGES',
     'fields' => {
-      '1' => {
+      '1' => bless( {
         'name' => 'high_bpm',
         'number' => 1,
-        'scale' => '1',
         'type' => {},
-        'units' => 'bpm'
-      },
-      '2' => {
+        'unit' => 'bpm'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'name',
         'number' => 2,
-        'scale' => '1',
         'type' => {}
-      },
-      '254' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
-        'scale' => '1',
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'high_bpm' => {},
       'message_index' => {},
       'name' => {}
@@ -5303,25 +5184,22 @@ $profile = {
   '9' => {
     'context' => 'SPORT SETTINGS FILE MESSAGES',
     'fields' => {
-      '1' => {
+      '1' => bless( {
         'name' => 'high_value',
         'number' => 1,
-        'scale' => '1',
         'type' => {},
-        'units' => 'watts'
-      },
-      '2' => {
+        'unit' => 'watts'
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '2' => bless( {
         'name' => 'name',
         'number' => 2,
-        'scale' => '1',
         'type' => {}
-      },
-      '254' => {
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
-        'scale' => '1',
         'type' => {}
-      },
+      }, 'Garmin::FIT::Streamer::Field' ),
       'high_value' => {},
       'message_index' => {},
       'name' => {}

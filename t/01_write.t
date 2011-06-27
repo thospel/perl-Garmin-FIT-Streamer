@@ -43,9 +43,9 @@ is(unpack("H*", $content),
    "Expected byte sequence");
 
 $fit = Garmin::FIT::Streamer->new;
-my %definition;
+my %message;
 # unnamed entries
-$definition{file_id} = $fit->define(
+$message{file_id} = $fit->define(
     0,	# file_id
     {
         number		=> 0,	# type
@@ -65,7 +65,7 @@ $definition{file_id} = $fit->define(
     },
 );
 # Named and numbered entries
-$definition{record} = $fit->define(
+$message{record} = $fit->define(
     "record",
     "heart_rate",
     4,		# cadence
@@ -74,7 +74,7 @@ $definition{record} = $fit->define(
         type	=> "uint32",
     }, "speed",
 );
-$definition{unknown_id} = $fit->define(
+$message{unknown_id} = $fit->define(
     UNKNOWN,	# Some id not in the profile
     {
         number		=> 0,
@@ -84,12 +84,12 @@ $definition{unknown_id} = $fit->define(
         type		=> "uint16",
     },
 );
-$fit->put($definition{file_id}, 4, 15, 22, 1234, 621463080);
-$fit->put($definition{record}, 140, 88,  510, 2800);
-$fit->put($definition{record}, 143, 90, 2080, 2920);
-$fit->put($definition{record}, 144, 92, 3710, 3050);
-$fit->put($definition{unknown_id}, 124, 68);
-$fit->put($definition{unknown_id}, undef, undef);
+$fit->put($message{file_id}, 4, 15, 22, 1234, 621463080);
+$fit->put($message{record}, 140, 88,  510, 2800);
+$fit->put($message{record}, 143, 90, 2080, 2920);
+$fit->put($message{record}, 144, 92, 3710, 3050);
+$fit->put($message{unknown_id}, 124, 68);
+$fit->put($message{unknown_id}, undef, undef);
 $out = $fit->out;
 is(unpack("H*", $out),
    "0c107800640000002e46495440000000000500010001028402028403048c04048600040f001600d204000028c60a25410000140004030102040102050486060284018c58fe010000f00a018f5a20080000680b01905c7e0e0000ea0b420000e80302000100ff0284027c440002ffffff7b36",

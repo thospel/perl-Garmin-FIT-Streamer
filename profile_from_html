@@ -8,7 +8,7 @@ our $VERSION = "1.000";
 $INC{"Garmin/FIT/Streamer/Profile.pm"} = "dummy";
 
 use lib "lib";
-require Garmin::FIT::Streamer::Type;
+require Garmin::FIT::Streamer::Message;
 
 use Data::Dumper;
 $Data::Dumper::Indent = 1;
@@ -323,7 +323,7 @@ sub profile_from_sheets {
             die "is a number" if $message_name =~ /^[0-9]+\z/;
             my $message_number = $message_numbers->{lc $message_name} ||
                 die "No corresponding mesg_num";
-            defined($message_number = $message_number->{number}) ||
+            defined($message_number = $message_number->{value}) ||
                 die "No message number value";
             $message_number =~ /^[1-9][0-9]*\z|^0\z/ ||
                 die "message number '$message_number' is not a number";
@@ -331,46 +331,30 @@ sub profile_from_sheets {
             my %fields;
             for my $row (@{$message->{table}}) {
                 defined(my $field_number = $row->{field_def_nr}) || next;
-                $field_number =~ /^[1-9][0-9]*\z|^0\z/ ||
-                    die "Field number '$field_number' is not a number";
-                defined(my $field_name = $row->{field_name}) ||
-                    die "Missing field_name";
-                die "Field '$field_name' is a number" if
-                    $field_name =~ /^[0-9]+\z/;
-                defined(my $field_type = $row->{field_type}) ||
-                   die "Missing field_type";
-                my $type = Garmin::FIT::Streamer::Type->from_id($field_type);
-                my %field = (
-                    name	=> $field_name,
-                    number	=> int($field_number),
-                    type	=> $type,
-                    defined($row->{scale} && $row->{scale} ne "1") ? (scale  => $row->{scale}) : (),
-                    $row->{offset} ? (offset => $row->{offset}) : (),
-                    defined $row->{units} ? (units  => $row->{units}) : (),
-                    $row->{bits} ? (bits => $row->{bits}) : (),
-                    $row->{accumulate} ? (accumulate => $row->{accumulate}) : (),
-                   );
+
+                my $array;
                 if (defined $row->{array}) {
                     $row->{array} =~ /^\[(.+)\]\z/ ||
                         die "Could not parse array specification '$row->{array}'";
-                    $fields{array} = $1;
+                    $array = $1;
                 }
-                my $splits;
-                for my $name (qw(bits scale offset units accumulate)) {
-                    defined $field{$name} && $field{$name} =~ /,/ || next;
-                    $field{$name} = [split /\s*,\s*/, $field{$name}];
-                    if (defined $splits) {
-                        $splits == @{$field{$name}} ||
-                            die "Inconsistent number of splits";
-                    } else {
-                        $splits = @{$field{$name}};
-                    }
-                }
-                die "Multiple fields called $field_name" if
-                    $fields{lc $field_name};
+
+                my $field = Garmin::FIT::Streamer::Field->new(
+                    name	=> $row->{field_name},
+                    number	=> $field_number,
+                    type	=> $row->{field_type},
+                    scale	=> $row->{scale},
+                    offset	=> $row->{offset},
+                    bits	=> $row->{bits},
+                    accumulate	=> $row->{accumulate},
+                    unit	=> $row->{units},
+                    array	=> $array,
+                    );
+                die "Multiple fields called $row->{field_name}" if
+                    $fields{lc $row->{field_name}};
                 die "Multiple fields numbered $field_number" if
                     $fields{$field_number};
-                $fields{lc $field_name} = $fields{$field_number} = \%field;
+                $fields{lc $row->{field_name}} = $fields{$field_number} = $field;
             }
             %fields || die "No usable rows";
 

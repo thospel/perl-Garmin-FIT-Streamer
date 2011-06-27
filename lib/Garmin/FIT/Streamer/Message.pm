@@ -1,4 +1,4 @@
-package Garmin::FIT::Streamer::Definition;
+package Garmin::FIT::Streamer::Message;
 use strict;
 use warnings;
 
@@ -7,8 +7,7 @@ our $VERSION = '1.000';
 use Carp;
 use Scalar::Util qw(refaddr);
 
-require Garmin::FIT::Streamer::BaseType;
-require Garmin::FIT::Streamer::Profile;
+require Garmin::FIT::Streamer::Field;
 
 our @CARP_NOT = qw(Garmin::FIT::Streamer);
 
@@ -115,7 +114,7 @@ sub new {
         die "Field '$field_id': $@" if $@;
     }
 
-    my $definition = {
+    my $mess = {
         # fit		=> $fit,
         message_number	=> $message_number,
         message		=> $message,
@@ -124,9 +123,9 @@ sub new {
         define_string	=> $define_string,
         code_string	=> $code_string,
     };
-    $definition->{id} = sprintf("%X", refaddr($definition));
+    $mess->{id} = sprintf("%X", refaddr($mess));
 
-    return bless $definition, $class;
+    return bless $mess, $class;
 }
 
 sub id {
@@ -142,15 +141,15 @@ sub code_string {
 }
 
 sub define_string {
-    my ($definition, $local_id) = @_;
-    return chr(0x40 + $local_id) . $definition->{define_string};
+    my ($message, $local_id) = @_;
+    return chr(0x40 + $local_id) . $message->{define_string};
 }
 
 sub encode {
-    my ($definition, $local_id, @values) = @_;
+    my ($message, $local_id, @values) = @_;
     my $i = 0;
     for my $value (@values) {
-        my $field = $definition->{fields}[$i++];
+        my $field = $message->{fields}[$i++];
         my $base_type = $field->{type}{base_type};
         if (defined $value) {
             # string: 7
@@ -165,7 +164,7 @@ sub encode {
             $value = $base_type->{invalid};
         }
     }
-    return pack($definition->{code_string}, $local_id, @values);
+    return pack($message->{code_string}, $local_id, @values);
 }
 
 1;
