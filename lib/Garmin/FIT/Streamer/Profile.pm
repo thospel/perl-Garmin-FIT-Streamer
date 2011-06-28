@@ -3198,7 +3198,7 @@ $types->{'workout_hr'}{'values'}{'bpm_offset'} = $types->{'workout_hr'}{'values'
 $types->{'workout_power'}{'base_type'} = $base_types->{'134'};
 $types->{'workout_power'}{'values'}{'watts_offset'} = $types->{'workout_power'}{'values'}{'1000'};
 $profile = {
-  '0' => {
+  '0' => bless( {
     'comment' => 'Must be first message in file.',
     'context' => 'COMMON MESSAGES',
     'fields' => {
@@ -3241,8 +3241,8 @@ $profile = {
     },
     'name' => 'file_id',
     'number' => 0
-  },
-  '1' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '1' => bless( {
     'context' => 'DEVICE FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -3268,8 +3268,8 @@ $profile = {
     },
     'name' => 'capabilities',
     'number' => 1
-  },
-  '10' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '10' => bless( {
     'context' => 'SPORT SETTINGS FILE MESSAGES',
     'fields' => {
       '1' => bless( {
@@ -3303,8 +3303,8 @@ $profile = {
     },
     'name' => 'met_zone',
     'number' => 10
-  },
-  '12' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '12' => bless( {
     'context' => 'SPORT SETTINGS FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -3328,8 +3328,8 @@ $profile = {
     },
     'name' => 'sport',
     'number' => 12
-  },
-  '15' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '15' => bless( {
     'context' => 'GOALS FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -3407,8 +3407,8 @@ $profile = {
     },
     'name' => 'goal',
     'number' => 15
-  },
-  '18' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '18' => bless( {
     'context' => 'ACTIVITY FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -3647,8 +3647,8 @@ $profile = {
     },
     'name' => 'session',
     'number' => 18
-  },
-  '19' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '19' => bless( {
     'context' => 'ACTIVITY FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -3854,8 +3854,8 @@ $profile = {
     },
     'name' => 'lap',
     'number' => 19
-  },
-  '2' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '2' => bless( {
     'context' => 'SETTINGS FILE MESSAGES',
     'fields' => {
       '1' => bless( {
@@ -3867,8 +3867,8 @@ $profile = {
     },
     'name' => 'device_settings',
     'number' => 2
-  },
-  '20' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '20' => bless( {
     'context' => 'ACTIVITY FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -4001,8 +4001,8 @@ $profile = {
     },
     'name' => 'record',
     'number' => 20
-  },
-  '21' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '21' => bless( {
     'context' => 'ACTIVITY FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -4046,8 +4046,8 @@ $profile = {
     },
     'name' => 'event',
     'number' => 21
-  },
-  '23' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '23' => bless( {
     'context' => 'ACTIVITY FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -4125,8 +4125,8 @@ $profile = {
     },
     'name' => 'device_info',
     'number' => 23
-  },
-  '26' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '26' => bless( {
     'context' => 'WORKOUT FILE MESSAGES',
     'fields' => {
       '4' => bless( {
@@ -4156,8 +4156,8 @@ $profile = {
     },
     'name' => 'workout',
     'number' => 26
-  },
-  '27' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '27' => bless( {
     'context' => 'WORKOUT FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -4217,8 +4217,8 @@ $profile = {
     },
     'name' => 'workout_step',
     'number' => 27
-  },
-  '3' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '3' => bless( {
     'context' => 'SETTINGS FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -4366,8 +4366,8 @@ $profile = {
     },
     'name' => 'user_profile',
     'number' => 3
-  },
-  '30' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '30' => bless( {
     'context' => 'WEIGHT SCALE FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -4469,8 +4469,8 @@ $profile = {
     },
     'name' => 'weight_scale',
     'number' => 30
-  },
-  '31' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '31' => bless( {
     'context' => 'COURSE FILE MESSAGES',
     'fields' => {
       '4' => bless( {
@@ -4494,8 +4494,8 @@ $profile = {
     },
     'name' => 'course',
     'number' => 31
-  },
-  '32' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '32' => bless( {
     'context' => 'COURSE FILE MESSAGES',
     'fields' => {
       '1' => bless( {
@@ -4547,8 +4547,8 @@ $profile = {
     },
     'name' => 'course_point',
     'number' => 32
-  },
-  '33' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '33' => bless( {
     'context' => 'TOTALS FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -4601,8 +4601,8 @@ $profile = {
     },
     'name' => 'totals',
     'number' => 33
-  },
-  '34' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '34' => bless( {
     'context' => 'ACTIVITY FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -4658,8 +4658,8 @@ $profile = {
     },
     'name' => 'activity',
     'number' => 34
-  },
-  '35' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '35' => bless( {
     'context' => 'DEVICE FILE MESSAGES',
     'fields' => {
       '254' => bless( {
@@ -4684,8 +4684,8 @@ $profile = {
     },
     'name' => 'software',
     'number' => 35
-  },
-  '37' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '37' => bless( {
     'context' => 'DEVICE FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -4728,8 +4728,8 @@ $profile = {
     },
     'name' => 'file_capabilities',
     'number' => 37
-  },
-  '38' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '38' => bless( {
     'context' => 'DEVICE FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -4765,8 +4765,8 @@ $profile = {
     },
     'name' => 'mesg_capabilities',
     'number' => 38
-  },
-  '39' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '39' => bless( {
     'context' => 'DEVICE FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -4802,8 +4802,8 @@ $profile = {
     },
     'name' => 'field_capabilities',
     'number' => 39
-  },
-  '4' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '4' => bless( {
     'context' => 'SETTINGS FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -4827,8 +4827,8 @@ $profile = {
     },
     'name' => 'hrm_profile',
     'number' => 4
-  },
-  '49' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '49' => bless( {
     'context' => 'COMMON MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -4846,8 +4846,8 @@ $profile = {
     },
     'name' => 'file_creator',
     'number' => 49
-  },
-  '5' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '5' => bless( {
     'context' => 'SETTINGS FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -4893,8 +4893,8 @@ $profile = {
     },
     'name' => 'sdm_profile',
     'number' => 5
-  },
-  '51' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '51' => bless( {
     'context' => 'WEIGHT SCALE FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -4974,8 +4974,8 @@ $profile = {
     },
     'name' => 'blood_pressure',
     'number' => 51
-  },
-  '6' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '6' => bless( {
     'context' => 'SETTINGS FILE MESSAGES',
     'fields' => {
       '0' => bless( {
@@ -5111,8 +5111,8 @@ $profile = {
     },
     'name' => 'bike_profile',
     'number' => 6
-  },
-  '7' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '7' => bless( {
     'context' => 'SPORT SETTINGS FILE MESSAGES',
     'fields' => {
       '1' => bless( {
@@ -5148,8 +5148,8 @@ $profile = {
     },
     'name' => 'zones_target',
     'number' => 7
-  },
-  '8' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '8' => bless( {
     'context' => 'SPORT SETTINGS FILE MESSAGES',
     'fields' => {
       '1' => bless( {
@@ -5174,8 +5174,8 @@ $profile = {
     },
     'name' => 'hr_zone',
     'number' => 8
-  },
-  '9' => {
+  }, 'Garmin::FIT::Streamer::Message' ),
+  '9' => bless( {
     'context' => 'SPORT SETTINGS FILE MESSAGES',
     'fields' => {
       '1' => bless( {
@@ -5200,7 +5200,7 @@ $profile = {
     },
     'name' => 'power_zone',
     'number' => 9
-  },
+  }, 'Garmin::FIT::Streamer::Message' ),
   'activity' => {},
   'bike_profile' => {},
   'blood_pressure' => {},

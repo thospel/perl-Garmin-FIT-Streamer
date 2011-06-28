@@ -15,6 +15,7 @@ sub new {
     my ($class, %params) = @_;
 
     my %field;
+
     defined($field{name} = delete $params{name}) ||
         croak "Missing parameter 'name'";
     croak "Name '$field{name}' looks like a natural" if
@@ -87,6 +88,9 @@ sub new {
             }
         }
     }
+
+    croak "Unknown parameter ", join(", ", keys %params) if %params;
+
     return bless \%field, $class;
 }
 

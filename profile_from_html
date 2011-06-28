@@ -313,22 +313,13 @@ sub types_from_sheets {
 sub profile_from_sheets {
     my ($sheets) = @_;
 
-    my %profile;
     my $messages = $sheets->{messages} || die "No messages sheet";
     my $message_numbers = Garmin::FIT::Streamer::Type->from_id("mesg_num");
-    $message_numbers = $message_numbers->{values} || die "No mesg_num values";
     for my $message_name (sort keys %$messages) {
         eval {
             my $message = $messages->{$message_name};
-            die "is a number" if $message_name =~ /^[0-9]+\z/;
-            my $message_number = $message_numbers->{lc $message_name} ||
-                die "No corresponding mesg_num";
-            defined($message_number = $message_number->{value}) ||
-                die "No message number value";
-            $message_number =~ /^[1-9][0-9]*\z|^0\z/ ||
-                die "message number '$message_number' is not a number";
 
-            my %fields;
+            my @fields;
             for my $row (@{$message->{table}}) {
                 defined(my $field_number = $row->{field_def_nr}) || next;
 
@@ -339,7 +330,7 @@ sub profile_from_sheets {
                     $array = $1;
                 }
 
-                my $field = Garmin::FIT::Streamer::Field->new(
+                push @fields, Garmin::FIT::Streamer::Field->new(
                     name	=> $row->{field_name},
                     number	=> $field_number,
                     type	=> $row->{field_type},
@@ -350,27 +341,19 @@ sub profile_from_sheets {
                     unit	=> $row->{units},
                     array	=> $array,
                     );
-                die "Multiple fields called $row->{field_name}" if
-                    $fields{lc $row->{field_name}};
-                die "Multiple fields numbered $field_number" if
-                    $fields{$field_number};
-                $fields{lc $row->{field_name}} = $fields{$field_number} = $field;
             }
-            %fields || die "No usable rows";
+            @fields || die "No usable rows";
 
-            die "Multiple named profiles" if $profile{lc $message_name};
-            die "Multiple numbered profiles" if $profile{$message_number};
-            $profile{lc $message_name} = $profile{$message_number} = {
-                name	=> $message_name,
-                number	=> int($message_number),
-                defined $message->{context} ? (context => $message->{context}) : (),
-                defined $message->{comment} ? (comment => $message->{comment}) : (),
-                fields	=> \%fields,
-            };
+            Garmin::FIT::Streamer::Message->new(
+                name	=> $message->{name},
+                number	=> $message_numbers->value_value($message->{name}),
+                fields	=> \@fields,
+                context => $message->{context},
+                comment => $message->{comment},
+               );
         };
         die "Definition '$message_name': $@" if $@;
     }
-    return \%profile;
 }
 
 sub unslash {
@@ -390,7 +373,8 @@ spew($profile_dump, Dumper($sheets));
 # Next construct a usable profile out of the perl data structure
 types_from_sheets($sheets);
 my $types = Garmin::FIT::Streamer::Type->types;
-my $profile = profile_from_sheets($sheets);
+profile_from_sheets($sheets);
+my $profile = Garmin::FIT::Streamer::Message->profile;
 $profile = do {
     local $Data::Dumper::Varname = "profile";
     local $Data::Dumper::Purity = 1;

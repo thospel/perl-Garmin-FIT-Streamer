@@ -103,12 +103,25 @@ sub name {
     return shift->{name};
 }
 
+sub base_type {
+    return shift->{base_type};
+}
+
 sub values {
     return shift->{values};
 }
 
-sub base_type {
-    return shift->{base_type};
+sub value {
+    defined $_[1] || croak "No value id argument";
+    return $_[0]->values->{lc $_[1]} || croak "Unknown value id '$_[1]'";
+}
+
+sub value_name {
+    return $_[0]->value($_[1])->{name};
+}
+
+sub value_value {
+    return $_[0]->value($_[1])->{value};
 }
 
 sub from_id {

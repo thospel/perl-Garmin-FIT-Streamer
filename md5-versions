@@ -1,11 +1,11 @@
-# Generated on 2011-06-28 08:06:01 UT using /usr/local/bin/release_pm
+# Generated on 2011-06-28 09:44:51 UT using /usr/local/bin/release_pm
 BEGIN
 SEMANTICS	1.012
 DIGITS		3
 RELEASE		1.000
-DATE		2011-06-28 08:06:01
+DATE		2011-06-28 09:44:51
 VCS_CHECK	1
-VERSION	5af639efe60f6ed52fd0f7cce2c87121 1.000 Changes
+VERSION	974e82176836208038694088ebcd4037 1.000 Changes
 VERSION	cd7e13b1d2f15e6cfe8da0fd40eab69a 1.000 MANIFEST
 VERSION	dda55cd4f160b14565d578ee74b1cba1 1.000 MANIFEST.SKIP
 VERSION	2a2baeccd927b277b8108d76f4a759c4 1.000 Makefile.PL
@@ -14,12 +14,12 @@ VERSION	0b876e217018c74771398247270639ec 1.000 README
 VERSION	873a904c5af8962730bfb5281437b314 1.000 lib/Garmin/FIT/Streamer.pm
 VERSION	e695e1033c8fc223b8b6a9912a8652ee 1.000 lib/Garmin/FIT/Streamer/BaseType.pm
 VERSION	ab750641fd71dddefe2ff440ece182fe 1.000 lib/Garmin/FIT/Streamer/Definition.pm
-VERSION	3b9774a36d3334f758f364c9eaa9a54f 1.000 lib/Garmin/FIT/Streamer/Field.pm
-VERSION	4aa3389dd56208e3ec275cdad7f33515 1.000 lib/Garmin/FIT/Streamer/Message.pm
-VERSION	bcb73611f6b6171ea2c5435db76d234c 1.000 lib/Garmin/FIT/Streamer/Package.pm
-VERSION	3df1bdbf32d33d96f7638c79c657ba88 1.000 lib/Garmin/FIT/Streamer/Profile.pm
-VERSION	09317f646dda434e200f15c8f40d7e9c 1.000 lib/Garmin/FIT/Streamer/Type.pm
-VERSION	b54940177837cf3cdb7856740bb67dff 1.000 profile_from_html
+VERSION	b79b92508dc47ca80ddccdd192377623 1.000 lib/Garmin/FIT/Streamer/Field.pm
+VERSION	e3e75ca701c5c677ea8d965df8f58608 1.000 lib/Garmin/FIT/Streamer/Message.pm
+VERSION	f38e1b2465c7dae0827d0942b586ef8d 1.000 lib/Garmin/FIT/Streamer/Package.pm
+VERSION	e3a735cd24e8d318551182ae2051b347 1.000 lib/Garmin/FIT/Streamer/Profile.pm
+VERSION	02b4051fc1dc97be770d13e7180c53ba 1.000 lib/Garmin/FIT/Streamer/Type.pm
+VERSION	3199a68dfd9d4bc30c5ee8542f301977 1.000 profile_from_html
 VERSION	269ab364379e1ee1842e547e0c07281a 1.000 t/00_load.t
 VERSION	4bc38f018770dd20747745ea28e731c7 1.000 t/01_write.t
 VERSION	01bfca8ba9f7ed1753351a1ac6609865 1.000 t/02_read.t
