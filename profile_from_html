@@ -312,8 +312,8 @@ sub types_from_sheets {
 
 sub profile_from_sheets {
     my ($sheets) = @_;
-    my %profile;
 
+    my %profile;
     my $messages = $sheets->{messages} || die "No messages sheet";
     my $message_numbers = Garmin::FIT::Streamer::Type->from_id("mesg_num");
     $message_numbers = $message_numbers->{values} || die "No mesg_num values";
@@ -368,7 +368,7 @@ sub profile_from_sheets {
                 fields	=> \%fields,
             };
         };
-        die "Message '$message_name': $@" if $@;
+        die "Definition '$message_name': $@" if $@;
     }
     return \%profile;
 }

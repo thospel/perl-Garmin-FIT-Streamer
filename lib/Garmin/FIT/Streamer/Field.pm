@@ -9,6 +9,8 @@ use Scalar::Util qw(looks_like_number);
 
 require Garmin::FIT::Streamer::Type;
 
+our @CARP_NOT = qw(Garmin::FIT::Streamer::Type);
+
 sub new {
     my ($class, %params) = @_;
 

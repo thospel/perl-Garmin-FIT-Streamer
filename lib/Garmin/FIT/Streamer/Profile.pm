@@ -11,16 +11,10 @@ our $base_types;
 package Garmin::FIT::Streamer::Type;
 our $types;
 
-package Garmin::FIT::Streamer::Profile;
+package Garmin::FIT::Streamer::Message;
 our $profile;
 
-sub types {
-    return $types;
-}
-
-sub profile {
-    return $profile;
-}
+package Garmin::FIT::Streamer::Profile;
 
 # BEGIN GENERATED
 # Generated from file 'Profile.html' by program 'profile_from_html'
@@ -1230,7 +1224,7 @@ $types = {
         'value' => 6
       },
       '9' => {
-        'comment' => 'Read only, single file. Circular buffer. All message messages at start of file. Directory=Weight',
+        'comment' => 'Read only, single file. Circular buffer. All message definitions at start of file. Directory=Weight',
         'name' => 'weight',
         'value' => 9
       },

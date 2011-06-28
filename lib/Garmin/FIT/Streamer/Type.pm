@@ -8,7 +8,8 @@ use Carp;
 
 our $types;
 require Garmin::FIT::Streamer::BaseType;
-require Garmin::FIT::Streamer::Profile;
+
+our @CARP_NOT = qw(Garmin::FIT::Streamer::BaseType);
 
 sub types {
     return $types;
@@ -104,6 +105,10 @@ sub name {
 
 sub values {
     return shift->{values};
+}
+
+sub base_type {
+    return shift->{base_type};
 }
 
 sub from_id {

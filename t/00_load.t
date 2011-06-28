@@ -9,16 +9,17 @@ use warnings;
 
 our $VERSION = "1.000";
 
-use Test::More tests => 12;
+use Test::More tests => 13;
 
 for my $module
     qw(
        Garmin::FIT::Streamer::Package
+       Garmin::FIT::Streamer::Profile
        Garmin::FIT::Streamer::BaseType
        Garmin::FIT::Streamer::Type
        Garmin::FIT::Streamer::Field
        Garmin::FIT::Streamer::Message
-       Garmin::FIT::Streamer::Profile
+       Garmin::FIT::Streamer::Definition
        Garmin::FIT::Streamer
 ) {
         use_ok($module) || BAIL_OUT("Cannot even use $module");

@@ -87,7 +87,7 @@ BEGIN {
     use vars qw(%postamble);
 
     $postamble{profile} = <<'EOT';
-lib/Garmin/FIT/Streamer/Profile.pm Profile.dump: profile_from_html Profile.html lib/Garmin/FIT/Streamer/BaseType.pm lib/Garmin/FIT/Streamer/Type.pm lib/Garmin/FIT/Streamer/Field.pm lib/Garmin/FIT/Streamer/Message.pm
+lib/Garmin/FIT/Streamer/Profile.pm Profile.dump: profile_from_html Profile.html lib/Garmin/FIT/Streamer/BaseType.pm lib/Garmin/FIT/Streamer/Type.pm lib/Garmin/FIT/Streamer/Field.pm lib/Garmin/FIT/Streamer/Definition.pm
 	"$(PERLRUN)" profile_from_html lib/Garmin/FIT/Streamer/Profile.pm Profile.dump Profile.html
 EOT
 }

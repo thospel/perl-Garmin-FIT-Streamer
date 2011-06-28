@@ -8,19 +8,13 @@ use Carp;
 use Scalar::Util qw(weaken);
 use Digest::CRC qw(crc16);
 
-use Garmin::FIT::Streamer::Profile;
-use Garmin::FIT::Streamer::Message;
+use Garmin::FIT::Streamer::Definition;
 
-our @CARP_NOT =
-    qw(Garmin::FIT::Streamer::Message
-       Garmin::FIT::Streamer::Profile);
+our @CARP_NOT = qw(Garmin::FIT::Streamer::Definition);
 
 use Data::Dumper;
 $Data::Dumper::Indent = 1;
 $Data::Dumper::Sortkeys = 1;
-
-my $types	= Garmin::FIT::Streamer::Profile->types;
-my $profile	= Garmin::FIT::Streamer::Profile->profile;
 
 use constant {
     HEADER_SIZE	=> 12,
@@ -135,10 +129,10 @@ sub get_define_header {
         $architecture == 1 ? $num1 + $num0 * 256 :
         croak "Invalid architecture $architecture";
     $fit->{in_type} = $fit->{in_types}[$fit->{in_type}] = {
-        nr_fields	=> $nr_fields || croak("Message of 0 fields"),
+        nr_fields	=> $nr_fields || croak("Definition of 0 fields"),
         big_endian	=> $architecture,
         global_nr	=> $num,
-        global_type	=> $profile->{$num},
+        global_type	=> Garmin::FIT::Streamer::Message->try_from_id($num),
     };
     $fit->{in_state} = "get_define_fields";
     $fit->{in_need} = 3*$nr_fields;
@@ -274,7 +268,7 @@ sub make_sender {
 
 sub define {
     my $fit = shift;
-    my $message = Garmin::FIT::Streamer::Message->new(
+    my $message = Garmin::FIT::Streamer::Definition->new(
         message	=> shift,
         fields	=> \@_,
         );
@@ -310,21 +304,6 @@ sub protocol {
 
 sub profile {
     return shift->{profile};
-}
-
-sub type {
-    defined $_[1] || croak "No type argument";
-    return $types->{lc $_[1]} || croak "Unknown type '$_[1]'";
-}
-
-sub message_from_id {
-    defined $_[1] || croak "No message_id argument";
-    return $profile->{lc $_[1]} || croak "Unknown message_id '$_[1]'";
-}
-
-sub try_message_from_id {
-    defined $_[1] || croak "No message_id argument";
-    return $profile->{lc $_[1]};
 }
 
 1;

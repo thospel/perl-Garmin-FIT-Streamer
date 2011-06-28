@@ -9,6 +9,10 @@ use Carp;
 our $base_types;
 require Garmin::FIT::Streamer::Profile;
 
+our @CARP_NOT = qw(
+    Garmin::FIT::Streamer::Profile
+);
+
 sub base_types {
     return $base_types;
 }
