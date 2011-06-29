@@ -18,14 +18,24 @@ sub new {
 
     # defined(my $fit = delete $params{fit}) || croak "No fit parameter";
 
-    defined(my $message_id = delete $params{message}) ||
-        croak "No message parameter";
-    my $message = Garmin::FIT::Streamer::Message->try_from_id($message_id);
-    my $message_fields = $message ? $message->{fields} : $dummy_fields;
-    my $message_number = $message ?
-        $message->{number} :
-        $message_id =~ /^\s*([0-9]+)\s*\z/ ? $1 + 0 :
-        croak "Invalid message parameter '$message_id'";
+    my ($message, $message_number);
+    my $message_id = delete $params{message};
+    if (ref $message_id eq "") {
+        defined $message_id || croak "No message parameter";
+        $message = Garmin::FIT::Streamer::Message->try_from_id($message_id);
+        $message_number = $message ? $message->number : $message_id;
+    } elsif (eval { $message_id->isa("Garmin::FIT::Streamer::Message") }) {
+        $message = $message_id;
+        $message_number = $message->number;
+        $message_id = $message->name;
+    } else {
+        croak "Parameter message is neither a plain value nor a Garmin::FIT::Streamer::Message object but '$message_id'";
+    }
+    $message_number =~ /^\s*\+?([0-9]+)\s*\z/ ||
+        croak "Unknown non-numeric message parameter '$message_number'";
+    $message_number = int($1);
+    $message_number <= 65535 || croak "Parameter 'message' has value '$message_number' but should be at most 65535";
+
 
     defined(my $fields = delete $params{fields}) ||
         croak "No fields parameter";
@@ -34,84 +44,63 @@ sub new {
     @$fields <= 255 || croak "Too many fields (at most 255)";
     @$fields || croak "No fields being defined";
 
-    my $big_endian  = delete $params{big_endian} ? 1 : 0;
+    my $big_endian = delete $params{big_endian} ? 1 : 0;
 
     croak "Unknown parameter ", join(", ", keys %params) if %params;
 
     my $define_string = pack($big_endian ? "xCnC" : "xCvC",
                              $big_endian, $message_number, scalar @$fields);
     my $code_string = "C";
-    my (%fields, $field, $field_id, $field_number, $base_type);
+    my (%fields, $base_type, $model);
 
     my @fields = @$fields;
-    for my $field_id (@fields) {
-        defined $field_id || croak "Undefined field";
-        my $known;
-        if (ref $field_id eq "") {
-            croak "Field '$field_id': Unknown because message '$message_id' is not in the global profile" if $message_fields == $dummy_fields;
-            $field = $known = $message_fields->{lc $field_id} ||
-                croak "Field '$field_id': Unknown because message '$message_id' has no such field in the global profile";
-            $field_number = $field->{number} ||
-                die "Assertion: no field number";
-        } elsif (ref $field_id eq "HASH") {
-            $field = $field_id;
-            defined($field_id = $field_number = $field->{number}) ||
-                croak "No field number";
-        } else {
-            croak "Field '$field' is neither a string nor a HASH reference";
-        }
-        eval {
-            $field_number =~ /^\s*([0-9]+)\s*\z/ ||
-                croak "Field number '$field_number' is not a natural number";
-            $field_number = $1 + 0;
-            $field_number <= 255 || croak "Field number '$field_number' is too high (at most 255)";
-            croak "Multiple uses of field number $field_number" if
-                $fields{$field_number};
-            my $message_field =
-                $message_fields->{$field->{number}} || $dummy_fields;
-
-            my $type = $field->{type};
-            if (defined($type)) {
-                if (ref $type eq "") {
-                    $type = Garmin::FIT::Streamer::Type->from_id($type);
-                    $base_type = $type->base_type;
+    for my $field (@fields) {
+        defined $field || croak "Undefined field";
+        if (ref $field eq "") {
+            $message || croak "Field '$field': Unknown because message '$message_id' is not in the global profile";
+            $model = eval { $message->field_from_id($field) } ||
+                croak "Field '$field': Unknown because message '$message_id' has no such field in the global profile";
+            eval { $field = ref($model)->new(field => $model) };
+            die "Field '$field': $@" if $@;
+            $base_type = $field->base_type;
+        } elsif (ref $field eq "HASH") {
+            if (defined($model = $field->{field})) {
+                if (ref $model eq "") {
+                    $model = $message->field_from_id($model);
+                    $field = Garmin::FIT::Streamer::Field->new(
+                        %$field,
+                        field => $model);
+                } elsif (eval { $field->isa("Garmin::FIT::Streamer::Field") }) {
+                    $field = (ref $field)->new(%$field);
                 } else {
-                    $base_type = $type->{base_type};
-                    eval {$base_type->isa("Garmin::FIT::Streamer::BaseType")} &&
-                        defined $base_type->{name} &&
-                        $base_type == Garmin::FIT::Streamer::BaseType->from_id($base_type->{name}) ||
-                        croak "Corrupt type";
+                    croak "Parameter field is neither a plain value nor a Garmin::FIT::Streamer::Field object but '$model'";
                 }
-                $message_field == $dummy_fields ||
-                    $message_field->{type}{base_type} == $base_type ||
-                    croak "Inconsistent base_type. Field uses '$base_type->{name}' but profile expects '$message_field->{type}{base_type}{name}'";
             } else {
-                $type = $message_field->{type} || croak "No field type";
-                $base_type = $type->{base_type};
+                $field = Garmin::FIT::Streamer::Field->new(%$field);
             }
+            $base_type = $field->base_type;
+            if (my $profile = $field->model || $message && $message->try_field_from_id($field->number)) {
+                if ($profile->base_type != $base_type) {
+                    my $field_number = $field->number;
+                    my $field_name = $base_type->{name};
+                    my $profile_name = $profile->base_type->name;
+                    croak "Field '$field_number': Inconsistent base_type. Field uses '$field_name' but profile expects '$profile_name'";
+                }
+            }
+        } else {
+            croak "Field '$field' is neither a plain value nor a HASH reference";
+        }
+        my $field_number = $field->number;
+        my $size = $field->size ||
+            croak "Field '$field_number': Parameter 'size' is still 0";
+        croak "Multiple uses of field number $field_number" if
+            $fields{$field_number};
+        $fields{$field_number} = 1;
 
-            my $size = $field->{size};
-            if (defined $size) {
-                $size =~ /^\s*([0-9]+)\s*\z/ ||
-                croak "Field size may not be '$size'";
-                $size = $1 + 0 || croak "Field size may not be '$1'";
-                croak "Inconsistent field size '$size' for base type '$base_type->{name}' (size $base_type->{size})" if
-                    $base_type->{size} && $size != $base_type->{size};
-            } else {
-                $size = $base_type->{size} || croak "Base type '$base_type->{name}' without field size";
-            }
-            $define_string .= pack("CCC",
-                                   $field_number, $size, $base_type->{number});
-            $code_string .= $base_type->{decoder}[$big_endian];
-            $code_string .= $size if !$base_type->{size};
-            $field_id = $fields{$field_number} = {
-                number	=> $field_number,
-                type	=> $type,
-                size	=> $size,
-                $known ? (message_field => $known) : (),
-            };
-        };
-        die "Field '$field_id': $@" if $@;
+        $define_string .= pack("CCC",
+                               $field_number, $size, $base_type->number);
+        $code_string .= $base_type->decoder($big_endian);
+        $code_string .= $size if !$base_type->size;
     }
 
     my $mess = {

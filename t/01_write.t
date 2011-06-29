@@ -49,39 +49,41 @@ $message{file_id} = $fit->define(
     0,	# file_id
     {
         number		=> 0,	# type
-        type	=> "enum",
+        type		=> "enum",
     }, {
         number		=> 1,	# manufacturer
-        type	=> "uint16",
+        type		=> "uint16",
     }, {
         number		=> 2,	# product
-        type	=> "uint16",
+        type		=> "uint16",
     }, {
         number		=> 3,	# serial_number
-        type	=> "uint32z",
+        type		=> "uint32z",
     }, {
         number		=> 4,	# time_created
-        type	=> "uint32",
+        type		=> "uint32",
     },
 );
 # Named and numbered entries
 $message{record} = $fit->define(
     "record",
-    "heart_rate",
-    4,		# cadence
     {
-        number		=> 5,	# distance
+        field	=> "heart_rate",
+    },
+    4,			# cadence
+    {
+        number	=> 5,	# distance
         type	=> "uint32",
     }, "speed",
 );
 $message{unknown_id} = $fit->define(
     UNKNOWN,	# Some id not in the profile
     {
-        number		=> 0,
-        type		=> "enum",
+        number	=> 0,
+        type	=> "enum",
     }, {
-        number		=> 255,
-        type		=> "uint16",
+        number	=> 255,
+        type	=> "uint16",
     },
 );
 $fit->put($message{file_id}, 4, 15, 22, 1234, 621463080);
@@ -115,7 +117,7 @@ eval {
         type		=> "uint16",
     });
 };
-like($@, qr{^\QInvalid message parameter 'Waf' at }, "Expected error message");
+like($@, qr{^\QUnknown non-numeric message parameter 'Waf' at }, "Expected error message");
 
 eval {
     $fit->define(20);
@@ -137,7 +139,7 @@ eval {
     }) x 255);
 };
 like($@,
-     qr{^\QField '0': Multiple uses of field number 0 at },
+     qr{^\QMultiple uses of field number 0 at },
      "Expected error message");
 
 eval {
@@ -146,7 +148,7 @@ eval {
     });
 };
 like($@,
-     qr{^\QField '0': No field type at },
+     qr{^\QField '0': Missing parameter 'type' at },
      "Expected error message");
 
 eval {
@@ -167,7 +169,7 @@ eval {
     });
 };
 like($@,
-     qr{^\QField '0': Inconsistent field size '2' for base type 'enum' (size 1) at },
+     qr{^\QField '0': Parameter size '2' is inconsistent with type size '1' at },
      "Expected error message");
 
 eval {
@@ -178,7 +180,7 @@ eval {
     });
 };
 like($@,
-     qr{^\QField '0': Field size may not be '0' at },
+     qr{^\QField '0': Parameter 'size' is still 0 at },
      "Expected error message");
 
 eval {
@@ -189,7 +191,7 @@ eval {
     });
 };
 like($@,
-     qr{^\QField '0': Field size may not be 'big' at },
+     qr{^\QField '0': Parameter 'size' is not a natural number but 'big' at },
      "Expected error message");
 
 eval {
@@ -199,7 +201,7 @@ eval {
     });
 };
 like($@,
-     qr{^\QField '0': Base type 'string' without field size at },
+     qr{^\QField '0': Parameter 'size' is still 0 at },
      "Expected error message");
 
 eval {
@@ -224,10 +226,22 @@ like($@,
      "Expected error message");
 
 eval {
-    $fit->define(0, {
+    $fit->define(UNKNOWN, {
         number	=> 256,
+        type	=> "enum",
     });
 };
 like($@,
      qr{^\QField '256': Field number '256' is too high (at most 255) at },
+     "Expected error message");
+
+
+eval {
+    $fit->define(65536, {
+        number	=> 0,
+        type	=> "enum",
+    });
+};
+like($@,
+     qr{^\QParameter 'message' has value '65536' but should be at most 65535 at },
      "Expected error message");

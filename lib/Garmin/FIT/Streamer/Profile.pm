@@ -233,6 +233,7 @@ $types = {
   'activity' => bless( {
     'base_type' => {},
     'name' => 'activity',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'manual',
@@ -249,6 +250,7 @@ $types = {
   'activity_class' => bless( {
     'base_type' => {},
     'name' => 'activity_class',
+    'size' => 1,
     'values' => {
       '100' => {
         'name' => 'level_max',
@@ -271,6 +273,7 @@ $types = {
   'autolap_trigger' => bless( {
     'base_type' => {},
     'name' => 'autolap_trigger',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'time',
@@ -312,6 +315,7 @@ $types = {
   'battery_status' => bless( {
     'base_type' => {},
     'name' => 'battery_status',
+    'size' => 1,
     'values' => {
       '1' => {
         'name' => 'new',
@@ -343,6 +347,7 @@ $types = {
   'bool' => bless( {
     'base_type' => {},
     'name' => 'bool',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'no',
@@ -359,6 +364,7 @@ $types = {
   'bp_status' => bless( {
     'base_type' => {},
     'name' => 'bp_status',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'no_error',
@@ -389,11 +395,13 @@ $types = {
   }, 'Garmin::FIT::Streamer::Type' ),
   'byte' => bless( {
     'base_type' => {},
-    'name' => 'byte'
+    'name' => 'byte',
+    'size' => 0
   }, 'Garmin::FIT::Streamer::Type' ),
   'course_capabilities' => bless( {
     'base_type' => {},
     'name' => 'course_capabilities',
+    'size' => 4,
     'values' => {
       '1' => {
         'name' => 'processed',
@@ -450,6 +458,7 @@ $types = {
   'course_point' => bless( {
     'base_type' => {},
     'name' => 'course_point',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'generic',
@@ -552,6 +561,7 @@ $types = {
     'base_type' => {},
     'comment' => 'seconds since UTC 00:00 Dec 31 1989',
     'name' => 'date_time',
+    'size' => 4,
     'values' => {
       '268435456' => {
         'comment' => 'if date_time is < 0x10000000 then it is system time (seconds from device power on)',
@@ -564,6 +574,7 @@ $types = {
   'device_index' => bless( {
     'base_type' => {},
     'name' => 'device_index',
+    'size' => 1,
     'values' => {
       '0' => {
         'comment' => 'Creator of the file is always device index 0.',
@@ -576,6 +587,7 @@ $types = {
   'device_type' => bless( {
     'base_type' => {},
     'name' => 'device_type',
+    'size' => 1,
     'values' => {
       '1' => {
         'name' => 'antfs',
@@ -642,6 +654,7 @@ $types = {
   'display_heart' => bless( {
     'base_type' => {},
     'name' => 'display_heart',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'bpm',
@@ -663,6 +676,7 @@ $types = {
   'display_measure' => bless( {
     'base_type' => {},
     'name' => 'display_measure',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'metric',
@@ -679,6 +693,7 @@ $types = {
   'display_position' => bless( {
     'base_type' => {},
     'name' => 'display_position',
+    'size' => 1,
     'values' => {
       '0' => {
         'comment' => 'dd.dddddd',
@@ -937,6 +952,7 @@ $types = {
   'display_power' => bless( {
     'base_type' => {},
     'name' => 'display_power',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'watts',
@@ -952,11 +968,13 @@ $types = {
   }, 'Garmin::FIT::Streamer::Type' ),
   'enum' => bless( {
     'base_type' => {},
-    'name' => 'enum'
+    'name' => 'enum',
+    'size' => 1
   }, 'Garmin::FIT::Streamer::Type' ),
   'event' => bless( {
     'base_type' => {},
     'name' => 'event',
+    'size' => 1,
     'values' => {
       '0' => {
         'comment' => 'Group 0.  Start / stop_all',
@@ -1119,6 +1137,7 @@ $types = {
   'event_type' => bless( {
     'base_type' => {},
     'name' => 'event_type',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'start',
@@ -1175,6 +1194,7 @@ $types = {
   'file' => bless( {
     'base_type' => {},
     'name' => 'file',
+    'size' => 1,
     'values' => {
       '1' => {
         'comment' => 'Read only, single file. Must be in root directory.',
@@ -1247,6 +1267,7 @@ $types = {
   'file_flags' => bless( {
     'base_type' => {},
     'name' => 'file_flags',
+    'size' => 1,
     'values' => {
       '2' => {
         'name' => 'read',
@@ -1269,6 +1290,7 @@ $types = {
     'base_type' => {},
     'comment' => 'fitness equipment event data',
     'name' => 'fitness_equipment_state',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'ready',
@@ -1295,15 +1317,18 @@ $types = {
   }, 'Garmin::FIT::Streamer::Type' ),
   'float32' => bless( {
     'base_type' => {},
-    'name' => 'float32'
+    'name' => 'float32',
+    'size' => 4
   }, 'Garmin::FIT::Streamer::Type' ),
   'float64' => bless( {
     'base_type' => {},
-    'name' => 'float64'
+    'name' => 'float64',
+    'size' => 4
   }, 'Garmin::FIT::Streamer::Type' ),
   'garmin_product' => bless( {
     'base_type' => {},
     'name' => 'garmin_product',
+    'size' => 2,
     'values' => {
       '1' => {
         'name' => 'hrm1',
@@ -1408,6 +1433,7 @@ $types = {
   'gender' => bless( {
     'base_type' => {},
     'name' => 'gender',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'female',
@@ -1424,6 +1450,7 @@ $types = {
   'goal' => bless( {
     'base_type' => {},
     'name' => 'goal',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'time',
@@ -1455,6 +1482,7 @@ $types = {
   'goal_recurrence' => bless( {
     'base_type' => {},
     'name' => 'goal_recurrence',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'off',
@@ -1491,6 +1519,7 @@ $types = {
   'hr_type' => bless( {
     'base_type' => {},
     'name' => 'hr_type',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'normal',
@@ -1507,6 +1536,7 @@ $types = {
   'hr_zone_calc' => bless( {
     'base_type' => {},
     'name' => 'hr_zone_calc',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'custom',
@@ -1528,6 +1558,7 @@ $types = {
   'intensity' => bless( {
     'base_type' => {},
     'name' => 'intensity',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'active',
@@ -1554,6 +1585,7 @@ $types = {
   'language' => bless( {
     'base_type' => {},
     'name' => 'language',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'english',
@@ -1695,6 +1727,7 @@ $types = {
   'lap_trigger' => bless( {
     'base_type' => {},
     'name' => 'lap_trigger',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'manual',
@@ -1746,11 +1779,13 @@ $types = {
   'local_date_time' => bless( {
     'base_type' => {},
     'comment' => 'seconds since 00:00 Dec 31 1989 in local time zone',
-    'name' => 'local_date_time'
+    'name' => 'local_date_time',
+    'size' => 4
   }, 'Garmin::FIT::Streamer::Type' ),
   'manufacturer' => bless( {
     'base_type' => {},
     'name' => 'manufacturer',
+    'size' => 2,
     'values' => {
       '1' => {
         'name' => 'garmin',
@@ -1923,6 +1958,7 @@ $types = {
   'mesg_count' => bless( {
     'base_type' => {},
     'name' => 'mesg_count',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'num_per_file',
@@ -1944,6 +1980,7 @@ $types = {
   'mesg_num' => bless( {
     'base_type' => {},
     'name' => 'mesg_num',
+    'size' => 2,
     'values' => {
       '0' => {
         'name' => 'file_id',
@@ -2117,6 +2154,7 @@ $types = {
   'message_index' => bless( {
     'base_type' => {},
     'name' => 'message_index',
+    'size' => 2,
     'values' => {
       '28672' => {
         'comment' => 'reserved (default 0)',
@@ -2141,6 +2179,7 @@ $types = {
   'pwr_zone_calc' => bless( {
     'base_type' => {},
     'name' => 'pwr_zone_calc',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'custom',
@@ -2157,6 +2196,7 @@ $types = {
   'session_trigger' => bless( {
     'base_type' => {},
     'name' => 'session_trigger',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'activity_end',
@@ -2185,19 +2225,23 @@ $types = {
   }, 'Garmin::FIT::Streamer::Type' ),
   'sint16' => bless( {
     'base_type' => {},
-    'name' => 'sint16'
+    'name' => 'sint16',
+    'size' => 2
   }, 'Garmin::FIT::Streamer::Type' ),
   'sint32' => bless( {
     'base_type' => {},
-    'name' => 'sint32'
+    'name' => 'sint32',
+    'size' => 4
   }, 'Garmin::FIT::Streamer::Type' ),
   'sint8' => bless( {
     'base_type' => {},
-    'name' => 'sint8'
+    'name' => 'sint8',
+    'size' => 1
   }, 'Garmin::FIT::Streamer::Type' ),
   'sport' => bless( {
     'base_type' => {},
     'name' => 'sport',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'generic',
@@ -2242,6 +2286,7 @@ $types = {
     'base_type' => {},
     'comment' => 'Bit field corresponding to sport enum type (1 << sport).',
     'name' => 'sport_bits_0',
+    'size' => 1,
     'values' => {
       '1' => {
         'name' => 'generic',
@@ -2278,11 +2323,13 @@ $types = {
   }, 'Garmin::FIT::Streamer::Type' ),
   'string' => bless( {
     'base_type' => {},
-    'name' => 'string'
+    'name' => 'string',
+    'size' => 0
   }, 'Garmin::FIT::Streamer::Type' ),
   'sub_sport' => bless( {
     'base_type' => {},
     'name' => 'sub_sport',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'generic',
@@ -2408,6 +2455,7 @@ $types = {
     'base_type' => {},
     'comment' => 'timer event data',
     'name' => 'timer_trigger',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'manual',
@@ -2428,31 +2476,38 @@ $types = {
   }, 'Garmin::FIT::Streamer::Type' ),
   'uint16' => bless( {
     'base_type' => {},
-    'name' => 'uint16'
+    'name' => 'uint16',
+    'size' => 2
   }, 'Garmin::FIT::Streamer::Type' ),
   'uint16z' => bless( {
     'base_type' => {},
-    'name' => 'uint16z'
+    'name' => 'uint16z',
+    'size' => 2
   }, 'Garmin::FIT::Streamer::Type' ),
   'uint32' => bless( {
     'base_type' => {},
-    'name' => 'uint32'
+    'name' => 'uint32',
+    'size' => 4
   }, 'Garmin::FIT::Streamer::Type' ),
   'uint32z' => bless( {
     'base_type' => {},
-    'name' => 'uint32z'
+    'name' => 'uint32z',
+    'size' => 4
   }, 'Garmin::FIT::Streamer::Type' ),
   'uint8' => bless( {
     'base_type' => {},
-    'name' => 'uint8'
+    'name' => 'uint8',
+    'size' => 1
   }, 'Garmin::FIT::Streamer::Type' ),
   'uint8z' => bless( {
     'base_type' => {},
-    'name' => 'uint8z'
+    'name' => 'uint8z',
+    'size' => 1
   }, 'Garmin::FIT::Streamer::Type' ),
   'user_local_id' => bless( {
     'base_type' => {},
     'name' => 'user_local_id',
+    'size' => 2,
     'values' => {
       '1' => {
         'name' => 'local_min',
@@ -2489,6 +2544,7 @@ $types = {
   'weight' => bless( {
     'base_type' => {},
     'name' => 'weight',
+    'size' => 2,
     'values' => {
       '65534' => {
         'name' => 'calculating',
@@ -2500,6 +2556,7 @@ $types = {
   'wkt_step_duration' => bless( {
     'base_type' => {},
     'name' => 'wkt_step_duration',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'time',
@@ -2586,6 +2643,7 @@ $types = {
   'wkt_step_target' => bless( {
     'base_type' => {},
     'name' => 'wkt_step_target',
+    'size' => 1,
     'values' => {
       '0' => {
         'name' => 'speed',
@@ -2627,6 +2685,7 @@ $types = {
   'workout_capabilities' => bless( {
     'base_type' => {},
     'name' => 'workout_capabilities',
+    'size' => 4,
     'values' => {
       '1' => {
         'name' => 'interval',
@@ -2712,6 +2771,7 @@ $types = {
     'base_type' => {},
     'comment' => '0 - 100 indicates% of maz hr; >100 indicates bpm (255 max) plus 100',
     'name' => 'workout_hr',
+    'size' => 4,
     'values' => {
       '100' => {
         'name' => 'bpm_offset',
@@ -2724,6 +2784,7 @@ $types = {
     'base_type' => {},
     'comment' => '0 - 1000 indicates % of functional threshold power; >1000 indicates watts plus 1000.',
     'name' => 'workout_power',
+    'size' => 4,
     'values' => {
       '1000' => {
         'name' => 'watts_offset',
@@ -3208,31 +3269,37 @@ $profile = {
       '0' => bless( {
         'name' => 'type',
         'number' => 0,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'manufacturer',
         'number' => 1,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'product',
         'number' => 2,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'serial_number',
         'number' => 3,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '4' => bless( {
         'name' => 'time_created',
         'number' => 4,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '5' => bless( {
         'name' => 'number',
         'number' => 5,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'manufacturer' => {},
@@ -3252,17 +3319,20 @@ $profile = {
         'array' => 'N',
         'name' => 'languages',
         'number' => 0,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'array' => 'N',
         'name' => 'sports',
         'number' => 1,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '21' => bless( {
         'name' => 'workouts_supported',
         'number' => 21,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'languages' => {},
@@ -3278,26 +3348,38 @@ $profile = {
       '1' => bless( {
         'name' => 'high_bpm',
         'number' => 1,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'calories',
         'number' => 2,
-        'scale' => 10,
+        'scale' => [
+          10
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'kcal / min'
+        'unit' => [
+          'kcal / min'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'fat_calories',
         'number' => 3,
-        'scale' => 10,
+        'scale' => [
+          10
+        ],
+        'size' => 1,
         'type' => {},
-        'unit' => 'kcal / min'
+        'unit' => [
+          'kcal / min'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       'calories' => {},
       'fat_calories' => {},
@@ -3313,16 +3395,19 @@ $profile = {
       '0' => bless( {
         'name' => 'sport',
         'number' => 0,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'sub_sport',
         'number' => 1,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'name',
         'number' => 3,
+        'size' => 0,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'name' => {},
@@ -3338,61 +3423,73 @@ $profile = {
       '0' => bless( {
         'name' => 'sport',
         'number' => 0,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'sub_sport',
         'number' => 1,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '10' => bless( {
         'name' => 'enabled',
         'number' => 10,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'start_date',
         'number' => 2,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'end_date',
         'number' => 3,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '4' => bless( {
         'name' => 'type',
         'number' => 4,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '5' => bless( {
         'name' => 'value',
         'number' => 5,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '6' => bless( {
         'name' => 'repeat',
         'number' => 6,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '7' => bless( {
         'name' => 'target_value',
         'number' => 7,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '8' => bless( {
         'name' => 'recurrence',
         'number' => 8,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '9' => bless( {
         'name' => 'recurrence_value',
         'number' => 9,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'enabled' => {},
@@ -3417,201 +3514,293 @@ $profile = {
       '0' => bless( {
         'name' => 'event',
         'number' => 0,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'event_type',
         'number' => 1,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '10' => bless( {
         'name' => 'total_cycles',
         'number' => 10,
+        'size' => 4,
         'type' => {},
-        'unit' => 'cycles'
+        'unit' => [
+          'cycles'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '11' => bless( {
         'name' => 'total_calories',
         'number' => 11,
+        'size' => 2,
         'type' => {},
-        'unit' => 'kcal'
+        'unit' => [
+          'kcal'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '13' => bless( {
         'name' => 'total_fat_calories',
         'number' => 13,
+        'size' => 2,
         'type' => {},
-        'unit' => 'kcal'
+        'unit' => [
+          'kcal'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '14' => bless( {
         'name' => 'avg_speed',
         'number' => 14,
-        'scale' => 1000,
+        'scale' => [
+          1000
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'm/s'
+        'unit' => [
+          'm/s'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '15' => bless( {
         'name' => 'max_speed',
         'number' => 15,
-        'scale' => 1000,
+        'scale' => [
+          1000
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'm/s'
+        'unit' => [
+          'm/s'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '16' => bless( {
         'name' => 'avg_heart_rate',
         'number' => 16,
+        'size' => 1,
         'type' => {},
-        'unit' => 'bpm'
+        'unit' => [
+          'bpm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '17' => bless( {
         'name' => 'max_heart_rate',
         'number' => 17,
+        'size' => 1,
         'type' => {},
-        'unit' => 'bpm'
+        'unit' => [
+          'bpm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '18' => bless( {
         'name' => 'avg_cadence',
         'number' => 18,
+        'size' => 1,
         'type' => {},
-        'unit' => 'rpm'
+        'unit' => [
+          'rpm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '19' => bless( {
         'name' => 'max_cadence',
         'number' => 19,
+        'size' => 1,
         'type' => {},
-        'unit' => 'rpm'
+        'unit' => [
+          'rpm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'start_time',
         'number' => 2,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '20' => bless( {
         'name' => 'avg_power',
         'number' => 20,
+        'size' => 2,
         'type' => {},
-        'unit' => 'watts'
+        'unit' => [
+          'watts'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '21' => bless( {
         'name' => 'max_power',
         'number' => 21,
+        'size' => 2,
         'type' => {},
-        'unit' => 'watts'
+        'unit' => [
+          'watts'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '22' => bless( {
         'name' => 'total_ascent',
         'number' => 22,
+        'size' => 2,
         'type' => {},
-        'unit' => 'm'
+        'unit' => [
+          'm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '23' => bless( {
         'name' => 'total_descent',
         'number' => 23,
+        'size' => 2,
         'type' => {},
-        'unit' => 'm'
+        'unit' => [
+          'm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '24' => bless( {
         'name' => 'total_training_effect',
         'number' => 24,
-        'scale' => 10,
+        'scale' => [
+          10
+        ],
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '25' => bless( {
         'name' => 'first_lap_index',
         'number' => 25,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
+        'size' => 4,
         'type' => {},
-        'unit' => 's'
+        'unit' => [
+          's'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '26' => bless( {
         'name' => 'num_laps',
         'number' => 26,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '27' => bless( {
         'name' => 'event_group',
         'number' => 27,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '28' => bless( {
         'name' => 'trigger',
         'number' => 28,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '29' => bless( {
         'name' => 'nec_lat',
         'number' => 29,
+        'size' => 4,
         'type' => {},
-        'unit' => 'semicircles'
+        'unit' => [
+          'semicircles'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'start_position_lat',
         'number' => 3,
+        'size' => 4,
         'type' => {},
-        'unit' => 'semicircles'
+        'unit' => [
+          'semicircles'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '30' => bless( {
         'name' => 'nec_long',
         'number' => 30,
+        'size' => 4,
         'type' => {},
-        'unit' => 'semicircles'
+        'unit' => [
+          'semicircles'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '31' => bless( {
         'name' => 'swc_lat',
         'number' => 31,
+        'size' => 4,
         'type' => {},
-        'unit' => 'semicircles'
+        'unit' => [
+          'semicircles'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '32' => bless( {
         'name' => 'swc_long',
         'number' => 32,
+        'size' => 4,
         'type' => {},
-        'unit' => 'semicircles'
+        'unit' => [
+          'semicircles'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '4' => bless( {
         'name' => 'start_position_long',
         'number' => 4,
+        'size' => 4,
         'type' => {},
-        'unit' => 'semicircles'
+        'unit' => [
+          'semicircles'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '5' => bless( {
         'name' => 'sport',
         'number' => 5,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '6' => bless( {
         'name' => 'sub_sport',
         'number' => 6,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '7' => bless( {
         'name' => 'total_elapsed_time',
         'number' => 7,
-        'scale' => 1000,
+        'scale' => [
+          1000
+        ],
+        'size' => 4,
         'type' => {},
-        'unit' => 's'
+        'unit' => [
+          's'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '8' => bless( {
         'name' => 'total_timer_time',
         'number' => 8,
-        'scale' => 1000,
+        'scale' => [
+          1000
+        ],
+        'size' => 4,
         'type' => {},
-        'unit' => 's'
+        'unit' => [
+          's'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '9' => bless( {
         'name' => 'total_distance',
         'number' => 9,
-        'scale' => 100,
+        'scale' => [
+          100
+        ],
+        'size' => 4,
         'type' => {},
-        'unit' => 'm'
+        'unit' => [
+          'm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       'avg_cadence' => {},
       'avg_heart_rate' => {},
@@ -3657,173 +3846,254 @@ $profile = {
       '0' => bless( {
         'name' => 'event',
         'number' => 0,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'event_type',
         'number' => 1,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '10' => bless( {
         'name' => 'total_cycles',
         'number' => 10,
+        'size' => 4,
         'type' => {},
-        'unit' => 'cycles'
+        'unit' => [
+          'cycles'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '11' => bless( {
         'name' => 'total_calories',
         'number' => 11,
+        'size' => 2,
         'type' => {},
-        'unit' => 'kcal'
+        'unit' => [
+          'kcal'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '12' => bless( {
         'name' => 'total_fat_calories',
         'number' => 12,
+        'size' => 2,
         'type' => {},
-        'unit' => 'kcal'
+        'unit' => [
+          'kcal'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '13' => bless( {
         'name' => 'avg_speed',
         'number' => 13,
-        'scale' => 1000,
+        'scale' => [
+          1000
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'm/s'
+        'unit' => [
+          'm/s'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '14' => bless( {
         'name' => 'max_speed',
         'number' => 14,
-        'scale' => 1000,
+        'scale' => [
+          1000
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'm/s'
+        'unit' => [
+          'm/s'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '15' => bless( {
         'name' => 'avg_heart_rate',
         'number' => 15,
+        'size' => 1,
         'type' => {},
-        'unit' => 'bpm'
+        'unit' => [
+          'bpm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '16' => bless( {
         'name' => 'max_heart_rate',
         'number' => 16,
+        'size' => 1,
         'type' => {},
-        'unit' => 'bpm'
+        'unit' => [
+          'bpm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '17' => bless( {
         'name' => 'avg_cadence',
         'number' => 17,
+        'size' => 1,
         'type' => {},
-        'unit' => 'rpm'
+        'unit' => [
+          'rpm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '18' => bless( {
         'name' => 'max_cadence',
         'number' => 18,
+        'size' => 1,
         'type' => {},
-        'unit' => 'rpm'
+        'unit' => [
+          'rpm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '19' => bless( {
         'name' => 'avg_power',
         'number' => 19,
+        'size' => 2,
         'type' => {},
-        'unit' => 'watts'
+        'unit' => [
+          'watts'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'start_time',
         'number' => 2,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '20' => bless( {
         'name' => 'max_power',
         'number' => 20,
+        'size' => 2,
         'type' => {},
-        'unit' => 'watts'
+        'unit' => [
+          'watts'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '21' => bless( {
         'name' => 'total_ascent',
         'number' => 21,
+        'size' => 2,
         'type' => {},
-        'unit' => 'm'
+        'unit' => [
+          'm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '22' => bless( {
         'name' => 'total_descent',
         'number' => 22,
+        'size' => 2,
         'type' => {},
-        'unit' => 'm'
+        'unit' => [
+          'm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '23' => bless( {
         'name' => 'intensity',
         'number' => 23,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '24' => bless( {
         'name' => 'lap_trigger',
         'number' => 24,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '25' => bless( {
         'name' => 'sport',
         'number' => 25,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
+        'size' => 4,
         'type' => {},
-        'unit' => 's'
+        'unit' => [
+          's'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '26' => bless( {
         'name' => 'event_group',
         'number' => 26,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'start_position_lat',
         'number' => 3,
+        'size' => 4,
         'type' => {},
-        'unit' => 'semicircles'
+        'unit' => [
+          'semicircles'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '4' => bless( {
         'name' => 'start_position_long',
         'number' => 4,
+        'size' => 4,
         'type' => {},
-        'unit' => 'semicircles'
+        'unit' => [
+          'semicircles'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '5' => bless( {
         'name' => 'end_position_lat',
         'number' => 5,
+        'size' => 4,
         'type' => {},
-        'unit' => 'semicircles'
+        'unit' => [
+          'semicircles'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '6' => bless( {
         'name' => 'end_position_long',
         'number' => 6,
+        'size' => 4,
         'type' => {},
-        'unit' => 'semicircles'
+        'unit' => [
+          'semicircles'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '7' => bless( {
         'name' => 'total_elapsed_time',
         'number' => 7,
-        'scale' => 1000,
+        'scale' => [
+          1000
+        ],
+        'size' => 4,
         'type' => {},
-        'unit' => 's'
+        'unit' => [
+          's'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '8' => bless( {
         'name' => 'total_timer_time',
         'number' => 8,
-        'scale' => 1000,
+        'scale' => [
+          1000
+        ],
+        'size' => 4,
         'type' => {},
-        'unit' => 's'
+        'unit' => [
+          's'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '9' => bless( {
         'name' => 'total_distance',
         'number' => 9,
-        'scale' => 100,
+        'scale' => [
+          100
+        ],
+        'size' => 4,
         'type' => {},
-        'unit' => 'm'
+        'unit' => [
+          'm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       'avg_cadence' => {},
       'avg_heart_rate' => {},
@@ -3864,6 +4134,7 @@ $profile = {
       '1' => bless( {
         'name' => 'utc_offset',
         'number' => 1,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'utc_offset' => {}
@@ -3877,85 +4148,134 @@ $profile = {
       '0' => bless( {
         'name' => 'position_lat',
         'number' => 0,
+        'size' => 4,
         'type' => {},
-        'unit' => 'semicircles'
+        'unit' => [
+          'semicircles'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'position_long',
         'number' => 1,
+        'size' => 4,
         'type' => {},
-        'unit' => 'semicircles'
+        'unit' => [
+          'semicircles'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '10' => bless( {
         'name' => 'resistance',
         'number' => 10,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '11' => bless( {
         'name' => 'time_from_course',
         'number' => 11,
-        'scale' => 1000,
+        'scale' => [
+          1000
+        ],
+        'size' => 4,
         'type' => {},
-        'unit' => 's'
+        'unit' => [
+          's'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '12' => bless( {
         'name' => 'cycle_length',
         'number' => 12,
-        'scale' => 100,
+        'scale' => [
+          100
+        ],
+        'size' => 1,
         'type' => {},
-        'unit' => 'm'
+        'unit' => [
+          'm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '13' => bless( {
         'name' => 'temperature',
         'number' => 13,
+        'size' => 1,
         'type' => {},
-        'unit' => 'C'
+        'unit' => [
+          'C'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'altitude',
         'number' => 2,
-        'offset' => 500,
-        'scale' => 5,
+        'offset' => [
+          500
+        ],
+        'scale' => [
+          5
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'm'
+        'unit' => [
+          'm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
+        'size' => 4,
         'type' => {},
-        'unit' => 's'
+        'unit' => [
+          's'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'heart_rate',
         'number' => 3,
+        'size' => 1,
         'type' => {},
-        'unit' => 'bpm'
+        'unit' => [
+          'bpm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '4' => bless( {
         'name' => 'cadence',
         'number' => 4,
+        'size' => 1,
         'type' => {},
-        'unit' => 'rpm'
+        'unit' => [
+          'rpm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '5' => bless( {
         'name' => 'distance',
         'number' => 5,
-        'scale' => 100,
+        'scale' => [
+          100
+        ],
+        'size' => 4,
         'type' => {},
-        'unit' => 'm'
+        'unit' => [
+          'm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '6' => bless( {
         'name' => 'speed',
         'number' => 6,
-        'scale' => 1000,
+        'scale' => [
+          1000
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'm/s'
+        'unit' => [
+          'm/s'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '7' => bless( {
         'name' => 'power',
         'number' => 7,
+        'size' => 2,
         'type' => {},
-        'unit' => 'watts'
+        'unit' => [
+          'watts'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '8' => bless( {
         'accumulate' => [
@@ -3964,15 +4284,16 @@ $profile = {
         ],
         'array' => '3',
         'bits' => [
-          '12',
-          '12'
+          12,
+          12
         ],
         'name' => 'compressed_speed_distance',
         'number' => 8,
         'scale' => [
-          '100',
-          '16'
+          100,
+          16
         ],
+        'size' => 0,
         'type' => {},
         'unit' => [
           'm/s',
@@ -3982,9 +4303,14 @@ $profile = {
       '9' => bless( {
         'name' => 'grade',
         'number' => 9,
-        'scale' => 100,
+        'scale' => [
+          100
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => '%'
+        'unit' => [
+          '%'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       'altitude' => {},
       'cadence' => {},
@@ -4011,33 +4337,43 @@ $profile = {
       '0' => bless( {
         'name' => 'event',
         'number' => 0,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'event_type',
         'number' => 1,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
-        'bits' => 16,
+        'bits' => [
+          16
+        ],
         'name' => 'data16',
         'number' => 2,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
+        'size' => 4,
         'type' => {},
-        'unit' => 's'
+        'unit' => [
+          's'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'data',
         'number' => 3,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '4' => bless( {
         'name' => 'event_group',
         'number' => 4,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'data' => {},
@@ -4054,65 +4390,88 @@ $profile = {
     'context' => 'ACTIVITY FILE MESSAGES',
     'fields' => {
       '0' => bless( {
-        'bits' => 16,
+        'bits' => [
+          16
+        ],
         'name' => 'device_index',
         'number' => 0,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'device_type',
         'number' => 1,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '10' => bless( {
         'name' => 'battery_voltage',
         'number' => 10,
-        'scale' => 256,
+        'scale' => [
+          256
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'V'
+        'unit' => [
+          'V'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '11' => bless( {
         'name' => 'battery_status',
         'number' => 11,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'manufacturer',
         'number' => 2,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
+        'size' => 4,
         'type' => {},
-        'unit' => 's'
+        'unit' => [
+          's'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'serial_number',
         'number' => 3,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '4' => bless( {
         'name' => 'product',
         'number' => 4,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '5' => bless( {
         'name' => 'software_version',
         'number' => 5,
-        'scale' => 100,
+        'scale' => [
+          100
+        ],
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '6' => bless( {
         'name' => 'hardware_version',
         'number' => 6,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '7' => bless( {
         'name' => 'cum_operating_time',
         'number' => 7,
+        'size' => 4,
         'type' => {},
-        'unit' => 's'
+        'unit' => [
+          's'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       'battery_status' => {},
       'battery_voltage' => {},
@@ -4135,21 +4494,25 @@ $profile = {
       '4' => bless( {
         'name' => 'sport',
         'number' => 4,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '5' => bless( {
         'name' => 'capabilities',
         'number' => 5,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '6' => bless( {
         'name' => 'num_valid_steps',
         'number' => 6,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '8' => bless( {
         'name' => 'wkt_name',
         'number' => 8,
+        'size' => 0,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'capabilities' => {},
@@ -4166,46 +4529,55 @@ $profile = {
       '0' => bless( {
         'name' => 'wkt_step_name',
         'number' => 0,
+        'size' => 0,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'duration_type',
         'number' => 1,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'duration_value',
         'number' => 2,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'target_type',
         'number' => 3,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '4' => bless( {
         'name' => 'target_value',
         'number' => 4,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '5' => bless( {
         'name' => 'custom_target_value_low',
         'number' => 5,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '6' => bless( {
         'name' => 'custom_target_value_high',
         'number' => 6,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '7' => bless( {
         'name' => 'intensity',
         'number' => 7,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'custom_target_value_high' => {},
@@ -4227,122 +4599,162 @@ $profile = {
       '0' => bless( {
         'name' => 'friendly_name',
         'number' => 0,
+        'size' => 0,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'gender',
         'number' => 1,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '10' => bless( {
         'name' => 'default_max_biking_heart_rate',
         'number' => 10,
+        'size' => 1,
         'type' => {},
-        'unit' => 'bpm'
+        'unit' => [
+          'bpm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '11' => bless( {
         'name' => 'default_max_heart_rate',
         'number' => 11,
+        'size' => 1,
         'type' => {},
-        'unit' => 'bpm'
+        'unit' => [
+          'bpm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '12' => bless( {
         'name' => 'hr_setting',
         'number' => 12,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '13' => bless( {
         'name' => 'speed_setting',
         'number' => 13,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '14' => bless( {
         'name' => 'dist_setting',
         'number' => 14,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '16' => bless( {
         'name' => 'power_setting',
         'number' => 16,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '17' => bless( {
         'name' => 'activity_class',
         'number' => 17,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '18' => bless( {
         'name' => 'position_setting',
         'number' => 18,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'age',
         'number' => 2,
+        'size' => 1,
         'type' => {},
-        'unit' => 'years'
+        'unit' => [
+          'years'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '21' => bless( {
         'name' => 'temperature_setting',
         'number' => 21,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '22' => bless( {
         'name' => 'local_id',
         'number' => 22,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '23' => bless( {
         'array' => '6',
         'name' => 'global_id',
         'number' => 23,
+        'size' => 0,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'height',
         'number' => 3,
-        'scale' => 100,
+        'scale' => [
+          100
+        ],
+        'size' => 1,
         'type' => {},
-        'unit' => 'm'
+        'unit' => [
+          'm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '4' => bless( {
         'name' => 'weight',
         'number' => 4,
-        'scale' => 10,
+        'scale' => [
+          10
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'kg'
+        'unit' => [
+          'kg'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '5' => bless( {
         'name' => 'language',
         'number' => 5,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '6' => bless( {
         'name' => 'elev_setting',
         'number' => 6,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '7' => bless( {
         'name' => 'weight_setting',
         'number' => 7,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '8' => bless( {
         'name' => 'resting_heart_rate',
         'number' => 8,
+        'size' => 1,
         'type' => {},
-        'unit' => 'bpm'
+        'unit' => [
+          'bpm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '9' => bless( {
         'name' => 'default_max_running_heart_rate',
         'number' => 9,
+        'size' => 1,
         'type' => {},
-        'unit' => 'bpm'
+        'unit' => [
+          'bpm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       'activity_class' => {},
       'age' => {},
@@ -4376,85 +4788,134 @@ $profile = {
       '0' => bless( {
         'name' => 'weight',
         'number' => 0,
-        'scale' => 100,
+        'scale' => [
+          100
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'kg'
+        'unit' => [
+          'kg'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'percent_fat',
         'number' => 1,
-        'scale' => 100,
+        'scale' => [
+          100
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => '%'
+        'unit' => [
+          '%'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '10' => bless( {
         'name' => 'metabolic_age',
         'number' => 10,
+        'size' => 1,
         'type' => {},
-        'unit' => 'years'
+        'unit' => [
+          'years'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '11' => bless( {
         'name' => 'visceral_fat_rating',
         'number' => 11,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '12' => bless( {
         'name' => 'user_profile_index',
         'number' => 12,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'percent_hydration',
         'number' => 2,
-        'scale' => 100,
+        'scale' => [
+          100
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => '%'
+        'unit' => [
+          '%'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
+        'size' => 4,
         'type' => {},
-        'unit' => 's'
+        'unit' => [
+          's'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'visceral_fat_mass',
         'number' => 3,
-        'scale' => 100,
+        'scale' => [
+          100
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'kg'
+        'unit' => [
+          'kg'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '4' => bless( {
         'name' => 'bone_mass',
         'number' => 4,
-        'scale' => 100,
+        'scale' => [
+          100
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'kg'
+        'unit' => [
+          'kg'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '5' => bless( {
         'name' => 'muscle_mass',
         'number' => 5,
-        'scale' => 100,
+        'scale' => [
+          100
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'kg'
+        'unit' => [
+          'kg'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '7' => bless( {
         'name' => 'basal_met',
         'number' => 7,
-        'scale' => 4,
+        'scale' => [
+          4
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'kcal/day'
+        'unit' => [
+          'kcal/day'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '8' => bless( {
         'name' => 'physique_rating',
         'number' => 8,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '9' => bless( {
         'name' => 'active_met',
         'number' => 9,
-        'scale' => 4,
+        'scale' => [
+          4
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'kcal/day'
+        'unit' => [
+          'kcal/day'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       'active_met' => {},
       'basal_met' => {},
@@ -4479,16 +4940,19 @@ $profile = {
       '4' => bless( {
         'name' => 'sport',
         'number' => 4,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '5' => bless( {
         'name' => 'name',
         'number' => 5,
+        'size' => 0,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '6' => bless( {
         'name' => 'capabilities',
         'number' => 6,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'capabilities' => {},
@@ -4504,40 +4968,55 @@ $profile = {
       '1' => bless( {
         'name' => 'timestamp',
         'number' => 1,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'position_lat',
         'number' => 2,
+        'size' => 4,
         'type' => {},
-        'unit' => 'semicircles'
+        'unit' => [
+          'semicircles'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'position_long',
         'number' => 3,
+        'size' => 4,
         'type' => {},
-        'unit' => 'semicircles'
+        'unit' => [
+          'semicircles'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '4' => bless( {
         'name' => 'distance',
         'number' => 4,
-        'scale' => 100,
+        'scale' => [
+          100
+        ],
+        'size' => 4,
         'type' => {},
-        'unit' => 'm'
+        'unit' => [
+          'm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '5' => bless( {
         'name' => 'type',
         'number' => 5,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '6' => bless( {
         'name' => 'name',
         'number' => 6,
+        'size' => 0,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'distance' => {},
@@ -4557,42 +5036,59 @@ $profile = {
       '0' => bless( {
         'name' => 'timer_time',
         'number' => 0,
+        'size' => 4,
         'type' => {},
-        'unit' => 's'
+        'unit' => [
+          's'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'distance',
         'number' => 1,
+        'size' => 4,
         'type' => {},
-        'unit' => 'm'
+        'unit' => [
+          'm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'calories',
         'number' => 2,
+        'size' => 4,
         'type' => {},
-        'unit' => 'kcal'
+        'unit' => [
+          'kcal'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
+        'size' => 4,
         'type' => {},
-        'unit' => 's'
+        'unit' => [
+          's'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'sport',
         'number' => 3,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '4' => bless( {
         'name' => 'elapsed_time',
         'number' => 4,
+        'size' => 4,
         'type' => {},
-        'unit' => 's'
+        'unit' => [
+          's'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       'calories' => {},
       'distance' => {},
@@ -4611,43 +5107,55 @@ $profile = {
       '0' => bless( {
         'name' => 'total_timer_time',
         'number' => 0,
-        'scale' => 1000,
+        'scale' => [
+          1000
+        ],
+        'size' => 4,
         'type' => {},
-        'unit' => 's'
+        'unit' => [
+          's'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'num_sessions',
         'number' => 1,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'type',
         'number' => 2,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'event',
         'number' => 3,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '4' => bless( {
         'name' => 'event_type',
         'number' => 4,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '5' => bless( {
         'name' => 'local_timestamp',
         'number' => 5,
+        'size' => 4,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '6' => bless( {
         'name' => 'event_group',
         'number' => 6,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'event' => {},
@@ -4668,17 +5176,22 @@ $profile = {
       '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'version',
         'number' => 3,
-        'scale' => 100,
+        'scale' => [
+          100
+        ],
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '5' => bless( {
         'name' => 'part_number',
         'number' => 5,
+        'size' => 0,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'message_index' => {},
@@ -4694,33 +5207,41 @@ $profile = {
       '0' => bless( {
         'name' => 'type',
         'number' => 0,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'flags',
         'number' => 1,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'directory',
         'number' => 2,
+        'size' => 0,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'max_count',
         'number' => 3,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '4' => bless( {
         'name' => 'max_size',
         'number' => 4,
+        'size' => 4,
         'type' => {},
-        'unit' => 'bytes'
+        'unit' => [
+          'bytes'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       'directory' => {},
       'flags' => {},
@@ -4738,26 +5259,31 @@ $profile = {
       '0' => bless( {
         'name' => 'file',
         'number' => 0,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'mesg_num',
         'number' => 1,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'count_type',
         'number' => 2,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'count',
         'number' => 3,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'count' => {},
@@ -4775,26 +5301,31 @@ $profile = {
       '0' => bless( {
         'name' => 'file',
         'number' => 0,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'mesg_num',
         'number' => 1,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'field_num',
         'number' => 2,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'count',
         'number' => 3,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'count' => {},
@@ -4812,16 +5343,19 @@ $profile = {
       '0' => bless( {
         'name' => 'enabled',
         'number' => 0,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'hrm_ant_id',
         'number' => 1,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'enabled' => {},
@@ -4837,11 +5371,13 @@ $profile = {
       '0' => bless( {
         'name' => 'software_version',
         'number' => 0,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'hardware_version',
         'number' => 1,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'hardware_version' => {},
@@ -4856,35 +5392,49 @@ $profile = {
       '0' => bless( {
         'name' => 'enabled',
         'number' => 0,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'sdm_ant_id',
         'number' => 1,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'sdm_cal_factor',
         'number' => 2,
-        'scale' => 10,
+        'scale' => [
+          10
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => '%'
+        'unit' => [
+          '%'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'odometer',
         'number' => 3,
-        'scale' => 100,
+        'scale' => [
+          100
+        ],
+        'size' => 4,
         'type' => {},
-        'unit' => 'm'
+        'unit' => [
+          'm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '4' => bless( {
         'name' => 'speed_source',
         'number' => 4,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'enabled' => {},
@@ -4903,64 +5453,91 @@ $profile = {
       '0' => bless( {
         'name' => 'systolic_pressure',
         'number' => 0,
+        'size' => 2,
         'type' => {},
-        'unit' => 'mmHg'
+        'unit' => [
+          'mmHg'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'diastolic_pressure',
         'number' => 1,
+        'size' => 2,
         'type' => {},
-        'unit' => 'mmHg'
+        'unit' => [
+          'mmHg'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'mean_arterial_pressure',
         'number' => 2,
+        'size' => 2,
         'type' => {},
-        'unit' => 'mmHg'
+        'unit' => [
+          'mmHg'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '253' => bless( {
         'name' => 'timestamp',
         'number' => 253,
+        'size' => 4,
         'type' => {},
-        'unit' => 's'
+        'unit' => [
+          's'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'map_3_sample_mean',
         'number' => 3,
+        'size' => 2,
         'type' => {},
-        'unit' => 'mmHg'
+        'unit' => [
+          'mmHg'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '4' => bless( {
         'name' => 'map_morning_values',
         'number' => 4,
+        'size' => 2,
         'type' => {},
-        'unit' => 'mmHg'
+        'unit' => [
+          'mmHg'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '5' => bless( {
         'name' => 'map_evening_values',
         'number' => 5,
+        'size' => 2,
         'type' => {},
-        'unit' => 'mmHg'
+        'unit' => [
+          'mmHg'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '6' => bless( {
         'name' => 'heart_rate',
         'number' => 6,
+        'size' => 1,
         'type' => {},
-        'unit' => 'bpm'
+        'unit' => [
+          'bpm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '7' => bless( {
         'name' => 'heart_rate_type',
         'number' => 7,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '8' => bless( {
         'name' => 'status',
         'number' => 8,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '9' => bless( {
         'name' => 'user_profile_index',
         'number' => 9,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'diastolic_pressure' => {},
@@ -4984,112 +5561,152 @@ $profile = {
       '0' => bless( {
         'name' => 'name',
         'number' => 0,
+        'size' => 0,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '1' => bless( {
         'name' => 'sport',
         'number' => 1,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '10' => bless( {
         'name' => 'bike_weight',
         'number' => 10,
-        'scale' => 10,
+        'scale' => [
+          10
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'kg'
+        'unit' => [
+          'kg'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '11' => bless( {
         'name' => 'power_cal_factor',
         'number' => 11,
-        'scale' => 10,
+        'scale' => [
+          10
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => '%'
+        'unit' => [
+          '%'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '12' => bless( {
         'name' => 'auto_wheel_cal',
         'number' => 12,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '13' => bless( {
         'name' => 'auto_power_zero',
         'number' => 13,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '14' => bless( {
         'name' => 'id',
         'number' => 14,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '15' => bless( {
         'name' => 'spd_enabled',
         'number' => 15,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '16' => bless( {
         'name' => 'cad_enabled',
         'number' => 16,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '17' => bless( {
         'name' => 'spdcad_enabled',
         'number' => 17,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '18' => bless( {
         'name' => 'power_enabled',
         'number' => 18,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'sub_sport',
         'number' => 2,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'odometer',
         'number' => 3,
-        'scale' => 100,
+        'scale' => [
+          100
+        ],
+        'size' => 4,
         'type' => {},
-        'unit' => 'm'
+        'unit' => [
+          'm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '4' => bless( {
         'name' => 'bike_spd_ant_id',
         'number' => 4,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '5' => bless( {
         'name' => 'bike_cad_ant_id',
         'number' => 5,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '6' => bless( {
         'name' => 'bike_spdcad_ant_id',
         'number' => 6,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '7' => bless( {
         'name' => 'bike_power_ant_id',
         'number' => 7,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '8' => bless( {
         'name' => 'custom_wheelsize',
         'number' => 8,
-        'scale' => 1000,
+        'scale' => [
+          1000
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'm'
+        'unit' => [
+          'm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '9' => bless( {
         'name' => 'auto_wheelsize',
         'number' => 9,
-        'scale' => 1000,
+        'scale' => [
+          1000
+        ],
+        'size' => 2,
         'type' => {},
-        'unit' => 'm'
+        'unit' => [
+          'm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       'auto_power_zero' => {},
       'auto_wheel_cal' => {},
@@ -5121,26 +5738,31 @@ $profile = {
       '1' => bless( {
         'name' => 'max_heart_rate',
         'number' => 1,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'threshold_heart_rate',
         'number' => 2,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'name' => 'functional_threshold_power',
         'number' => 3,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '5' => bless( {
         'name' => 'hr_calc_type',
         'number' => 5,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '7' => bless( {
         'name' => 'pwr_calc_type',
         'number' => 7,
+        'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'functional_threshold_power' => {},
@@ -5158,17 +5780,22 @@ $profile = {
       '1' => bless( {
         'name' => 'high_bpm',
         'number' => 1,
+        'size' => 1,
         'type' => {},
-        'unit' => 'bpm'
+        'unit' => [
+          'bpm'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'name',
         'number' => 2,
+        'size' => 0,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'high_bpm' => {},
@@ -5184,17 +5811,22 @@ $profile = {
       '1' => bless( {
         'name' => 'high_value',
         'number' => 1,
+        'size' => 2,
         'type' => {},
-        'unit' => 'watts'
+        'unit' => [
+          'watts'
+        ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '2' => bless( {
         'name' => 'name',
         'number' => 2,
+        'size' => 0,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       '254' => bless( {
         'name' => 'message_index',
         'number' => 254,
+        'size' => 2,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
       'high_value' => {},

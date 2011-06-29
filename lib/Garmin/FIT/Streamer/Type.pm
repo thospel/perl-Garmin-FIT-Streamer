@@ -29,6 +29,8 @@ sub new {
     } elsif (!eval { $type{base_type}->isa("Garmin::FIT::Streamer::BaseType") }) {
         croak "Parameter 'base_type' is neither a name nor a Garmin::FIT::Streamer::BaseType but '$type{base_type}'";
     }
+    $type{size} = $type{base_type}->size;
+
     my $comment = delete $params{comment};
     $type{comment} = $comment if defined $comment;
     if (defined(my $values = delete $params{values})) {
@@ -105,6 +107,10 @@ sub name {
 
 sub base_type {
     return shift->{base_type};
+}
+
+sub size {
+    return shift->{size};
 }
 
 sub values {

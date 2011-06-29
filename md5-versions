@@ -1,27 +1,27 @@
-# Generated on 2011-06-29 08:24:40 UT using /usr/local/bin/release_pm
+# Generated on 2011-06-29 23:04:42 UT using /usr/local/bin/release_pm
 BEGIN
 SEMANTICS	1.012
 DIGITS		3
 RELEASE		1.000
-DATE		2011-06-29 08:24:40
+DATE		2011-06-29 23:04:42
 VCS_CHECK	1
-VERSION	fc351d694bec6fd279e17c1cf0671f67 1.000 Changes
+VERSION	26a26095088a3212fca7c4c2ff05c2ea 1.000 Changes
 VERSION	cd7e13b1d2f15e6cfe8da0fd40eab69a 1.000 MANIFEST
 VERSION	dda55cd4f160b14565d578ee74b1cba1 1.000 MANIFEST.SKIP
 VERSION	2a2baeccd927b277b8108d76f4a759c4 1.000 Makefile.PL
 VERSION	af623b45f6ab2d23a6c637b53bd667e3 1.000 Profile.html
 VERSION	0b876e217018c74771398247270639ec 1.000 README
 VERSION	8b8d5a49f22393118fe293c04492c0d7 1.000 lib/Garmin/FIT/Streamer.pm
-VERSION	e695e1033c8fc223b8b6a9912a8652ee 1.000 lib/Garmin/FIT/Streamer/BaseType.pm
-VERSION	ab750641fd71dddefe2ff440ece182fe 1.000 lib/Garmin/FIT/Streamer/Definition.pm
-VERSION	44f666d85ff2de1b38c8a6361d1e1053 1.000 lib/Garmin/FIT/Streamer/Field.pm
-VERSION	ea5cb5a23111daa85956fbb9e432f042 1.000 lib/Garmin/FIT/Streamer/Message.pm
-VERSION	361a810f7df0c7eb8b842824ad241c11 1.000 lib/Garmin/FIT/Streamer/Package.pm
-VERSION	69fd5d62ae0886b5795b2630ae73471f 1.000 lib/Garmin/FIT/Streamer/Profile.pm
-VERSION	02b4051fc1dc97be770d13e7180c53ba 1.000 lib/Garmin/FIT/Streamer/Type.pm
+VERSION	46e0d2389a9f83cfb9bffc0b6b63da64 1.000 lib/Garmin/FIT/Streamer/BaseType.pm
+VERSION	ab9deae523285444b677051c4d791b46 1.000 lib/Garmin/FIT/Streamer/Definition.pm
+VERSION	cc4129ad1ecbe0ef36b419d2e12124f4 1.000 lib/Garmin/FIT/Streamer/Field.pm
+VERSION	b35fc932f1a450a45fa6363e7f235d54 1.000 lib/Garmin/FIT/Streamer/Message.pm
+VERSION	8504bf280108b3c64ab3a7a307d97b0a 1.000 lib/Garmin/FIT/Streamer/Package.pm
+VERSION	b4a18cb7cf4b6236668426b9955bb3fd 1.000 lib/Garmin/FIT/Streamer/Profile.pm
+VERSION	59dd302edc53c04271bb94cb87f4407c 1.000 lib/Garmin/FIT/Streamer/Type.pm
 VERSION	64cdf26a8308d341f0da742b844b2cfd 1.000 profile_from_html
 VERSION	269ab364379e1ee1842e547e0c07281a 1.000 t/00_load.t
-VERSION	4bc38f018770dd20747745ea28e731c7 1.000 t/01_write.t
+VERSION	f065a5b720f5467c2a0e5db2281ce19b 1.000 t/01_write.t
 VERSION	01bfca8ba9f7ed1753351a1ac6609865 1.000 t/02_read.t
 VERSION	657588e6184ead29ad8c847ce7054d90 1.000 t/TestDrive.pm
 RELEASED 1.000 1.000 Changes

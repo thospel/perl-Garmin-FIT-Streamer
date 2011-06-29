@@ -71,6 +71,10 @@ sub number {
     return shift->{number};
 }
 
+sub size {
+    return shift->{size};
+}
+
 sub from_id {
     defined $_[1] || croak "No base_type id argument";
     return $base_types->{lc $_[1]} || croak "Unknown base_type id '$_[1]'";
@@ -78,6 +82,11 @@ sub from_id {
 
 sub regex {
     return shift->{regex};
+}
+
+sub decoder {
+    return shift->{decoder} if @_ <= 1;
+    return $_[0]->{decoder}[$_[1] ? 1 : 0] || die "Assertion: No decoder";
 }
 
 1;

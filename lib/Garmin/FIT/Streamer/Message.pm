@@ -31,6 +31,7 @@ sub new {
         croak "Missing parameter 'number'";
     $number =~ /^\s*([0-9]+)\s*\z/ ||
         croak "Parameter 'number' is not a natural number but '$number'";
+    $1 <= 65535 || croak "Parameter 'number' has value '$1' but should be at most 65535";
     $message{number} = int($1);
 
     my $comment = delete $params{comment};
@@ -48,13 +49,13 @@ sub new {
                 croak "Parameter 'fields' element is undefined";
             eval { $field->isa("Garmin::FIT::Streamer::Field") } ||
                 croak "Parameter 'fields' element is not a Garmin::FIT::Streamer::Field object but '$field'";
-            my $field_name   = lc $field->name;
+            defined(my $field_name = $field->name) || croak "Field has no name";
             croak "Already have a field named '$field_name'" if
-                $fields{$field_name};
+                $fields{lc $field_name};
             my $field_number = lc $field->number;
             croak "Already have a field numbered '$number'" if
                 $fields{$field_number};
-            $fields{$field_name} = $fields{$field_number} = $field;
+            $fields{lc $field_name} = $fields{$field_number} = $field;
         }
     }
 
