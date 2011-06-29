@@ -8,7 +8,7 @@ use Carp;
 use Scalar::Util qw(weaken);
 use Digest::CRC qw(crc16);
 
-use Garmin::FIT::Streamer::Definition;
+require Garmin::FIT::Streamer::Definition;
 
 our @CARP_NOT = qw(Garmin::FIT::Streamer::Definition);
 
@@ -143,13 +143,14 @@ sub get_define_fields {
     my @message = unpack("C*", shift);
 
     my $in_type = $fit->{in_type};
-    my $meta = ref $in_type->{global_type} eq "HASH" ?
-        $in_type->{global_type}{fields} : {};
+    my $meta = eval {
+        $in_type->{global_type}->isa("Garmin::FIT::Streamer::Message") } ?
+        $in_type->{global_type}->fields : {};
     my $total_size = 0;
     my $decoder = "";
     $in_type->{fields} = \my @fields;
     while (my ($field_nr, $size, $base_type) = splice(@message, 0, 3)) {
-        my $base_type = $fit->base_type($base_type);
+        my $base_type = Garmin::FIT::Streamer::BaseType->from_id($base_type);
         print STDERR "Type $base_type->{name}\n" if $base_type->{notice};
         if ($base_type->{size}) {
             $base_type->{size} == $size || die "Unexpected size $size for base_type $base_type ($base_type->{name})";
@@ -163,7 +164,7 @@ sub get_define_fields {
             base_type	=> $base_type,
             size	=> $size,
             field_nr	=> $field_nr,
-            $meta->{$field_nr} ? (meta	=> $meta->{$field_nr}) : (),
+            $meta->{$field_nr} ? (field	=> $meta->{$field_nr}) : (),
         };
     }
     $in_type->{size} = $total_size;
@@ -188,9 +189,15 @@ sub get_data {
     my $global_name = $fit->{in_type}{global_type}{name} || "<unknown $fit->{in_type}{global_nr}>";
     print STDERR "DATA:\n";
     for my $data (@data) {
-        my $meta_name = $fields[0]{meta} ?
-            $fields[0]{meta}{name} : "<$fields[0]{field_nr}>";
-        print STDERR "  '$data'	($global_name: $meta_name $fields[0]{base_type}{name} \[$fields[0]{field_nr}\])\n";
+        my $field_name;
+        if (my $field = $fields[0]{field}) {
+            $field_name = $field->name;
+            my $type = $field->type;
+            eval { $data = $type->value_name($data) };
+        } else {
+            $field_name = "<$fields[0]{field_nr}>";
+        }
+        print STDERR "  '$data'	($global_name: $field_name $fields[0]{base_type}{name} \[$fields[0]{field_nr}\])\n";
         $data = undef if $data eq $fields[0]{base_type}{invalid};
         $data = [$data, shift @fields];
     }
@@ -222,6 +229,7 @@ sub add_bytes {
         my $method = $fit->{in_state} || croak "Assertion: No method";
         $fit->{in_want} -= $fit->{in_need};
         my $bytes = substr($fit->{in_buffer}, 0, $fit->{in_need}, "");
+        # print STDERR "$method: ", unpack("H*", $bytes), "\n";
         $fit->{in_crc}->add($bytes);
         $fit->$method($bytes);
     }
@@ -304,6 +312,47 @@ sub protocol {
 
 sub profile {
     return shift->{profile};
+}
+
+sub crc16_multiply {
+    my ($x, $y) = @_;
+
+    my $a = 0;
+    # Use bitwise peasant multiplication with poly reduction
+    # It looks reversed because the leftmost bit is really the coef of X**0
+    while (($x & 0xffff) && $y) {
+        $a ^= $y if $x & 0x8000;
+        if ($y & 1) {
+            # 0xa001 is the CRC16 polynomial with the high bit dropped
+            $y = ($y >> 1) ^ 0xa001
+        } else {
+            $y >>= 1;
+        }
+        $x <<= 1;
+    }
+    return $a;
+}
+
+our ($crc16, $crc16_modulo);
+
+#   crc16($a . "\x00" x $n) == crc16_prefix(crc16($a), $n)
+# which implies:
+#   crc16($a . $b) = crc16_prefix(crc16($a), length $b) ^ crc16($b)
+sub crc16_prefix {
+    my ($pre, $n) = @_;
+
+    my $test = 1;
+    my $shift = 0;
+    $n %= $crc16_modulo;
+    while ($n) {
+        if ($n & $test) {
+            $pre = crc16_multiply($pre, $crc16->[$shift]);
+            $n ^= $test;
+        }
+        $test <<= 1;
+        $shift++;
+    }
+    return $pre;
 }
 
 1;

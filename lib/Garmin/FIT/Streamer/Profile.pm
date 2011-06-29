@@ -14,6 +14,9 @@ our $types;
 package Garmin::FIT::Streamer::Message;
 our $profile;
 
+package Garmin::FIT::Streamer;
+our ($crc16, $crc16_modulo);
+
 package Garmin::FIT::Streamer::Profile;
 
 # BEGIN GENERATED
@@ -5802,6 +5805,24 @@ $profile->{'weight_scale'} = $profile->{'30'};
 $profile->{'workout'} = $profile->{'26'};
 $profile->{'workout_step'} = $profile->{'27'};
 $profile->{'zones_target'} = $profile->{'7'};
+$crc16 = [
+  128,
+  40961,
+  59393,
+  51329,
+  24704,
+  34817,
+  57473,
+  26624,
+  10368,
+  43137,
+  18560,
+  32897,
+  16384,
+  8192,
+  2048
+];
+$crc16_modulo = 32767;
 # END GENERATED
 
 1;

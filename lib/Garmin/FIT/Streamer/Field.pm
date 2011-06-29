@@ -102,4 +102,24 @@ sub number {
     return shift->{number};
 }
 
+sub type {
+    return shift->{type};
+}
+
+sub scale {
+    return shift->{scale} || 1;
+}
+
+sub offset {
+    return shift->{offset} || 0;
+}
+
+sub unit {
+    return shift->{unit};
+}
+
+sub accumulate {
+    return shift->{accumulate} || 0;
+}
+
 1;

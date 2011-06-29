@@ -8,11 +8,36 @@ our $VERSION = "1.000";
 $INC{"Garmin/FIT/Streamer/Profile.pm"} = "dummy";
 
 use lib "lib";
-require Garmin::FIT::Streamer::Message;
+require Garmin::FIT::Streamer;
 
 use Data::Dumper;
 $Data::Dumper::Indent = 1;
 $Data::Dumper::Sortkeys = 1;
+
+# Construct a CRC16 byte shift table
+# 0x8000 is 1 in reversed bit order
+my $crc16_1 = 0x8000;
+# 0x80 is 256 in reversed bit order
+my $crc16_256 = 0x80;
+my $crc16_modulo;
+# The initial value doesn't really matter as long as it's not 0
+my $work = $crc16_1;
+for (1..2**16) {
+    $crc16_modulo++;
+    $work = Garmin::FIT::Streamer::crc16_multiply($work, $crc16_256);
+    if ($work == $crc16_1) {
+        $crc16_modulo = $_;
+        last;
+    }
+}
+$crc16_modulo || die "No power gives 1";
+
+my @crc16 = ($crc16_256);
+# Construct a table we can use up the needed number of bytes
+$work = $crc16_modulo;
+while ($work >>= 1) {
+    push @crc16, Garmin::FIT::Streamer::crc16_multiply($crc16[-1], $crc16[-1]);
+}
 
 my @base_types = (
     Garmin::FIT::Streamer::BaseType->new(
@@ -378,8 +403,9 @@ my $profile = Garmin::FIT::Streamer::Message->profile;
 $profile = do {
     local $Data::Dumper::Varname = "profile";
     local $Data::Dumper::Purity = 1;
-    Data::Dumper->Dump([  $base_types, $types, $profile],
-                       [qw(base_types   types   profile)]);
+    Data::Dumper->Dump(
+        [  $base_types, $types, $profile, \@crc16, $crc16_modulo],
+        [qw(base_types   types   profile    crc16   crc16_modulo)]);
 };
 chomp $profile;
 $profile =~ s{('regex'\s*=>\s*)'(.*)'(,)}{"$1qr{" . unslash($2) . "}$3"}eg;

@@ -76,6 +76,20 @@ sub number {
     return shift->{number};
 }
 
+sub fields {
+    return shift->{fields};
+}
+
+sub field_from_id {
+    defined $_[1] || croak "No field_id argument";
+    return $_[0]->{fields}{lc $_[1]} ||  croak "Unknown field_id '$_[1]'";
+}
+
+sub try_field_from_id {
+    defined $_[1] || croak "No field_id argument";
+    return $_[0]->{fields}{lc $_[1]};
+}
+
 sub from_id {
     defined $_[1] || croak "No message_id argument";
     return $profile->{lc $_[1]} || croak "Unknown message_id '$_[1]'";
