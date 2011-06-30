@@ -19,9 +19,9 @@ sub new {
     my ($class, %params) = @_;
 
     my %type;
-    defined($type{name} = delete $params{name}) ||
+    $type{name} = delete $params{name} //
         croak "Missing parameter 'name'";
-    defined($type{base_type} = delete $params{base_type}) ||
+    $type{base_type} = delete $params{base_type} //
         croak "Missing parameter 'base_type'";
     if (ref $type{base_type} eq "") {
         $type{base_type} =
@@ -42,7 +42,7 @@ sub new {
             $type{values} = \my %values;
             for my $name (keys %$values) {
                 croak "Value name '$name' can match values" if $name =~ $regex;
-                defined $values->{$name} || croak "Value '$name' is undefined";
+                $values->{$name} // croak "Value '$name' is undefined";
                 # Maybe allow this to give a name to the invalid value
                 ref $values->{$name} eq "" ||
                     croak "Value '$name' is not a plain value but '$values->{$name}'";
@@ -70,10 +70,10 @@ sub new {
                     exists $value{name} ? delete $value{name} :
                     exists $value{value_name} ? delete $value{value_name} :
                     croak "Value has no name or value_name";
-                defined $name || croak "Undefined value name";
+                $name // croak "Undefined value name";
                 croak "Value name '$name' can match values" if $name =~ $regex;
 
-                defined(my $val = delete $value{value}) ||
+                my $val = delete $value{value} //
                     croak "Value '$name' is undefined";
                 $val =~ $regex ||
                     croak "Value '$name' is not a valid '", $type{base_type}->name, "' BaseType but '$val'";
@@ -118,21 +118,56 @@ sub values {
 }
 
 sub value {
-    defined $_[1] || croak "No value id argument";
-    return $_[0]->values->{lc $_[1]} || croak "Unknown value id '$_[1]'";
+    return $_[0]->values->{lc($_[1] // croak "No value id argument")} //
+        croak "Unknown value id '$_[1]'";
 }
 
 sub value_name {
-    return $_[0]->value($_[1])->{name};
+    return ($_[0]->values->{lc($_[1] // croak "No value id argument")} //
+        croak "Unknown value id '$_[1]'")->{name};
 }
 
 sub value_value {
-    return $_[0]->value($_[1])->{value};
+    return ($_[0]->values->{lc($_[1] // croak "No value id argument")} //
+        croak "Unknown value id '$_[1]'")->{value};
 }
 
 sub from_id {
-    defined $_[1] || croak "No type id argument";
-    return $types->{lc $_[1]} || croak "Unknown type id '$_[1]'";
+    return $types->{lc($_[1] // croak "No type id argument")} ||
+        croak "Unknown type id '$_[1]'";
+}
+
+package Garmin::FIT::Streamer::Type::DateTime;
+use Carp;
+use POSIX qw(strftime);
+use Time::Local qw(timegm);
+
+use vars qw(@ISA $base_time);
+@ISA = qw(Garmin::FIT::Streamer::Type);
+
+$base_time = timegm(0, 0, 0, 31, 11, 89);	# 1989-12-31 00:00:00 UTC
+sub value_name {
+    return ($_[0]->values->{lc($_[1] // croak "No value id argument")} // do {
+        return $_[1] if $_[1] < $_[0]->values->{min}{value};
+        # Some systems still don't have %F, use %Y-%m-%d instead
+        return strftime("%Y-%m-%dT%TZ", gmtime($base_time + $_[1]));
+    })->{name};
+}
+
+package Garmin::FIT::Streamer::Type::LocalDateTime;;
+use Carp;
+use POSIX qw(strftime);
+use Time::Local qw(timelocal);
+
+use vars qw(@ISA $base_time);
+@ISA = qw(Garmin::FIT::Streamer::Type);
+
+$base_time = timelocal(0, 0, 0, 31, 11, 89);	# 1989-12-31 00:00:00
+sub value_name {
+    return ($_[0]->values->{lc($_[1] // croak "No value id argument")} //
+        # Some systems still don't have %F, use %Y-%m-%d instead
+        return strftime("%Y-%m-%dT%T", localtime($base_time + $_[1]))
+       )->{name};
 }
 
 1;

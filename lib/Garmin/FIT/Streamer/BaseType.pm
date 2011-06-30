@@ -75,6 +75,10 @@ sub size {
     return shift->{size};
 }
 
+sub invalid {
+    return shift->{invalid};
+}
+
 sub from_id {
     defined $_[1] || croak "No base_type id argument";
     return $base_types->{lc $_[1]} || croak "Unknown base_type id '$_[1]'";

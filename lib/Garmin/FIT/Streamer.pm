@@ -18,12 +18,21 @@ $Data::Dumper::Sortkeys = 1;
 
 use constant {
     HEADER_SIZE	=> 12,
+    CRC16_POLY	=> crc16("\x80"),
 };
+
+our ($crc16_high, $crc16_low, $crc16_modulo, $debug_parse);
 
 sub new {
     my ($class, %params) = @_;
+
     my $fit = bless {
     }, $class;
+
+    if (defined(my $on_record = delete $params{on_record})) {
+        ref $on_record eq "CODE" || croak "on_record is not a CODE reference but '$on_record'";
+        $fit->{on_record} = $on_record;
+    }
 
     croak "Unknown parameter ", join(", ", keys %params) if %params;
 
@@ -116,7 +125,7 @@ sub get_record_header {
             $fit->{in_type} = $fit->{in_types}[$local_message_type] ||
                 croak "Local message type $local_message_type used but not defined";
             $fit->{in_state} = "get_data";
-            $fit->{in_need}  = $fit->{in_type}{size};
+            $fit->{in_need}  = $fit->{in_type}->total_size;
         }
     }
 }
@@ -128,11 +137,11 @@ sub get_define_header {
         $architecture == 0 ? $num0 + $num1 * 256 :
         $architecture == 1 ? $num1 + $num0 * 256 :
         croak "Invalid architecture $architecture";
-    $fit->{in_type} = $fit->{in_types}[$fit->{in_type}] = {
+    $fit->{in_types}[$fit->{in_type}] = {
         nr_fields	=> $nr_fields || croak("Definition of 0 fields"),
         big_endian	=> $architecture,
-        global_nr	=> $num,
-        global_type	=> Garmin::FIT::Streamer::Message->try_from_id($num),
+        message_number	=> $num,
+        message		=> Garmin::FIT::Streamer::Message->try_from_id($num),
     };
     $fit->{in_state} = "get_define_fields";
     $fit->{in_need} = 3*$nr_fields;
@@ -140,36 +149,38 @@ sub get_define_header {
 
 sub get_define_fields {
     my $fit = shift;
-    my @message = unpack("C*", shift);
+    my @definitions = unpack("C*", shift);
 
-    my $in_type = $fit->{in_type};
-    my $meta = eval {
-        $in_type->{global_type}->isa("Garmin::FIT::Streamer::Message") } ?
-        $in_type->{global_type}->fields : {};
-    my $total_size = 0;
-    my $decoder = "";
-    $in_type->{fields} = \my @fields;
-    while (my ($field_nr, $size, $base_type) = splice(@message, 0, 3)) {
+    my $in_type = $fit->{in_types}[$fit->{in_type}];
+    my $message = $in_type->{message};
+
+    my (@fields, $field);
+    while (my ($field_nr, $size, $base_type) = splice(@definitions, 0, 3)) {
         my $base_type = Garmin::FIT::Streamer::BaseType->from_id($base_type);
         print STDERR "Type $base_type->{name}\n" if $base_type->{notice};
-        if ($base_type->{size}) {
-            $base_type->{size} == $size || die "Unexpected size $size for base_type $base_type ($base_type->{name})";
-            $decoder .= $base_type->{decoder}[$in_type->{big_endian}];
+
+        if ($message and $field = $message->try_field_from_id($field_nr)) {
+            # Field is known in the profile
+            $field = {
+                model_field	=> $field,
+                base_type	=> $base_type,
+                size		=> $size,
+            };
         } else {
-            $decoder .= $base_type->{decoder}[$in_type->{big_endian}];
-            $decoder .= $size;
+            # Field is not known in the profile
+            $field = {
+                number		=> $field_nr,
+                base_type	=> $base_type,
+                size		=> $size,
+            }
         }
-        $total_size += $size;
-        push @fields, {
-            base_type	=> $base_type,
-            size	=> $size,
-            field_nr	=> $field_nr,
-            $meta->{$field_nr} ? (field	=> $meta->{$field_nr}) : (),
-        };
+        push @fields, $field;
     }
-    $in_type->{size} = $total_size;
-    $in_type->{decoder} = $decoder;
-    # print STDERR Dumper($in_type);
+
+    $fit->{in_types}[$fit->{in_type}] = Garmin::FIT::Streamer::Definition->new(
+        message		=> $message || $in_type->{message_number},
+        fields		=> \@fields,
+        big_endian	=> $in_type->{big_endian});
 
     if ($fit->{in_want} > 2) {
         $fit->{in_need} = 1;
@@ -184,24 +195,12 @@ sub get_define_fields {
 
 sub get_data {
     my $fit = shift;
-    my @fields = @{$fit->{in_type}{fields}};
-    my @data = unpack($fit->{in_type}{decoder}, shift);
-    my $global_name = $fit->{in_type}{global_type}{name} || "<unknown $fit->{in_type}{global_nr}>";
-    print STDERR "DATA:\n";
-    for my $data (@data) {
-        my $field_name;
-        if (my $field = $fields[0]{field}) {
-            $field_name = $field->name;
-            my $type = $field->type;
-            eval { $data = $type->value_name($data) };
-        } else {
-            $field_name = "<$fields[0]{field_nr}>";
-        }
-        print STDERR "  '$data'	($global_name: $field_name $fields[0]{base_type}{name} \[$fields[0]{field_nr}\])\n";
-        $data = undef if $data eq $fields[0]{base_type}{invalid};
-        $data = [$data, shift @fields];
-    }
-    # print STDERR Dumper(\@data);
+
+    ($fit->{on_record} || croak "No on_record callback")->(
+        $fit,
+        $fit->{in_type},
+        $fit->{in_type}->decode(shift));
+
     if ($fit->{in_want} > 2) {
         $fit->{in_need} = 1;
         $fit->{in_state} = "get_record_header";
@@ -229,7 +228,7 @@ sub add_bytes {
         my $method = $fit->{in_state} || croak "Assertion: No method";
         $fit->{in_want} -= $fit->{in_need};
         my $bytes = substr($fit->{in_buffer}, 0, $fit->{in_need}, "");
-        # print STDERR "$method: ", unpack("H*", $bytes), "\n";
+        print STDERR "$method: ", unpack("H*", $bytes), "\n" if $debug_parse;
         $fit->{in_crc}->add($bytes);
         $fit->$method($bytes);
     }
@@ -314,45 +313,42 @@ sub profile {
     return shift->{profile};
 }
 
+# There just has to be a way to speed this up using lookup tables
+# (An obvious way would be byte multiplication tables, but I don't want to
+#  invest 384k in the tables)
+# Oh well, we do only two crc_multiplies for a crc16_shift so I suppose this
+# is acceptable
+# Arguments and result are bit reversed
+# Arguments are assumed to be <= 0xffff
 sub crc16_multiply {
     my ($x, $y) = @_;
 
     my $a = 0;
     # Use bitwise peasant multiplication with poly reduction
     # It looks reversed because the leftmost bit is really the coef of X**0
-    while (($x & 0xffff) && $y) {
-        $a ^= $y if $x & 0x8000;
-        if ($y & 1) {
-            # 0xa001 is the CRC16 polynomial with the high bit dropped
-            $y = ($y >> 1) ^ 0xa001
+    while ($y & 0xffff) {
+        $a ^= $x if $y & 0x8000;
+        if ($x & 1) {
+            $x = ($x >> 1) ^ CRC16_POLY;
         } else {
-            $y >>= 1;
+            $x >>= 1 or return $a;
         }
-        $x <<= 1;
+        $y <<= 1;
     }
     return $a;
 }
 
-our ($crc16, $crc16_modulo);
-
-#   crc16($a . "\x00" x $n) == crc16_prefix(crc16($a), $n)
+# This is a sort of "left shift by $n bytes:
+#   crc16_shift(crc16($a), $n) = crc16($a . "\x00" x $n)
 # which implies:
-#   crc16($a . $b) = crc16_prefix(crc16($a), length $b) ^ crc16($b)
-sub crc16_prefix {
+#   crc16($a . $b) = crc16_shift(crc16($a), length $b) ^ crc16($b)
+sub crc16_shift {
     my ($pre, $n) = @_;
 
-    my $test = 1;
-    my $shift = 0;
     $n %= $crc16_modulo;
-    while ($n) {
-        if ($n & $test) {
-            $pre = crc16_multiply($pre, $crc16->[$shift]);
-            $n ^= $test;
-        }
-        $test <<= 1;
-        $shift++;
-    }
-    return $pre;
+    my $low  = $crc16_low->[$n & 0xff];
+    my $high = $crc16_high->[$n >> 8];
+    return crc16_multiply(crc16_multiply($low, $high), $pre);
 }
 
 1;

@@ -68,7 +68,7 @@ $message{file_id} = $fit->define(
 $message{record} = $fit->define(
     "record",
     {
-        field	=> "heart_rate",
+        model_field	=> "heart_rate",
     },
     4,			# cadence
     {
@@ -164,12 +164,12 @@ like($@,
 eval {
     $fit->define(0, {
         number		=> 0,
-        type		=> "enum",
-        size		=> 2,
+        type		=> "uint16",
+        size		=> 1,
     });
 };
 like($@,
-     qr{^\QField '0': Parameter size '2' is inconsistent with type size '1' at },
+     qr{^\QField '0': Parameter size '1' is inconsistent with type size '2' at },
      "Expected error message");
 
 eval {
@@ -222,7 +222,7 @@ eval {
     $fit->define(0, "waf");
 };
 like($@,
-     qr{^\QField 'waf': Unknown because message '0' has no such field in the global profile at },
+     qr{^\QField 'waf': Unknown because message 'file_id=0' has no such field in the global profile at },
      "Expected error message");
 
 eval {

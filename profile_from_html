@@ -10,16 +10,27 @@ $INC{"Garmin/FIT/Streamer/Profile.pm"} = "dummy";
 use lib "lib";
 require Garmin::FIT::Streamer;
 
+use Digest::CRC qw(crc16);
 use Data::Dumper;
 $Data::Dumper::Indent = 1;
 $Data::Dumper::Sortkeys = 1;
 
+my %type_class = (
+    date_time		=> "Garmin::FIT::Streamer::Type::DateTime",
+    local_date_time	=> "Garmin::FIT::Streamer::Type::LocalDateTime",
+);
+
+# We do bit_reverses here since we want the second argument of crc16_multiply
+# to NOT be bit reversed. That allows the shifts in crc16_multiply to be done
+# without masks
+sub bit_reverse {
+    return oct("0b" . reverse sprintf("%016b", shift));
+}
+
 # Construct a CRC16 byte shift table
-# 0x8000 is 1 in reversed bit order
-my $crc16_1 = 0x8000;
-# 0x80 is 256 in reversed bit order
-my $crc16_256 = 0x80;
 my $crc16_modulo;
+my $crc16_1   = bit_reverse(1);
+my $crc16_256 = bit_reverse(256);
 # The initial value doesn't really matter as long as it's not 0
 my $work = $crc16_1;
 for (1..2**16) {
@@ -32,11 +43,29 @@ for (1..2**16) {
 }
 $crc16_modulo || die "No power gives 1";
 
-my @crc16 = ($crc16_256);
-# Construct a table we can use up the needed number of bytes
-$work = $crc16_modulo;
-while ($work >>= 1) {
-    push @crc16, Garmin::FIT::Streamer::crc16_multiply($crc16[-1], $crc16[-1]);
+if (0) {
+    my @crc16 = ($crc16_256);
+    # Construct a table we can use up the needed number of bytes
+    $work = $crc16_modulo;
+    while ($work >>= 1) {
+        push @crc16, Garmin::FIT::Streamer::crc16_multiply($crc16[-1], $crc16[-1]);
+    }
+}
+
+# We could generate one huge 128k table
+# But let's generate two small tables instead at the cost of one extra
+# crc16_multiply when doing a crc16_shift
+my @crc16_low;
+$work = $crc16_1;
+for (1..256) {
+    push @crc16_low, $work;
+    $work = Garmin::FIT::Streamer::crc16_multiply($work, $crc16_256);
+}
+my @crc16_high;
+my $high = $crc16_1;
+for (0 .. $crc16_modulo/256) {
+    push @crc16_high, $high;
+    $high = Garmin::FIT::Streamer::crc16_multiply($high, $work);
 }
 
 my @base_types = (
@@ -55,7 +84,6 @@ my @base_types = (
         decoder	=> ["c", "c"],
         invalid	=> 0x7f,
         regex	=> '^[+-]?[0-9]+\z',
-        notice	=> 1,
        ),
     Garmin::FIT::Streamer::BaseType->new(
         name	=> "uint8",
@@ -89,7 +117,6 @@ my @base_types = (
         decoder	=> ["V!", "N!"],
         invalid	=> 0x7fffffff,
         regex	=> '^[+-]?[0-9]+\z',
-        notice	=> 1,
        ),
     Garmin::FIT::Streamer::BaseType->new(
         name	=> "uint32",
@@ -105,7 +132,6 @@ my @base_types = (
         size	=> 0,
         decoder	=> ["Z", "Z"],
         invalid	=> 0x00,
-        notice	=> 1,
        ),
     Garmin::FIT::Streamer::BaseType->new(
         name	=> "float32",
@@ -321,7 +347,9 @@ sub types_from_sheets {
             my $type = $types->{$type_name};
             die "Already have values" if $type->{values};
             $type->{values} = delete $type->{table};
-            Garmin::FIT::Streamer::Type->new(%$type);
+            my $type_class =
+                $type_class{$type_name} || "Garmin::FIT::Streamer::Type";
+            $type_class->new(%$type);
         };
         die "Type '$type_name': $@" if $@;
     }
@@ -404,11 +432,14 @@ $profile = do {
     local $Data::Dumper::Varname = "profile";
     local $Data::Dumper::Purity = 1;
     Data::Dumper->Dump(
-        [  $base_types, $types, $profile, \@crc16, $crc16_modulo],
-        [qw(base_types   types   profile    crc16   crc16_modulo)]);
+        [  $base_types,$types,$profile,\@crc16_low,\@crc16_high,$crc16_modulo],
+        [qw(base_types  types  profile   crc16_low   crc16_high  crc16_modulo)]);
 };
 chomp $profile;
 $profile =~ s{('regex'\s*=>\s*)'(.*)'(,)}{"$1qr{" . unslash($2) . "}$3"}eg;
+$profile =~ s{^([^\S\n]*([0-9]+)),?[^\S\n]*\n}{
+    sprintf("%s,%s\t# %04x\n", $1, length($1) <= 6 ? "\t" : "", $2)
+}gem;
 
 open(my $fh, "<", $profile_file) || die "Could not open '$profile_file': $!";
 my $profile_content = do { local $/; <$fh> };

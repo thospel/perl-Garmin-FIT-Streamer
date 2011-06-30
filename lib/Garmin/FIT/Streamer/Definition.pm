@@ -15,6 +15,8 @@ my $dummy_fields = {};
 
 sub new {
     my ($class, %params) = @_;
+    # use Data::Dumper;
+    # print Dumper(\@_);
 
     # defined(my $fit = delete $params{fit}) || croak "No fit parameter";
 
@@ -22,8 +24,12 @@ sub new {
     my $message_id = delete $params{message};
     if (ref $message_id eq "") {
         defined $message_id || croak "No message parameter";
-        $message = Garmin::FIT::Streamer::Message->try_from_id($message_id);
-        $message_number = $message ? $message->number : $message_id;
+        if ($message = Garmin::FIT::Streamer::Message->try_from_id($message_id)) {
+            $message_number = $message->number;
+            $message_id = $message->name;
+        } else {
+            $message_number = $message_id;
+        }
     } elsif (eval { $message_id->isa("Garmin::FIT::Streamer::Message") }) {
         $message = $message_id;
         $message_number = $message->number;
@@ -35,7 +41,6 @@ sub new {
         croak "Unknown non-numeric message parameter '$message_number'";
     $message_number = int($1);
     $message_number <= 65535 || croak "Parameter 'message' has value '$message_number' but should be at most 65535";
-
 
     defined(my $fields = delete $params{fields}) ||
         croak "No fields parameter";
@@ -50,36 +55,48 @@ sub new {
 
     my $define_string = pack($big_endian ? "xCnC" : "xCvC",
                              $big_endian, $message_number, scalar @$fields);
-    my $code_string = "C";
+    my $code_string = "";
     my (%fields, $base_type, $model);
 
+    my $total_size = 0;
     my @fields = @$fields;
     for my $field (@fields) {
         defined $field || croak "Undefined field";
         if (ref $field eq "") {
             $message || croak "Field '$field': Unknown because message '$message_id' is not in the global profile";
             $model = eval { $message->field_from_id($field) } ||
-                croak "Field '$field': Unknown because message '$message_id' has no such field in the global profile";
-            eval { $field = ref($model)->new(field => $model) };
-            die "Field '$field': $@" if $@;
+                croak "Field '$field': Unknown because message '$message_id=$message_number' has no such field in the global profile";
+            eval {
+                $field = ref($model)->new(
+                    model_field => $model,
+                    big_endian	=> $big_endian,
+                   );
+            };
+            die "Message '$message_id': Field '$field': $@" if $@;
             $base_type = $field->base_type;
         } elsif (ref $field eq "HASH") {
-            if (defined($model = $field->{field})) {
+            if (defined($model = $field->{model_field})) {
                 if (ref $model eq "") {
                     $model = $message->field_from_id($model);
                     $field = Garmin::FIT::Streamer::Field->new(
                         %$field,
-                        field => $model);
-                } elsif (eval { $field->isa("Garmin::FIT::Streamer::Field") }) {
-                    $field = (ref $field)->new(%$field);
+                        model_field	=> $model,
+                        big_endian	=> $big_endian);
+                } elsif (eval { $model->isa("Garmin::FIT::Streamer::Field") }) {
+                    $field = (ref $model)->new(
+                        %$field,
+                        big_endian => $big_endian);
                 } else {
                     croak "Parameter field is neither a plain value nor a Garmin::FIT::Streamer::Field object but '$model'";
                 }
             } else {
-                $field = Garmin::FIT::Streamer::Field->new(%$field);
+                $field = Garmin::FIT::Streamer::Field->new(
+                    %$field,
+                    big_endian	=> $big_endian);
             }
             $base_type = $field->base_type;
-            if (my $profile = $field->model || $message && $message->try_field_from_id($field->number)) {
+            if (my $profile = $field->model_field ||
+                $message && $message->try_field_from_id($field->number)) {
                 if ($profile->base_type != $base_type) {
                     my $field_number = $field->number;
                     my $field_name = $base_type->{name};
@@ -91,26 +108,34 @@ sub new {
             croak "Field '$field' is neither a plain value nor a HASH reference";
         }
         my $field_number = $field->number;
-        my $size = $field->size ||
-            croak "Field '$field_number': Parameter 'size' is still 0";
         croak "Multiple uses of field number $field_number" if
             $fields{$field_number};
         $fields{$field_number} = 1;
 
+        my $size = $field->size ||
+            croak "Field '$field_number': Parameter 'size' is still 0";
+        $total_size += $size;
         $define_string .= pack("CCC",
                                $field_number, $size, $base_type->number);
-        $code_string .= $base_type->decoder($big_endian);
-        $code_string .= $size if !$base_type->size;
+        if (defined(my $array = $field->array)) {
+            $code_string .= "a" . $size;
+        } else {
+            $code_string .= $base_type->decoder($big_endian);
+            $code_string .= $size if !$base_type->size;
+        }
+
     }
 
     my $mess = {
         # fit		=> $fit,
+        message_id	=> $message_id,
         message_number	=> $message_number,
         message		=> $message,
         big_endian	=> $big_endian,
         fields		=> \@fields,
         define_string	=> $define_string,
         code_string	=> $code_string,
+        total_size	=> $total_size,
     };
     $mess->{id} = sprintf("%X", refaddr($mess));
 
@@ -125,13 +150,29 @@ sub big_endian {
     return shift->{big_endian};
 }
 
+sub message_number {
+    return shift->{message_number};
+}
+
+sub message_id {
+    return shift->{message_id};
+}
+
 sub code_string {
     return shift->{code_string};
+}
+
+sub total_size {
+    return shift->{total_size};
 }
 
 sub define_string {
     my ($message, $local_id) = @_;
     return chr(0x40 + $local_id) . $message->{define_string};
+}
+
+sub fields {
+    return @{shift->{fields}};
 }
 
 sub encode {
@@ -153,7 +194,20 @@ sub encode {
             $value = $base_type->{invalid};
         }
     }
-    return pack($message->{code_string}, $local_id, @values);
+    return pack("C" . $message->{code_string}, $local_id, @values);
+}
+
+sub decode {
+    my $definition = shift;
+    defined $_[0] || croak "No bytes argument";
+    length $_[0] == $definition->{total_size} || croak "Incorrect bytes length";
+    my @data = unpack($definition->{code_string}, $_[0]);
+
+    my $i = -1;
+    for my $field (@{$definition->{fields}}) {
+        $field->decode_inplace($data[++$i]);
+    }
+    return \@data;
 }
 
 1;
