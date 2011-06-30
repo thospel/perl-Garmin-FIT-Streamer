@@ -111,6 +111,8 @@ sub new {
             $model_field ? $model_field->comment :
             undef;
         $field{comment} = $comment if defined $comment;
+        my $user_data = delete $params{user_data};
+        $field{user_data} = $user_data if defined $user_data;
 
         my $array =
             exists $params{array} ? delete $params{array} :
@@ -189,6 +191,7 @@ sub new {
                     $special ||= 1;
                 } elsif ($tag eq "unit") {
                     $v || croak "Parameter unit is not a true value but '$v'";
+                    $v =~ s{\s*/\s*}{/}g;
                     $special ||= 1;
                 } else {
                     die "Assertion: Unknown tag '$tag'";
@@ -208,6 +211,14 @@ sub new {
     die "Field '$number': $@" if $@;
 
     return bless \%field, $class;
+}
+
+sub user_data {
+    return shift->{user_data} if @_ <= 1;
+    my $definition = shift;
+    my $old = $definition->{user_data};
+    $definition->{user_data} = shift;
+    return $old;
 }
 
 sub name {

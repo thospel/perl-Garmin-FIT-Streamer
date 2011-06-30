@@ -12,6 +12,7 @@ lib/Garmin/FIT/Streamer/Message.pm
 lib/Garmin/FIT/Streamer/Package.pm
 lib/Garmin/FIT/Streamer/Profile.pm
 lib/Garmin/FIT/Streamer/Type.pm
+lib/Garmin/FIT/Streamer/Unit.pm
 md5-versions
 profile_from_html
 t/00_load.t

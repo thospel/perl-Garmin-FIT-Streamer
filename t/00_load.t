@@ -9,7 +9,7 @@ use warnings;
 
 our $VERSION = "1.000";
 
-use Test::More tests => 13;
+use Test::More tests => 14;
 
 for my $module
     qw(
@@ -17,6 +17,7 @@ for my $module
        Garmin::FIT::Streamer::Profile
        Garmin::FIT::Streamer::BaseType
        Garmin::FIT::Streamer::Type
+       Garmin::FIT::Streamer::Unit
        Garmin::FIT::Streamer::Field
        Garmin::FIT::Streamer::Message
        Garmin::FIT::Streamer::Definition

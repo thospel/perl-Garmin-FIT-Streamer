@@ -51,8 +51,6 @@ sub new {
 
     my $big_endian = delete $params{big_endian} ? 1 : 0;
 
-    croak "Unknown parameter ", join(", ", keys %params) if %params;
-
     my $define_string = pack($big_endian ? "xCnC" : "xCvC",
                              $big_endian, $message_number, scalar @$fields);
     my $code_string = "";
@@ -123,10 +121,9 @@ sub new {
             $code_string .= $base_type->decoder($big_endian);
             $code_string .= $size if !$base_type->size;
         }
-
     }
 
-    my $mess = {
+    my $definition = {
         # fit		=> $fit,
         message_id	=> $message_id,
         message_number	=> $message_number,
@@ -137,9 +134,36 @@ sub new {
         code_string	=> $code_string,
         total_size	=> $total_size,
     };
-    $mess->{id} = sprintf("%X", refaddr($mess));
+    if (defined(my $on_record = delete $params{on_record})) {
+        ref $on_record eq "CODE" ||
+            croak "Parameter 'on_record' is not undefined or a CODE reference but '$on_record'";
+        $definition->{on_record} = $on_record;
+    }
+    my $user_data = delete $params{user_data};
+    $definition->{user_data} = $user_data if defined $user_data;
+    $definition->{id} = sprintf("%X", refaddr($definition));
 
-    return bless $mess, $class;
+    croak "Unknown parameter ", join(", ", map "'$_'", keys %params) if %params;
+
+    return bless $definition, $class;
+}
+
+sub on_record {
+    return shift->{on_record} if @_ <= 1;
+    my ($definition, $on_record) = @_;
+    !defined $on_record || ref $on_record eq "CODE" ||
+    croak "on_record is not undefined or a CODE reference but '$on_record'";
+    my $old = $definition->{on_record};
+    $definition->{on_record} = $on_record;
+    return $old;
+}
+
+sub user_data {
+    return shift->{user_data} if @_ <= 1;
+    my $definition = shift;
+    my $old = $definition->{user_data};
+    $definition->{user_data} = shift;
+    return $old;
 }
 
 sub id {

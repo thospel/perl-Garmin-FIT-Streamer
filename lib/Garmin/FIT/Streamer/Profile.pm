@@ -38,6 +38,8 @@ sub PROTOCOL_VERSION() {
     return PROTOCOL_MAJOR() * PROTOCOL_SCALE() + PROTOCOL_MINOR();
 }
 
+my $all_units;
+
 $base_types = {
   '0' => bless( {
     'decoder' => [
@@ -3368,7 +3370,7 @@ $profile = {
         'size' => 2,
         'type' => {},
         'unit' => [
-          'kcal / min'
+          'kcal/min'
         ]
       }, 'Garmin::FIT::Streamer::Field' ),
       '254' => bless( {
@@ -3388,7 +3390,7 @@ $profile = {
         'size' => 1,
         'type' => {},
         'unit' => [
-          'kcal / min'
+          'kcal/min'
         ]
       }, 'Garmin::FIT::Streamer::Field' ),
       'calories' => {},
@@ -7092,6 +7094,26 @@ $crc16_high = [
   49488,	# c150
 ];
 $crc16_modulo = 32767;
+$all_units = {
+  '%' => 1,
+  'C' => 1,
+  'V' => 1,
+  'bpm' => 1,
+  'bytes' => 1,
+  'cycles' => 1,
+  'kcal' => 1,
+  'kcal/day' => 1,
+  'kcal/min' => 1,
+  'kg' => 1,
+  'm' => 1,
+  'm/s' => 1,
+  'mmHg' => 1,
+  'rpm' => 1,
+  's' => 1,
+  'semicircles' => 1,
+  'watts' => 1,
+  'years' => 1
+};
 # END GENERATED
 
 1;

@@ -33,6 +33,10 @@ sub new {
         ref $on_record eq "CODE" || croak "on_record is not a CODE reference but '$on_record'";
         $fit->{on_record} = $on_record;
     }
+    if (defined(my $on_definition = delete $params{on_definition})) {
+        ref $on_definition eq "CODE" || croak "on_definition is not a CODE reference but '$on_definition'";
+        $fit->{on_definition} = $on_definition;
+    }
 
     croak "Unknown parameter ", join(", ", keys %params) if %params;
 
@@ -177,10 +181,12 @@ sub get_define_fields {
         push @fields, $field;
     }
 
-    $fit->{in_types}[$fit->{in_type}] = Garmin::FIT::Streamer::Definition->new(
+    my $definition = Garmin::FIT::Streamer::Definition->new(
         message		=> $message || $in_type->{message_number},
         fields		=> \@fields,
         big_endian	=> $in_type->{big_endian});
+    $fit->{on_definition}->($fit, $definition) if $fit->{on_definition};
+    $fit->{in_types}[$fit->{in_type}] = $definition;
 
     if ($fit->{in_want} > 2) {
         $fit->{in_need} = 1;
@@ -196,7 +202,8 @@ sub get_define_fields {
 sub get_data {
     my $fit = shift;
 
-    ($fit->{on_record} || croak "No on_record callback")->(
+    ($fit->{in_type}->on_record || $fit->{on_record} ||
+     croak "No on_record callback")->(
         $fit,
         $fit->{in_type},
         $fit->{in_type}->decode(shift));

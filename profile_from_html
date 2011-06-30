@@ -20,6 +20,8 @@ my %type_class = (
     local_date_time	=> "Garmin::FIT::Streamer::Type::LocalDateTime",
 );
 
+my %all_units;
+
 # We do bit_reverses here since we want the second argument of crc16_multiply
 # to NOT be bit reversed. That allows the shifts in crc16_multiply to be done
 # without masks
@@ -394,6 +396,9 @@ sub profile_from_sheets {
                     unit	=> $row->{units},
                     array	=> $array,
                     );
+                for my $unit (@{$fields[-1]->unit || []}) {
+                    $all_units{$unit} ||= 1;
+                }
             }
             @fields || die "No usable rows";
 
@@ -432,8 +437,8 @@ $profile = do {
     local $Data::Dumper::Varname = "profile";
     local $Data::Dumper::Purity = 1;
     Data::Dumper->Dump(
-        [  $base_types,$types,$profile,\@crc16_low,\@crc16_high,$crc16_modulo],
-        [qw(base_types  types  profile   crc16_low   crc16_high  crc16_modulo)]);
+        [  $base_types,$types,$profile,\@crc16_low,\@crc16_high,$crc16_modulo,\%all_units],
+        [qw(base_types  types  profile   crc16_low   crc16_high  crc16_modulo   all_units)]);
 };
 chomp $profile;
 $profile =~ s{('regex'\s*=>\s*)'(.*)'(,)}{"$1qr{" . unslash($2) . "}$3"}eg;
@@ -473,6 +478,8 @@ sub PROFILE_VERSION() {
 sub PROTOCOL_VERSION() {
     return PROTOCOL_MAJOR() * PROTOCOL_SCALE() + PROTOCOL_MINOR();
 }
+
+my \$all_units;
 
 $profile
 # END GENERATED

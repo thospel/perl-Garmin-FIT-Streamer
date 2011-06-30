@@ -132,6 +132,11 @@ sub value_value {
         croak "Unknown value id '$_[1]'")->{value};
 }
 
+sub value_comment {
+    return ($_[0]->values->{lc($_[1] // croak "No value id argument")} //
+        croak "Unknown value id '$_[1]'")->{comment};
+}
+
 sub from_id {
     return $types->{lc($_[1] // croak "No type id argument")} ||
         croak "Unknown type id '$_[1]'";
