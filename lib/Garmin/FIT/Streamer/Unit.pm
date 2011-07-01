@@ -1,4 +1,4 @@
-use Garmin::FIT::Streamer::Unit;
+package Garmin::FIT::Streamer::Unit;
 use strict;
 use warnings;
 
@@ -10,7 +10,8 @@ our %base_units = (
     kg		=> 1,
     meter	=> 1,
     second	=> 1,
-    degree	=> 1,
+    # degree	=> 1,
+    degrees	=> 1,
     celcius	=> 1,
     volt	=> 1,
     bit		=> 1,
@@ -78,4 +79,27 @@ our %units = (
         "joule"		=> 4.184,
     },
 );
+
+$units{$_}{$_} = 1 for keys %base_units;
+
+sub converters {
+    my ($class, $preferences) = @_;
+    ref $preferences eq "HASH" ||
+        croak "preferences is not a HASH reference but '$preferences'";
+    my %converters;
+    for my $from (keys %$preferences) {
+        eval {
+            $units{$from} || croak "Unknown";
+            my $to = $preferences->{$from} // croak "Undefined preference";
+            ref $to eq "" || croak "Preference is not a plain value but '$to'";
+            $units{$to} || croak "Unknown target '$to'";
+            my $converter = $units{$from}{$to} ||
+               croak "Unrelated target '$to'";
+            $converters{$from} = [$to, $converter];
+        };
+        die "Unit $from: $@" if $@;
+    }
+    return \%converters;
+}
+
 1;

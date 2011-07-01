@@ -5,10 +5,11 @@ use warnings;
 our $VERSION = '1.000';
 
 use Carp;
-use Scalar::Util qw(weaken);
+use Scalar::Util qw(looks_like_number);
 use Digest::CRC qw(crc16);
 
 require Garmin::FIT::Streamer::Definition;
+require Garmin::FIT::Streamer::Unit;
 
 our @CARP_NOT = qw(Garmin::FIT::Streamer::Definition);
 
@@ -30,12 +31,20 @@ sub new {
     }, $class;
 
     if (defined(my $on_record = delete $params{on_record})) {
-        ref $on_record eq "CODE" || croak "on_record is not a CODE reference but '$on_record'";
+        ref $on_record eq "CODE" ||
+            croak "on_record is not a CODE reference but '$on_record'";
         $fit->{on_record} = $on_record;
     }
     if (defined(my $on_definition = delete $params{on_definition})) {
-        ref $on_definition eq "CODE" || croak "on_definition is not a CODE reference but '$on_definition'";
+        ref $on_definition eq "CODE" ||
+            croak "on_definition is not a CODE reference but '$on_definition'";
         $fit->{on_definition} = $on_definition;
+    }
+
+    if (defined(my $unit_preferences = delete $params{unit_preferences})) {
+        $unit_preferences =
+            Garmin::FIT::Streamer::Unit->converters($unit_preferences);
+        $fit->{unit_preferences} = $unit_preferences if %$unit_preferences;
     }
 
     croak "Unknown parameter ", join(", ", keys %params) if %params;
@@ -184,7 +193,8 @@ sub get_define_fields {
     my $definition = Garmin::FIT::Streamer::Definition->new(
         message		=> $message || $in_type->{message_number},
         fields		=> \@fields,
-        big_endian	=> $in_type->{big_endian});
+        big_endian	=> $in_type->{big_endian},
+        unit_preferences=> $fit->{unit_preferences});
     $fit->{on_definition}->($fit, $definition) if $fit->{on_definition};
     $fit->{in_types}[$fit->{in_type}] = $definition;
 
@@ -318,6 +328,39 @@ sub protocol {
 
 sub profile {
     return shift->{profile};
+}
+
+sub dump_record {
+    my ($fit, $definition, $data) = @_;
+
+    my $message_id = $definition->message_id;
+
+    print STDERR "DATA $definition->{message_id}:\n";
+    my @fields = $definition->fields;
+    @fields == @$data || die "Assertion: Inconsistent number of fields";
+    for my $value (@$data) {
+        my $field = shift @fields;
+        my $field_id = $field->id;
+        my $field_number = $field->number;
+        my $unit = $field->unit;
+        $unit = $unit ? " $unit->[0]" : "";
+
+        if (defined $value) {
+            if (ref $value eq "") {
+                my $comment = eval { "\t(" . ($field->type->value_comment($value) // return) . ")" } || "";
+                $value = looks_like_number($value) ? "'$value$unit'$comment" : "'$value'$comment"
+            } else {
+                $value =
+                    "[" .
+                    join(", ", map defined $_ ? looks_like_number($_) ? "'$_$unit'" : "'$_'": "undef", @$value) .
+                    "]";
+            }
+        } else {
+            $value = "undef";
+        }
+        my $base_type_name = $field->base_type->name;
+        print STDERR "  $field_id $base_type_name \[$field_number\]:\t$value\n";
+    }
 }
 
 # There just has to be a way to speed this up using lookup tables

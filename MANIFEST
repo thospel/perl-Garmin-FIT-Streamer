@@ -4,6 +4,9 @@ MANIFEST.SKIP
 Makefile.PL
 Profile.html
 README
+bin/fit_dump
+bin/fit_from_tcx
+bin/tcx_from_fit
 lib/Garmin/FIT/Streamer.pm
 lib/Garmin/FIT/Streamer/BaseType.pm
 lib/Garmin/FIT/Streamer/Definition.pm
@@ -16,6 +19,7 @@ lib/Garmin/FIT/Streamer/Unit.pm
 md5-versions
 profile_from_html
 t/00_load.t
+t/00_syntax.t
 t/01_write.t
 t/02_read.t
 t/TestDrive.pm

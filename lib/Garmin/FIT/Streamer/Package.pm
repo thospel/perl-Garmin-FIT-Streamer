@@ -8,7 +8,7 @@ use strict;
 use warnings;
 use vars qw($VERSION $release_time %history);
 $VERSION = "1.000";
-$release_time = 1309473270;	## no critic (ProhibitUselessNoCritic ProhibitMagicNumbers)
+$release_time = 1309532292;	## no critic (ProhibitUselessNoCritic ProhibitMagicNumbers)
 %history = (
   'Changes' => {
     '1.000' => '1.000'
@@ -26,6 +26,15 @@ $release_time = 1309473270;	## no critic (ProhibitUselessNoCritic ProhibitMagicN
     '1.000' => '1.000'
   },
   'README' => {
+    '1.000' => '1.000'
+  },
+  'bin/fit_dump' => {
+    '1.000' => '1.000'
+  },
+  'bin/fit_from_tcx' => {
+    '1.000' => '1.000'
+  },
+  'bin/tcx_from_fit' => {
     '1.000' => '1.000'
   },
   'lib/Garmin/FIT/Streamer.pm' => {
@@ -59,6 +68,9 @@ $release_time = 1309473270;	## no critic (ProhibitUselessNoCritic ProhibitMagicN
     '1.000' => '1.000'
   },
   't/00_load.t' => {
+    '1.000' => '1.000'
+  },
+  't/00_syntax.t' => {
     '1.000' => '1.000'
   },
   't/01_write.t' => {

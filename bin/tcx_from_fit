@@ -1,0 +1,311 @@
+#!/usr/bin/perl -w
+use strict;
+use warnings;
+
+use lib "blib/lib";
+
+our $VERSION = "1.000";
+
+use Garmin::FIT::Streamer;
+
+use Data::Dumper;
+$Data::Dumper::Indent = 1;
+$Data::Dumper::Sortkeys = 1;
+
+my (%known_unkown, $activity, $author, $lap, $track);
+
+my %sports = (
+    cycling	=> "Biking",
+);
+
+my $out = << 'EOT';
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TrainingCenterDatabase xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd">
+EOT
+
+# To fix: Do proper XML entity escaping
+sub escape {
+    return shift;
+}
+
+sub on_file_id {
+    my ($fit, $definition, $data) = @_;
+
+    die "Multiple file_id records" if $author;
+    $author = $data;
+    $author->{product_field} = $definition->field("product") if
+        defined $data->{product};
+    $data->{type} eq "course" || $data->{type} eq "activity" ||
+        die "Cannot convert a file of FIT file type '$data->{type}'";
+    $out .= $author->{type} eq "course" ?
+        qq(  <Courses>\n    <Course>\n) :
+        qq(  <Activities>\n    <Activity>\n);
+    if ($data->{type} eq "activity") {
+        # No clear header record. Fake it
+        $out .= sprintf(qq(      <Id>%s</Id>\n),
+                        escape($data->{time_created})) if $data->{time_created};
+        $activity = 1;
+    }
+}
+
+sub on_file_creator {
+    my ($fit, $definition, $data) = @_;
+    @{$author}{keys %$data} = values %$data;
+}
+
+sub close_track {
+    defined $track || die "Assertion: Not in track";
+    $track .= qq(        </Track>\n);
+    $out .= $track;
+    $track = undef;
+}
+
+sub close_lap {
+    if ($author->{type} ne "course" && defined $track) {
+        close_track();
+    }
+    $lap || die "Assertion: Not in lap";
+
+    $out .= qq(      </Lap>\n);
+    $lap = undef;
+    if ($author->{type} eq "course" && defined $track) {
+        $track =~ s/^  //mg;
+        close_track();
+    }
+}
+
+sub close_activity {
+    # my ($fit) = @_;
+
+    $activity || die "Assertion: No activity";
+    if ($author->{type} eq "course") {
+        close_lap() if $lap;
+    } else {
+        !defined $track || die "Track without closing lap";
+    }
+
+    $out .= qq(      <Creator xsi:type="Device_t">\n);
+    $out .= sprintf("        <Name>%s</Name>\n",
+                    escape($author->{product})) if $author->{product};
+    $out .= sprintf("        <UnitId>%s</UnitId>\n",
+                    escape($author->{serial_number})) if $author->{serial_number};
+    $out .= sprintf("        <ProductID>%s</ProductID>\n",
+                    escape(
+                        eval { $author->{product_field}->value_value($author->{product}) } || $author->{product})) if defined $author->{product};
+    if (defined $author->{software_version}) {
+        my $major = int($author->{software_version} / 100);
+        my $minor = $author->{software_version} % 100;
+        $out .= << "EOT";
+        <Version>
+          <VersionMajor>$major</VersionMajor>
+          <VersionMinor>$minor</VersionMinor>
+        </Version>
+EOT
+;
+    }
+    $out .= qq(      </Creator>\n);
+    $out .= $author->{type} eq "course" ?
+        qq(    </Course>\n  </Courses>\n) :
+        qq(    </Activity>\n  </Activities>\n);
+    $activity = 0;
+}
+
+sub on_course {
+    my ($fit, $definition, $data) = @_;
+
+    close_activity($fit) if $activity;
+    $activity = $definition;
+    # $lap = undef;
+    if (0) {
+    $data->{sport} = $sports{$data->{sport}} //
+        warn("Unknown sport '$data->{sport}'") && undef if
+        defined $data->{sport};
+    if (defined $data->{sport}) {
+        $out .= sprintf(qq(    <Course Sport="%s">\n),
+                        escape($data->{sport}));
+    } else {
+        $out .= qq(    <Course>\n);
+    }
+}
+    $out .= sprintf(qq(      <Name>%s</Name>\n), escape($data->{name}));
+}
+
+sub on_lap {
+    my ($fit, $definition, $data) = @_;
+
+    $activity || die "Lap outside activity";
+    if ($author->{type} eq "course") {
+        close_lap() if $lap;
+        # die "Lap while in track" if defined $track;
+    } else {
+        !$lap || die "Pending lap in lap";
+    }
+    $lap = 1;
+
+    if ($data->{start_time}) {
+        $out .= sprintf(qq(      <Lap StartTime="%s">\n),
+                        escape($data->{start_time}));
+    } else {
+        $out .= qq(      <Lap>\n);
+    }
+    $out .= sprintf(qq(        <TotalTimeSeconds>%s</TotalTimeSeconds>\n),
+                    escape($data->{total_timer_time})) if
+        defined $data->{total_timer_time};
+    $out .= sprintf(qq(        <DistanceMeters>%s</DistanceMeters>\n),
+                    escape($data->{total_distance})) if
+        defined $data->{total_distance};
+    $out .= sprintf(qq(        <MaximumSpeed>%s</MaximumSpeed>\n),
+                    escape($data->{max_speed})) if
+        defined $data->{max_speed};
+    $out .= sprintf(qq(        <Calories>%s</Calories>\n),
+                    escape($data->{total_calories})) if
+        defined $data->{total_calories};
+    # Intensity
+    # TriggerMethod
+    if ($author->{type} eq "course") {
+        !defined $track || die "Lap with preceding track in type '$author->{type}'";
+    } else {
+        defined $track || die "Lap without preceding track in type '$author->{type}'";
+        close_lap();
+    }
+}
+
+sub on_point {
+    my ($fit, $definition, $data) = @_;
+
+    if (!defined $track) {
+        $track = qq(        <Track>\n);
+    }
+    $track .= qq(          <Trackpoint>\n);
+    $track .= sprintf("            <Time>%s</Time>\n",
+                    escape($data->{timestamp})) if
+        defined $data->{timestamp};
+    if (defined $data->{position_lat} && defined $data->{position_long}) {
+        $track .= << "EOT";
+            <Position>
+              <LatitudeDegrees>$data->{position_lat}</LatitudeDegrees>
+              <LongitudeDegrees>$data->{position_long}</LongitudeDegrees>
+            </Position>
+EOT
+        ;
+    }
+    $track .= sprintf("            <AltitudeMeters>%s</AltitudeMeters>\n",
+                    escape($data->{altitude})) if
+        defined $data->{altitude};
+    $track .= sprintf("            <DistanceMeters>%s</DistanceMeters>\n",
+                    escape($data->{distance})) if
+        defined $data->{distance};
+    $track .= qq(          </Trackpoint>\n);
+}
+
+sub nop {
+}
+
+sub on_definition {
+    my ($fit, $definition) = @_;
+
+    if (my $message = $definition->try_message) {
+        my $message_name = $message->name;
+        if ($message_name eq "file_id") {
+            $definition->select(
+                serial_number	=> 0,
+                time_created	=> 0,
+                manufacturer	=> 0,
+                product		=> 0,
+                number		=> 0,
+                type		=> 1);
+            $definition->on_record(\&on_file_id);
+        } elsif ($message_name eq "file_creator") {
+            $definition->select(
+                software_version	=> 0,
+                hardware_version	=> 0,
+               );
+            $definition->on_record(\&on_file_creator);
+        } elsif ($message_name eq "course") {
+            $definition->select(
+                name		=> 1,
+                sport		=> 0,
+                # capabilities
+                );
+            $definition->on_record(\&on_course);
+        } elsif ($message_name eq "lap") {
+            $definition->select(
+                start_time	=> 0,
+                total_timer_time=> 0,
+                total_distance	=> 0,
+                max_speed	=> 0,
+                total_calories	=> 0,
+                intensity	=> 0,
+                lap_trigger	=> 0,
+                );
+            $definition->on_record(\&on_lap);
+        } elsif ($message_name eq "event") {
+            # Ignore events for now
+            # They are typically presses of the start/stop button
+            # Maybe we can detect a new lap here ?
+            $definition->on_record(\&nop);
+        } elsif ($message_name eq "record") {
+            $definition->select(
+                timestamp	=> 0,
+                position_lat	=> 0,
+                position_long	=> 0,
+                distance	=> 0,
+                altitude	=> 0,
+                # speed		=> 0,
+               );
+            $definition->on_record(\&on_point);
+        } else {
+            warn("Ignoring definition of unknown message '$message_name'\n") if
+                !$known_unkown{$message_name};
+            $known_unkown{$message_name} = 1;
+            $definition->on_record(\&nop);
+        }
+        $author || $message_name eq "file_id" ||
+            die "Definition '$message_name' without file_id";
+    } else {
+        my $message_number = $definition->message_number;
+        warn("Ignoring definition of unknown message '$message_number'\n") if
+            !$known_unkown{$message_number};
+        $known_unkown{$message_number} = 1;
+        $definition->on_record(\&nop);
+    }
+}
+
+my $fit = Garmin::FIT::Streamer->new(
+    on_definition	=> \&on_definition,
+    on_record		=> Garmin::FIT::Streamer->can("dump_record"),
+    unit_preferences	=> {
+        semicircles	=> "degrees",
+    },
+   );
+$fit->from_file(shift);
+
+if ($activity) {
+    close_activity($fit);
+} else {
+    warn("No activity\n");
+}
+$out .= qq(  <Author xsi:type="Application_t">\n),
+$out .= sprintf("    <Name>%s</Name>\n",
+                escape($author->{product})) if $author->{product};
+if (defined $author->{software_version}) {
+    my $major = int($author->{software_version} / 100);
+    my $minor = $author->{software_version} % 100;
+    $out .= << "EOT";
+    <Build>
+      <Version>
+        <VersionMajor>$major</VersionMajor>
+        <VersionMinor>$minor</VersionMinor>
+      </Version>
+      <Type>Release</Type>
+    </Build>
+EOT
+    }
+    # Serial number != part number
+    # $out .= sprintf("    <PartNumber>%s</PartNumber>\n",
+    #                escape($author->{serial_number})) if $author->{serial_number};
+$out .= << 'EOT';
+  </Author>
+</TrainingCenterDatabase>
+EOT
+print $out;

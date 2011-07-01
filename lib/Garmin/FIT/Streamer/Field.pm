@@ -11,6 +11,8 @@ require Garmin::FIT::Streamer::Type;
 
 our @CARP_NOT = qw(Garmin::FIT::Streamer::Type);
 
+my $dummy_hash = {};
+
 # We should probably distinguish creating a definition field and a base field
 # We conflate the two classes here
 sub new {
@@ -65,9 +67,8 @@ sub new {
                 $field{name} =~ /^\s*[0-9]+\s*\z/;
             $field{id} = $field{name};
         } else {
-            $field{id} =
-                $model_field && $model_field->name ||
-                "<$field{number}>";
+            eval { $field{name} = $model_field->name };
+            $field{id} = $field{name} || "<$field{number}>";
         }
 
         my $type =
@@ -199,6 +200,19 @@ sub new {
             }
             $field{$tag} = \@values if $special;
         }
+
+        my $unit_preferences = delete $params{unit_preferences};
+        if ($unit_preferences && $field{unit}) {
+            for my $i (0..$splits-1) {
+                my $converter = $unit_preferences->{$field{unit}[$i]} || next;
+                next if $converter->[1] == 1;
+                $field{scale} ||= [(1) x $splits];
+                $field{scale}[$i] /= $converter->[1];
+                $field{offset}[$i] /= $converter->[1] if $field{offset};
+                $field{unit}[$i] = $converter->[0];
+            }
+        }
+
         # The combination in fact DOES happen
         # e.g. weight_scale has a scale of 100 and a special value that means
         # "calculating"
