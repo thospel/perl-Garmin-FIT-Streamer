@@ -72,8 +72,8 @@ $message{record} = $fit->define(
     },
     4,			# cadence
     {
-        number	=> 5,	# distance
-        type	=> "uint32",
+        number		=> 5,	# distance
+        type		=> "uint32",
     }, "speed",
 );
 $message{unknown_id} = $fit->define(
@@ -87,9 +87,9 @@ $message{unknown_id} = $fit->define(
     },
 );
 $fit->put($message{file_id}, 4, 15, 22, 1234, 621463080);
-$fit->put($message{record}, 140, 88,  510, 2800);
-$fit->put($message{record}, 143, 90, 2080, 2920);
-$fit->put($message{record}, 144, 92, 3710, 3050);
+$fit->put($message{record}, 140, 88,  510, 2.800);
+$fit->put($message{record}, 143, 90, 2080, 2.920);
+$fit->put($message{record}, 144, 92, 3710, 3.050);
 $fit->put($message{unknown_id}, 124, 68);
 $fit->put($message{unknown_id}, undef, undef);
 $out = $fit->out;

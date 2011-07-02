@@ -259,20 +259,7 @@ sub encode {
     my ($message, $local_id, @values) = @_;
     my $i = 0;
     for my $value (@values) {
-        my $field = $message->{fields}[$i++];
-        my $base_type = $field->{type}{base_type};
-        if (defined $value) {
-            # string: 7
-            if ($base_type->{number} != 7) {
-                if (defined $field->{type}{values}{$value}) {
-                    $value = $field->{type}{values}{$value};
-                }
-                $value =~ $base_type->{regex} ||
-                    croak "Invalid $base_type->{name} value '$value'";
-            }
-        } else {
-            $value = $base_type->{invalid};
-        }
+        $message->{fields}[$i++]->encode_inplace($value);
     }
     return pack("C" . $message->{code_string}, $local_id, @values);
 }

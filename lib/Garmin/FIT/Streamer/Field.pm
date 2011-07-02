@@ -299,22 +299,59 @@ sub model_field {
     return shift->{model_field};
 }
 
+sub encode_inplace {
+    my $field = shift;
+    for my $value (@_) {
+        my $base_type = $field->{type}{base_type};
+        if (defined $value) {
+            # string: 7
+            if ($base_type->{number} != 7) {
+                if (eval { $value = $field->{type}->value_value($value); 1 }) {
+                    # done
+                } else {
+                    looks_like_number($value) ||
+                        croak "Value '$value' does not look like a number";
+                    $value += $field->{offset}[0] if $field->{offset};
+                    $value *= $field->{scale}[0]  if $field->{scale};
+                    if (exists $base_type->{max}) {
+                        if ($value > 0) {
+                            $value = int($value + 0.5);
+                        } elsif ($value < 0) {
+                            $value = int($value - 0.5);
+                        }
+                        $base_type->{min} <= $value &&
+                        $value <= $base_type->{max} ||
+                            croak "Invalid $base_type->{name} value '$value'";
+                    } elsif ($base_type->{regex}) {
+                        $value =~ $base_type->{regex} ||
+                            croak "Invalid $base_type->{name} value '$value'";
+                    }
+                }
+            } else {
+                utf8::downgrade($value);
+            }
+        } else {
+            $value = $base_type->{invalid};
+        }
+    }
+}
+
 sub decode_inplace {
     my $field = shift;
-    for my $data (@_) {
+    for my $value (@_) {
         if (defined $field->{array}) {
             my $base_type = $field->{type}->base_type;
-            my @array = unpack($base_type->decoder($field->{big_endian}) . "*", $data);
+            my @array = unpack($base_type->decoder($field->{big_endian}) . "*", $value);
             local $field->{array};
             $field->decode_inplace(@array);
-            $data = \@array;
-        } elsif (eval { $data = $field->{type}->value_name($data); 1 }) {
+            $value = \@array;
+        } elsif ($value eq $field->{type}->base_type->invalid) {
+            $value = undef;
+        } elsif (eval { $value = $field->{type}->value_name($value); 1 }) {
             # done
-        } elsif ($data eq $field->{type}->base_type->invalid) {
-            $data = undef;
         } else {
-            $data /= $field->{scale}[0]  if $field->{scale};
-            $data -= $field->{offset}[0] if $field->{offset};
+            $value /= $field->{scale}[0]  if $field->{scale};
+            $value -= $field->{offset}[0] if $field->{offset};
         }
     }
 }

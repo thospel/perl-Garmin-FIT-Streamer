@@ -7,43 +7,10 @@ use lib "blib/lib";
 our $VERSION = "1.000";
 
 use Garmin::FIT::Streamer;
-use Scalar::Util qw(looks_like_number);
-
-sub on_record {
-    my ($fit, $definition, $data) = @_;
-
-    my $message_id = $definition->message_id;
-
-    print STDERR "DATA $definition->{message_id}:\n";
-    my @fields = $definition->fields;
-    @fields == @$data || die "Assertion: Inconsistent number of fields";
-    for my $value (@$data) {
-        my $field = shift @fields;
-        my $field_id = $field->id;
-        my $field_number = $field->number;
-        my $unit = $field->unit;
-        $unit = $unit ? " $unit->[0]" : "";
-
-        if (defined $value) {
-            if (ref $value eq "") {
-                my $comment = eval { "\t(" . ($field->type->value_comment($value) // return) . ")" } || "";
-                $value = looks_like_number($value) ? "'$value$unit'$comment" : "'$value'$comment"
-            } else {
-                $value =
-                    "[" .
-                    join(", ", map defined $_ ? looks_like_number($_) ? "'$_$unit'" : "'$_'": "undef", @$value) .
-                    "]";
-            }
-        } else {
-            $value = "undef";
-        }
-        my $base_type_name = $field->base_type->name;
-        print STDERR "  $field_id $base_type_name \[$field_number\]:\t$value\n";
-    }
-}
-
 my $fit = Garmin::FIT::Streamer->new(
-    on_record => \&on_record,
+    dump_fh	=> \*STDOUT,
+    on_record	=> Garmin::FIT::Streamer->can("dump_record") ||
+        die("Assertion: no dump_record"),
     unit_preferences	=> {
         semicircles	=> "degrees",
     },

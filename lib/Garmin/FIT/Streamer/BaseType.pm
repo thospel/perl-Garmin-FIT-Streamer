@@ -24,7 +24,7 @@ sub new {
     $base_type{notice} = 1 if delete $params{notice};
 
     for my $tag (qw(name number size decoder invalid)) {
-        defined($base_type{$tag} = delete $params{$tag}) ||
+        $base_type{$tag} = delete $params{$tag} //
             croak "Missing parameter '$tag'";
     }
     croak "name parameter '$base_type{name}' is a number" if
@@ -35,8 +35,33 @@ sub new {
         $base_type{$tag} = int($1);
     }
     if ($base_type{size}) {
-        defined($base_type{regex} = delete $params{regex}) ||
-            croak "Missing parameter 'regex'";
+        # We already checked that invalid is an integer
+        # looks_like_number($base_type{invalid}) ||
+        #   croak "Parameter 'invalid' is not a number but '$base_type{invalid}'";
+        if (exists $params{regex}) {
+            $base_type{regex} = delete $params{regex} //
+                croak "Undefined parameter 'regex'";
+            $base_type{invalid} =~ $base_type{regex} ||
+                croak "Parameter 'invalid' value '$base_type{invalid}' does not match regex";
+        } else {
+            # Integer types only
+
+            my $min = delete $params{min} // croak "Missing parameter 'min'";
+            $min =~ /^\s*([+-]?[0-9]+)\s*\z/ ||
+                croak "Parameter 'min' is not an integer but '$min'";
+            $base_type{min} = int($1);;
+            my $max = delete $params{max} // croak "Missing parameter 'max'";
+            $max =~ /^\s*([+-]?[0-9]+)\s*\z/ ||
+                croak "Parameter 'min' is not an integer but '$max'";
+            $base_type{max} = int($1);;
+
+            # We already checked that invalid is an integer
+            # $base_type{invalid} == int($base_type{invalid}) ||
+            #    croak "Parameter 'invalid' is not an integer but '$base_type{invalid}'";
+            $base_type{invalid} < $base_type{min} ||
+            $base_type{max} < $base_type{invalid} ||
+                croak "Parameter 'invalid' value '$base_type{invalid}' falls in the interval [$base_type{min}, $base_type{max}]";
+        }
     }
     my $comment = delete $params{comment};
     $base_type{comment} = $comment if defined $comment;
@@ -86,6 +111,14 @@ sub from_id {
 
 sub regex {
     return shift->{regex};
+}
+
+sub min {
+    return shift->{min};
+}
+
+sub max {
+    return shift->{max};
 }
 
 sub decoder {

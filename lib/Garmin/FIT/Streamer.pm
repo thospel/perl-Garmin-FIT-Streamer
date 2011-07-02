@@ -5,7 +5,7 @@ use warnings;
 our $VERSION = '1.000';
 
 use Carp;
-use Scalar::Util qw(looks_like_number);
+use Scalar::Util qw(looks_like_number openhandle);
 use Digest::CRC qw(crc16);
 
 require Garmin::FIT::Streamer::Definition;
@@ -47,6 +47,11 @@ sub new {
         $fit->{unit_preferences} = $unit_preferences if %$unit_preferences;
     }
 
+    if (defined(my $dump_fh = delete $params{dump_fh})) {
+        openhandle($dump_fh) || croak "dump_fh is not an open filehandle";
+        $fit->{dump_fh} = $dump_fh;
+    }
+
     croak "Unknown parameter ", join(", ", keys %params) if %params;
 
     $fit->in_reset;
@@ -84,6 +89,8 @@ sub out {
 
     substr($fit->{out_buffer}, 4, 4,
            pack("V", length($fit->{out_buffer}) - HEADER_SIZE));
+    die "Assertion: Buffer somehow became UTF-8" if
+        utf8::is_utf8($fit->{out_buffer});
     return $fit->{out_buffer} . pack("v", crc16($fit->{out_buffer}));
 }
 
@@ -92,6 +99,8 @@ sub to_handle {
 
     substr($fit->{out_buffer}, 4, 4,
            pack("V", length($fit->{out_buffer}) - HEADER_SIZE));
+    die "Assertion: Buffer somehow became UTF-8" if
+        utf8::is_utf8($fit->{out_buffer});
     local $\;
     print($fh $fit->{out_buffer}) || croak "Write error: $!";
     print($fh pack("v", crc16($fit->{out_buffer}))) || croak "Write error: $!";
@@ -125,18 +134,20 @@ sub get_record_header {
     my $fit = shift;
     my $header = ord shift;
     if ($header & 0x80) {
-        my $local_message_type = ($header >> 5) & 0x3;
+        $fit->{local_message} = ($header >> 5) & 0x3;
         my $time_offset = $header & 0x1f;
-        die "Abnormal header";
+        # I haven't seen a file with these yet and I don't know relative
+        # to what the times are calculated
+        die "Abnormal headers not handled (yet)";
     } else {
         if ($header & 0x40) {
             $fit->{in_type} = $header & 0xf;
             $fit->{in_state} = "get_define_header";
             $fit->{in_need} = 5;
         } else {
-            my $local_message_type = $header & 0xf;
-            $fit->{in_type} = $fit->{in_types}[$local_message_type] ||
-                croak "Local message type $local_message_type used but not defined";
+            $fit->{local_message} = $header & 0xf;
+            $fit->{in_type} = $fit->{in_types}[$fit->{local_message}] ||
+                croak "Local message type $fit->{local_message} used but not defined";
             $fit->{in_state} = "get_data";
             $fit->{in_need}  = $fit->{in_type}->total_size;
         }
@@ -233,7 +244,8 @@ sub get_crc {
     my $fit = shift;
     # Skip test if the file CRC is 0
     # Calculating CRC over message including the CRC should always be 0
-    shift eq "\x00\x00" || $fit->{in_crc}->digest == 0 || croak "Invalid CRC16";
+    shift eq "\x00\x00" || $fit->{in_crc}->digest == 0 ||
+        croak "Invalid CRC16";
     $fit->{in_need} = 1e99;
     $fit->{in_state} = "done";
 }
@@ -246,6 +258,7 @@ sub add_bytes {
         $fit->{in_want} -= $fit->{in_need};
         my $bytes = substr($fit->{in_buffer}, 0, $fit->{in_need}, "");
         print STDERR "$method: ", unpack("H*", $bytes), "\n" if $debug_parse;
+        die "Assertion: Buffer somehow became UTF-8" if utf8::is_utf8($bytes);
         $fit->{in_crc}->add($bytes);
         $fit->$method($bytes);
     }
@@ -312,7 +325,7 @@ sub put {
             # All numbers are in use
             # bump a random one
             $local_id = int rand 16;
-            delete $fit->{out_message_ids}{$fit->{out_messages}[$local_id]->id} || die "Assertion: Did not have the bumbed id";
+            delete $fit->{out_message_ids}{$fit->{out_messages}[$local_id]->id} || die "Assertion: Did not have the bumped id";
         }
         $fit->{out_messages}[$local_id] = $message;
         $fit->{out_message_ids}{$id} = $local_id;
@@ -330,14 +343,20 @@ sub profile {
     return shift->{profile};
 }
 
+sub local_message {
+    return shift->{local_message};
+}
+
 sub dump_record {
     my ($fit, $definition, $data) = @_;
 
+    my $fh = $fit->{dump_fh} || \*STDERR;
     my $message_id = $definition->message_id;
 
-    print STDERR "DATA $definition->{message_id}:\n";
+    print $fh "DATA $definition->{message_id} ($fit->{local_message}):\n";
     my @fields = $definition->fields;
     @fields == @$data || die "Assertion: Inconsistent number of fields";
+    my $max_len = 0;
     for my $value (@$data) {
         my $field = shift @fields;
         my $field_id = $field->id;
@@ -359,7 +378,12 @@ sub dump_record {
             $value = "undef";
         }
         my $base_type_name = $field->base_type->name;
-        print STDERR "  $field_id $base_type_name \[$field_number\]:\t$value\n";
+        $value = ["  $field_id $base_type_name \[$field_number\]:", $value];
+        $max_len = int((length($value->[0])+7)/8)*8 if
+            $max_len < length $value->[0];
+    }
+    for my $value (@$data) {
+        printf $fh "%-*s%s\n", $max_len, $value->[0], $value->[1];
     }
 }
 

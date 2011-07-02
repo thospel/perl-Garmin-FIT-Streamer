@@ -47,9 +47,10 @@ $base_types = {
       'C'
     ],
     'invalid' => 255,
+    'max' => 254,
+    'min' => 0,
     'name' => 'enum',
     'number' => 0,
-    'regex' => qr{^[0-9]+\z},
     'size' => 1
   }, 'Garmin::FIT::Streamer::BaseType' ),
   '1' => bless( {
@@ -58,9 +59,10 @@ $base_types = {
       'c'
     ],
     'invalid' => 127,
+    'max' => 126,
+    'min' => -128,
     'name' => 'sint8',
     'number' => 1,
-    'regex' => qr{^[+-]?[0-9]+\z},
     'size' => 1
   }, 'Garmin::FIT::Streamer::BaseType' ),
   '10' => bless( {
@@ -69,10 +71,11 @@ $base_types = {
       'C'
     ],
     'invalid' => 0,
+    'max' => 255,
+    'min' => 1,
     'name' => 'uint8z',
     'notice' => 1,
     'number' => 10,
-    'regex' => qr{^[0-9]+\z},
     'size' => 1
   }, 'Garmin::FIT::Streamer::BaseType' ),
   '13' => bless( {
@@ -92,10 +95,11 @@ $base_types = {
       'n!'
     ],
     'invalid' => 32767,
+    'max' => 32766,
+    'min' => -32768,
     'name' => 'sint16',
     'notice' => 1,
     'number' => 131,
-    'regex' => qr{^[+-]?[0-9]+\z},
     'size' => 2
   }, 'Garmin::FIT::Streamer::BaseType' ),
   '132' => bless( {
@@ -104,9 +108,10 @@ $base_types = {
       'n'
     ],
     'invalid' => 65535,
+    'max' => 65534,
+    'min' => 0,
     'name' => 'uint16',
     'number' => 132,
-    'regex' => qr{^[0-9]+\z},
     'size' => 2
   }, 'Garmin::FIT::Streamer::BaseType' ),
   '133' => bless( {
@@ -115,9 +120,10 @@ $base_types = {
       'N!'
     ],
     'invalid' => 2147483647,
+    'max' => 2147483646,
+    'min' => '-2147483648',
     'name' => 'sint32',
     'number' => 133,
-    'regex' => qr{^[+-]?[0-9]+\z},
     'size' => 4
   }, 'Garmin::FIT::Streamer::BaseType' ),
   '134' => bless( {
@@ -126,9 +132,10 @@ $base_types = {
       'N'
     ],
     'invalid' => 4294967295,
+    'max' => 4294967294,
+    'min' => 0,
     'name' => 'uint32',
     'number' => 134,
-    'regex' => qr{^[0-9]+\z},
     'size' => 4
   }, 'Garmin::FIT::Streamer::BaseType' ),
   '136' => bless( {
@@ -161,10 +168,11 @@ $base_types = {
       'n'
     ],
     'invalid' => 0,
+    'max' => 65535,
+    'min' => 1,
     'name' => 'uint16z',
     'notice' => 1,
     'number' => 139,
-    'regex' => qr{^[0-9]+\z},
     'size' => 2
   }, 'Garmin::FIT::Streamer::BaseType' ),
   '140' => bless( {
@@ -173,9 +181,10 @@ $base_types = {
       'N'
     ],
     'invalid' => 0,
+    'max' => 4294967295,
+    'min' => 1,
     'name' => 'uint32z',
     'number' => 140,
-    'regex' => qr{^[0-9]+\z},
     'size' => 4
   }, 'Garmin::FIT::Streamer::BaseType' ),
   '2' => bless( {
@@ -184,9 +193,10 @@ $base_types = {
       'C'
     ],
     'invalid' => 255,
+    'max' => 254,
+    'min' => 0,
     'name' => 'uint8',
     'number' => 2,
-    'regex' => qr{^[0-9]+\z},
     'size' => 1
   }, 'Garmin::FIT::Streamer::BaseType' ),
   '7' => bless( {
@@ -4106,10 +4116,50 @@ $profile = {
         'size' => 1,
         'type' => {}
       }, 'Garmin::FIT::Streamer::Field' ),
+      '27' => bless( {
+        'id' => 'nec_lat',
+        'name' => 'nec_lat',
+        'number' => 27,
+        'size' => 4,
+        'type' => {},
+        'unit' => [
+          'semicircles'
+        ]
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '28' => bless( {
+        'id' => 'nec_long',
+        'name' => 'nec_long',
+        'number' => 28,
+        'size' => 4,
+        'type' => {},
+        'unit' => [
+          'semicircles'
+        ]
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '29' => bless( {
+        'id' => 'swc_lat',
+        'name' => 'swc_lat',
+        'number' => 29,
+        'size' => 4,
+        'type' => {},
+        'unit' => [
+          'semicircles'
+        ]
+      }, 'Garmin::FIT::Streamer::Field' ),
       '3' => bless( {
         'id' => 'start_position_lat',
         'name' => 'start_position_lat',
         'number' => 3,
+        'size' => 4,
+        'type' => {},
+        'unit' => [
+          'semicircles'
+        ]
+      }, 'Garmin::FIT::Streamer::Field' ),
+      '30' => bless( {
+        'id' => 'swc_long',
+        'name' => 'swc_long',
+        'number' => 30,
         'size' => 4,
         'type' => {},
         'unit' => [
@@ -4201,10 +4251,14 @@ $profile = {
       'max_power' => {},
       'max_speed' => {},
       'message_index' => {},
+      'nec_lat' => {},
+      'nec_long' => {},
       'sport' => {},
       'start_position_lat' => {},
       'start_position_long' => {},
       'start_time' => {},
+      'swc_lat' => {},
+      'swc_long' => {},
       'timestamp' => {},
       'total_ascent' => {},
       'total_calories' => {},
@@ -6282,7 +6336,11 @@ $profile->{'19'}{'fields'}{'25'}{'type'} = $types->{'sport'};
 $profile->{'19'}{'fields'}{'253'}{'type'} = $types->{'date_time'};
 $profile->{'19'}{'fields'}{'254'}{'type'} = $types->{'message_index'};
 $profile->{'19'}{'fields'}{'26'}{'type'} = $types->{'uint8'};
+$profile->{'19'}{'fields'}{'27'}{'type'} = $types->{'sint32'};
+$profile->{'19'}{'fields'}{'28'}{'type'} = $types->{'sint32'};
+$profile->{'19'}{'fields'}{'29'}{'type'} = $types->{'sint32'};
 $profile->{'19'}{'fields'}{'3'}{'type'} = $types->{'sint32'};
+$profile->{'19'}{'fields'}{'30'}{'type'} = $types->{'sint32'};
 $profile->{'19'}{'fields'}{'4'}{'type'} = $types->{'sint32'};
 $profile->{'19'}{'fields'}{'5'}{'type'} = $types->{'sint32'};
 $profile->{'19'}{'fields'}{'6'}{'type'} = $types->{'sint32'};
@@ -6305,10 +6363,14 @@ $profile->{'19'}{'fields'}{'max_heart_rate'} = $profile->{'19'}{'fields'}{'16'};
 $profile->{'19'}{'fields'}{'max_power'} = $profile->{'19'}{'fields'}{'20'};
 $profile->{'19'}{'fields'}{'max_speed'} = $profile->{'19'}{'fields'}{'14'};
 $profile->{'19'}{'fields'}{'message_index'} = $profile->{'19'}{'fields'}{'254'};
+$profile->{'19'}{'fields'}{'nec_lat'} = $profile->{'19'}{'fields'}{'27'};
+$profile->{'19'}{'fields'}{'nec_long'} = $profile->{'19'}{'fields'}{'28'};
 $profile->{'19'}{'fields'}{'sport'} = $profile->{'19'}{'fields'}{'25'};
 $profile->{'19'}{'fields'}{'start_position_lat'} = $profile->{'19'}{'fields'}{'3'};
 $profile->{'19'}{'fields'}{'start_position_long'} = $profile->{'19'}{'fields'}{'4'};
 $profile->{'19'}{'fields'}{'start_time'} = $profile->{'19'}{'fields'}{'2'};
+$profile->{'19'}{'fields'}{'swc_lat'} = $profile->{'19'}{'fields'}{'29'};
+$profile->{'19'}{'fields'}{'swc_long'} = $profile->{'19'}{'fields'}{'30'};
 $profile->{'19'}{'fields'}{'timestamp'} = $profile->{'19'}{'fields'}{'253'};
 $profile->{'19'}{'fields'}{'total_ascent'} = $profile->{'19'}{'fields'}{'21'};
 $profile->{'19'}{'fields'}{'total_calories'} = $profile->{'19'}{'fields'}{'11'};
