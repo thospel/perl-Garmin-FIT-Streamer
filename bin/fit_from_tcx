@@ -6,9 +6,10 @@ use lib "blib/lib";
 
 our $VERSION = "1.000";
 
-use Garmin::FIT::Streamer;
 use XML::LibXML;
+use Getopt::Long 2.11;
 
+use Garmin::FIT::Streamer;
 # nominal speed = 12mph
 my $mile = 1609.344;
 my $speed = 12*$mile / 3600;
@@ -24,8 +25,31 @@ use constant {
     DEG_TO_HAVER	=> PI/360,
 };
 
+&Getopt::Long::config("bundling", "require_order");
+die "Could not parse your command line. Try $0 -h\n" unless
+    GetOptions("name=s"		=> \my $first_name,
+               "version!"	=> \my $version,
+               "U|unsafe!"	=> \my $unsafe,
+               "h|help!"	=> \my $help);
+if ($version) {
+    print<<"EOF";
+fit_from_tcx (Garmin::FIT::Streamer) $VERSION
+EOF
+    exit 0;
+}
+if ($help) {
+    require Config;
+    $ENV{PATH} .= ":" unless $ENV{PATH} eq "";
+    $ENV{PATH} = "$ENV{PATH}$Config::Config{'installscript'}";
+    exec("perldoc", "-F", $unsafe ? "-U" : (), $0) || exit 1;
+    # make parser happy
+    %Config::Config = ();
+}
+
 @ARGV == 2 || die "Syntax in_file.tcx out_file.fit\n";
 my ($in_file, $out_file) = @ARGV;
+
+die "Empty name option\n" if defined $first_name && $first_name eq "";
 
 my $xpc;
 my $now = time();
@@ -58,37 +82,34 @@ $root->nodeName eq "TrainingCenterDatabase" ||
 $xpc = XML::LibXML::XPathContext->new;
 $xpc->registerNs("xsi", "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2");
 
-my $unit_preferences = Garmin::FIT::Streamer::Unit->converters({
+my $fit = Garmin::FIT::Streamer->new(
+    unit_preferences	=> {
         semicircles	=> "degrees",
-    });
-
-my $fit = Garmin::FIT::Streamer->new;
+    }
+);
 my $file_id_definition = $fit->define(
     "file_id",
     "time_created",
     "type");
 $fit->put($file_id_definition, $now, "course");
-my $lap_definition = Garmin::FIT::Streamer::Definition->new(
-    message	=> "lap",
-    unit_preferences	=> $unit_preferences,
-    fields	=> [
-        "timestamp",
-        "start_time",
-        "start_position_lat",
-        "start_position_long",
-        "end_position_lat",
-        "end_position_long",
-        "total_timer_time",
-        "total_distance",
-        'nec_lat',
-        'nec_long',
-        'swc_lat',
-        'swc_long',
-        "event",
-        "event_type",
-        "lap_trigger",
-        "sport",
-       ],
+my $lap_definition = $fit->define(
+    "lap",
+    "timestamp",
+    "start_time",
+    "start_position_lat",
+    "start_position_long",
+    "end_position_lat",
+    "end_position_long",
+    "total_timer_time",
+    "total_distance",
+    'nec_lat',
+    'nec_long',
+    'swc_lat',
+    'swc_long',
+    "event",
+    "event_type",
+    "lap_trigger",
+    "sport",
    );
 my $event_definition = $fit->define(
     "event",
@@ -98,27 +119,34 @@ my $event_definition = $fit->define(
     "event_type",
     "event_group",
 );
-my $record_definition = Garmin::FIT::Streamer::Definition->new(
-    message	=> "record",
-    unit_preferences	=> $unit_preferences,
-    fields	=> [
-        "timestamp",
-        "position_lat",
-        "position_long",
-        "distance",
-       ],
+my $record_definition = $fit->define(
+    "record",
+    "timestamp",
+    "position_lat",
+    "position_long",
+    "distance",
    );
 my @courses = $xpc->findnodes("xsi:Courses", $root) or
     die "Could not find element /TrainingCenterDatabase/Courses";
 
 my $max_name_length = 0;
+my $max_point_name_length = 0;
 for my $courses (@courses) {
     my $course_name;
     my @course = $xpc->findnodes("xsi:Course", $courses) or
         die "Could not find element Course";
     for my $course (@course) {
-        my $name = get_value($course, "Name");
-        $max_name_length = length $name if $max_name_length < length $name;
+        if ($max_name_length == 0 && defined $first_name) {
+            $max_name_length = length $first_name;
+        } else {
+            my $name = get_value($course, "Name");
+            $max_name_length = length $name if $max_name_length < length $name;
+        }
+        for my $course_point ($xpc->findnodes("xsi:CoursePoint", $course)) {
+            my $name = get_value($course_point, "Name");
+            $max_point_name_length = length $name if
+                $max_point_name_length < length $name;
+        }
     }
 }
 $max_name_length || die "No courses";
@@ -133,6 +161,20 @@ my $course_definition = $fit->define(
     "sport",
    );
 
+my $course_point_definition;
+$course_point_definition = $fit->define(
+    "course_point",
+    "timestamp",
+    "position_lat",
+    "position_long",
+    {
+        model_field	=> "name",
+        size		=> $max_point_name_length+1,
+    },
+    "message_index",
+    "type",
+) if $max_point_name_length;
+
 for my $courses (@courses) {
     my $course_name;
     my @course = $xpc->findnodes("xsi:Course", $courses) or
@@ -144,6 +186,10 @@ for my $courses (@courses) {
             if ($name eq "Name") {
                 die "Already have a course name" if defined $course_name;
                 my $course_name = $child->to_literal;
+                if (defined $first_name) {
+                    $course_name = $first_name;
+                    $first_name = undef;
+                }
                 die "Empty name" if $course_name eq "";
                 $fit->put($course_definition,
                           $course_name,
@@ -154,10 +200,15 @@ for my $courses (@courses) {
                           # 0x200 | 0x100,
                           $sport);
             } elsif ($name eq "Lap") {
-                push @laps, [$child];
+                push @laps, [$child, []];
             } elsif ($name eq "Track") {
-                @laps || die "Track outside lap";
+                @laps || die "$name outside lap";
                 push @{$laps[-1]}, $child;
+            } elsif ($name eq "CoursePoint") {
+                @laps || die "$name outside lap";
+                push @{$laps[-1][1]}, $child;
+            } elsif ($name eq "Creator") {
+                # Currently ignored
             } else {
                 die "Unhandled Course child '$name'";
             }
@@ -165,6 +216,7 @@ for my $courses (@courses) {
         @laps || die "No laps";
         for my $tracks (@laps) {
             my $lap = shift @$tracks;
+            my $course_points = shift @$tracks;
 
             my @points;
 
@@ -235,6 +287,25 @@ for my $courses (@courses) {
                       0);
             for my $point (@points) {
                 $fit->put($record_definition, @$point);
+            }
+            my $index = 0;
+            for my $course_point (@$course_points) {
+                my @pos = $xpc->findnodes("xsi:Position", $course_point);
+                die "Multiple positions in CoursePoint" if @pos > 1;
+                if (!@pos) {
+                    warn("Dropping CoursePoint without Positions\n");
+                    next;
+                }
+                $fit->put(
+                    $course_point_definition,
+                    get_value($course_point, "Time"),
+                    get_value($pos[0], "LatitudeDegrees"),
+                    get_value($pos[0], "LongitudeDegrees"),
+                    get_value($course_point, "Name"),
+                    $index,
+                    "generic",
+                   );
+                ++$index;
             }
             $fit->put($event_definition,
                       $total_distance / $speed,

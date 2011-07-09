@@ -3,7 +3,7 @@ use ExtUtils::MakeMaker;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 
-my @programs_to_install = qw(bin/fit_dump bin/tcx_from_fit);
+my @programs_to_install = qw(bin/fit_dump bin/tcx_from_fit bin/fit_from_tcx);
 
 WriteMakefile
     (NAME		=> 'Garmin::FIT::Streamer',

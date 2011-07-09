@@ -112,7 +112,8 @@ sub to_file {
     open(my $fh, ">", $file) ||
         croak "Could not open file '$file' for write: $!";
     binmode($fh);
-    $fit->to_handle($fh);
+    eval { $fit->to_handle($fh) };
+    die "File '$file': $@" if $@;
     close($fh) || croak "Could not close file '$file': $!";
 }
 
@@ -306,6 +307,7 @@ sub make_sender {
 sub define {
     my $fit = shift;
     my $message = Garmin::FIT::Streamer::Definition->new(
+        unit_preferences	=> $fit->{unit_preferences},
         message	=> shift,
         fields	=> \@_,
         );

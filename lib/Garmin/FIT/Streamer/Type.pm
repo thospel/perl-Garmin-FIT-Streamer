@@ -189,7 +189,14 @@ sub value_value {
                 $_[1] - $base_time < $_[0]->values->{min}{value};
             return $_[1] - $base_time;
         } else {
-            croak "Date converter not implemented (yet)";
+            my ($year, $mon, $day, $hour, $min, $sec, $frac) =
+                $_[1] =~ m{^\s*([0-9]{4})-([0-9]{2})-([0-9]{2})[tT]([0-9]{2}):([0-9]{2}):([0-9]{2}(\.[0-9]*)?)[zZ]\s*\z} or croak "Could not parse date_time '$_[1]'";
+            $year >= 1900 || croak "Year '$year' is too far in the past";
+            my $value = timegm($sec, $min, $hour, $day, $mon-1, $year - 1900) - $base_time;
+            $value += "0$frac" if defined $frac;
+            croak "Epoch time $_[1] before base_time $base_time" if
+                $value < $_[0]->values->{min}{value};
+            return $value;
         }
     })->{value};
 }
