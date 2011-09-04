@@ -12,7 +12,7 @@ use Data::Dumper;
 $Data::Dumper::Indent = 1;
 $Data::Dumper::Sortkeys = 1;
 
-my (%known_unkown, $activity, $author, $lap, $track);
+my (%known_unkown, $activity, $author, $lap, $track, $track_data);
 
 my %sports = (
     cycling	=> "Biking",
@@ -75,13 +75,22 @@ sub close_lap {
 }
 
 sub close_activity {
-    # my ($fit) = @_;
+    my ($fit) = @_;
 
     $activity || die "Assertion: No activity";
     if ($author->{type} eq "course") {
         close_lap() if $lap;
-    } else {
-        !defined $track || die "Track without closing lap";
+    } elsif (defined $track) {
+        warn("Track without closing lap. Trying to fake one\n");
+        # print Dumper($track);
+        if ($track_data->{start_time} && $track_data->{end_time}) {
+            my $date_time = Garmin::FIT::Streamer::Type->from_id("date_time");
+            $track_data->{total_timer_time} =
+                $date_time->value_value($track_data->{end_time}) -
+                $date_time->value_value($track_data->{start_time});
+        }
+        on_lap($fit, undef, $track_data);
+        # die "Foo";
     }
 
     $out .= qq(      <Creator xsi:type="Device_t">\n);
@@ -175,11 +184,16 @@ sub on_point {
 
     if (!defined $track) {
         $track = qq(        <Track>\n);
+        $track_data = {};
+        $track_data->{start_time} = $data->{timestamp} if
+            defined $data->{timestamp};
     }
     $track .= qq(          <Trackpoint>\n);
-    $track .= sprintf("            <Time>%s</Time>\n",
-                    escape($data->{timestamp})) if
-        defined $data->{timestamp};
+    if (defined $data->{timestamp}) {
+        $track .= sprintf("            <Time>%s</Time>\n",
+                          escape($data->{timestamp}));
+        $track_data->{end_time} = $data->{timestamp};
+    }
     if (defined $data->{position_lat} && defined $data->{position_long}) {
         $track .= << "EOT";
             <Position>
@@ -192,9 +206,11 @@ EOT
     $track .= sprintf("            <AltitudeMeters>%s</AltitudeMeters>\n",
                     escape($data->{altitude})) if
         defined $data->{altitude};
-    $track .= sprintf("            <DistanceMeters>%s</DistanceMeters>\n",
-                    escape($data->{distance})) if
-        defined $data->{distance};
+    if (defined $data->{distance}) {
+        $track .= sprintf("            <DistanceMeters>%s</DistanceMeters>\n",
+                          escape($data->{distance}));
+        $track_data->{total_distance} = $data->{distance};
+    }
     $track .= qq(          </Trackpoint>\n);
 }
 
