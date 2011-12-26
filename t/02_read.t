@@ -3,7 +3,7 @@
 # `make test'. After `make install' it should work as `perl 02_read.t'
 #########################
 # $Id: 02_read.t 4213 2010-09-27 00:52:37Z hospelt $
-## no critic (ProhibitUselessNoCritic ProhibitMagicNumbers)
+## no critic (UselessNoCritic MagicNumbers)
 use strict;
 use warnings;
 

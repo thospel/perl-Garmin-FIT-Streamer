@@ -75,7 +75,7 @@ ppm_uninstall:
 	ppm uninstall $(DISTNAME)
 EOT
 
-undef &postamble;	## no critic (ProhibitUselessNoCritic ProhibitAmpersandSigils)
+undef &postamble;	## no critic (UselessNoCritic AmpersandSigils)
 }
 {
     package MY;

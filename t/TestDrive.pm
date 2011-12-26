@@ -1,6 +1,6 @@
 package TestDrive;
 # $Id: TestDrive.pm 4556 2011-05-03 14:41:42Z hospelt $
-## no critic (ProhibitUselessNoCritic ProhibitMagicNumbers)
+## no critic (UselessNoCritic MagicNumbers)
 use strict;
 use warnings;
 

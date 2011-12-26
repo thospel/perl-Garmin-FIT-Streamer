@@ -4,7 +4,7 @@
 #########################
 # $Id: 00_syntax.t 4213 2010-09-27 00:52:37Z hospelt $
 
-## no critic (ProhibitUselessNoCritic ProhibitMagicNumbers)
+## no critic (UselessNoCritic MagicNumbers)
 use strict;
 use warnings;
 BEGIN { $^W = 1 };
