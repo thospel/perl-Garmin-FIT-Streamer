@@ -63,8 +63,10 @@ sub in_reset {
     my ($fit) = @_;
 
     $fit->{in_buffer} = "";
-    $fit->{in_want} = HEADER_SIZE;
-    $fit->{in_need} = HEADER_SIZE;
+#    $fit->{in_want} = HEADER_SIZE;
+#    $fit->{in_need} = HEADER_SIZE;
+    $fit->{in_want} = 2+HEADER_SIZE;
+    $fit->{in_need} = 2+HEADER_SIZE;
     $fit->{in_state} = "get_header";
     $fit->{in_crc} = Digest::CRC->new(type => "crc16");
     $fit->{in_types} = [];
@@ -120,7 +122,7 @@ sub to_file {
 sub get_header {
     my $fit = shift;
     my ($len, $protocol, $profile, $size, $type) = unpack("CCvVa4", shift);
-    $len == 12 || croak "Invalid header length $len (expected 12)";
+    $len == 14 || croak "Invalid header length $len (expected 14)";
     $type eq ".FIT" || croak "Invalid file type (expected .FIT)";
     $fit->{protocol} = $protocol;
     $fit->{profile}  = $profile;

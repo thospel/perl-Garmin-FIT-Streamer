@@ -12,7 +12,7 @@ our $VERSION = "1.000";
 use Test::More tests => 14;
 
 for my $module
-    qw(
+    (qw(
        Garmin::FIT::Streamer::Package
        Garmin::FIT::Streamer::Profile
        Garmin::FIT::Streamer::BaseType
@@ -22,7 +22,7 @@ for my $module
        Garmin::FIT::Streamer::Message
        Garmin::FIT::Streamer::Definition
        Garmin::FIT::Streamer
-) {
+)) {
         use_ok($module) || BAIL_OUT("Cannot even use $module");
 }
 like(Garmin::FIT::Streamer::Package->release_time,

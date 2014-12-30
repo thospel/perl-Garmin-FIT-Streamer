@@ -193,10 +193,13 @@ for my $courses (@courses) {
                 die "Empty name" if $course_name eq "";
                 $fit->put($course_definition,
                           $course_name,
-                          # "Zombie7",
                           # proceessed: 0x01
                           # valid:      0x02
+                          # training:	0x100
+                          # navigation:	0x200
                           0x200 | 0x100 | 0x02 | 0x01,
+                          # 0x100 | 0x02 | 0x01,
+                          # 0x02 | 0x01,
                           # 0x200 | 0x100,
                           $sport);
             } elsif ($name eq "Lap") {

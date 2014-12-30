@@ -1,9 +1,13 @@
+#!/usr/bin/perl -w
+# $Id: Makefile.PL 3116 2008-07-14 09:00:00Z hospelt $
 use 5.008001;
+use strict;
+use warnings;
 use ExtUtils::MakeMaker;
-# See lib/ExtUtils/MakeMaker.pm for details of how to influence
-# the contents of the Makefile that is written.
 
 my @programs_to_install = qw(bin/fit_dump bin/tcx_from_fit bin/fit_from_tcx);
+
+settings();
 
 WriteMakefile
     (NAME		=> 'Garmin::FIT::Streamer',
@@ -22,7 +26,7 @@ WriteMakefile
          PM_FILTER	=> '$(PERL) -p -e1',
      ) : (),
      clean		=> {
-         FILES => '$(DISTNAME).ppd ppm cover_db Profile.dump',
+         FILES => '$(DISTNAME).ppd ppm cover_db nytprof nytprof.out* Profile.dump md5-versions.old',
      },
 );
 
@@ -85,10 +89,15 @@ undef &postamble;	## no critic (UselessNoCritic AmpersandSigils)
 }
 # END MY
 
-BEGIN {
+sub settings {
     package MY;
 
     use vars qw(%postamble);
+
+    $postamble{version_check} = <<'EOF';
+all ::
+	$(NOECHO) $(FULLPERL) version_check "$(NAME)" "$(DESTINSTALLSITELIB)" "$(VERSION)" "$(VERSION_FROM)"
+EOF
 
     $postamble{profile} = <<'EOT';
 lib/Garmin/FIT/Streamer/Profile.pm Profile.dump: profile_from_html Profile.html lib/Garmin/FIT/Streamer/BaseType.pm lib/Garmin/FIT/Streamer/Type.pm lib/Garmin/FIT/Streamer/Field.pm lib/Garmin/FIT/Streamer/Definition.pm lib/Garmin/FIT/Streamer.pm

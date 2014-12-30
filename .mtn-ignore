@@ -19,3 +19,6 @@
 ^\.#
 /\.#
 ^daemons/
+^\.access\^$
+^MYMETA\.yml$
+^MYMETA\.json$
