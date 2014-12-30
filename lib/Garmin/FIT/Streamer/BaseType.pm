@@ -42,7 +42,7 @@ sub new {
             $base_type{regex} = delete $params{regex} //
                 croak "Undefined parameter 'regex'";
             $base_type{invalid} =~ $base_type{regex} ||
-                croak "Parameter 'invalid' value '$base_type{invalid}' does not match regex";
+                croak "Parameter 'invalid' value '$base_type{invalid}' does not match $base_type{name} regex";
         } else {
             # Integer types only
 

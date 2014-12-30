@@ -157,7 +157,7 @@ my @base_types = (
         size	=> 4,
         decoder	=> ["d<", "d>"],
         invalid	=> 0xffffffffffffffff,
-        regex	=> '^[+-]?[0-9]+(?:\.[0-9]*)?(?:[eE][+-]?[0-9]+)\z',
+        regex	=> '^[+-]?[0-9]+(?:\.[0-9]*)?(?:[eE][+-]?[0-9]+)?\z',
         notice	=> 1,
        ),
     Garmin::FIT::Streamer::BaseType->new(
