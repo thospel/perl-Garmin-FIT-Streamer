@@ -79,6 +79,18 @@ ppm_uninstall:
 	ppm uninstall $(DISTNAME)
 EOT
 
+    # You will need to add your own entry for README.md
+    $postamble{commit} = <<'EOT';
+commit: all README.md
+	release_pm
+	git commit -av
+EOT
+
+    $postamble{version_check} = <<'EOT';
+all ::
+	$(NOECHO) $(FULLPERL) version_check "$(NAME)" "$(DESTINSTALLSITELIB)" "$(VERSION)" "$(VERSION_FROM)"
+EOT
+
 undef &postamble;	## no critic (UselessNoCritic AmpersandSigils)
 }
 {
@@ -93,11 +105,6 @@ sub settings {
     package MY;
 
     use vars qw(%postamble);
-
-    $postamble{version_check} = <<'EOF';
-all ::
-	$(NOECHO) $(FULLPERL) version_check "$(NAME)" "$(DESTINSTALLSITELIB)" "$(VERSION)" "$(VERSION_FROM)"
-EOF
 
     $postamble{profile} = <<'EOT';
 lib/Garmin/FIT/Streamer/Profile.pm Profile.dump: profile_from_html Profile.html lib/Garmin/FIT/Streamer/BaseType.pm lib/Garmin/FIT/Streamer/Type.pm lib/Garmin/FIT/Streamer/Field.pm lib/Garmin/FIT/Streamer/Definition.pm lib/Garmin/FIT/Streamer.pm

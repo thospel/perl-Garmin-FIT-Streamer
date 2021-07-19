@@ -10,6 +10,8 @@
 ^_MTN$
 ^_MTN/
 ^\.mtn-ignore$
+^\.git/
+^\.gitignore$
 
 # Avoid Makemaker generated and utility files.
 \bMANIFEST\.bak
@@ -17,13 +19,15 @@
 \bblib/
 \bMakeMaker-\d
 \bpm_to_blib\.ts$
-^pm_to_blib$
-\bblibdirs\.ts$         # 6.18 through 6.25 generated this
+\bpm_to_blib$
+\bblibdirs\.ts$		# 6.18 through 6.25 generated this
 ^[\w-]+-\d+\.\d+\.tar\.gz$
 ^[\w-]+-\d+\.\d+\.ppm$
 ^[\w-]+\.ppd$
 ^ppm/[\w-]+\.ppd$
 ^ppm/[\w.-]+/[\w-]+-\d+\.\d+\.tar\.gz$
+
+^pm_to_blib$
 ^t/options$
 
 # Avoid Module::Build generated and utility files.
@@ -34,8 +38,11 @@
 ~$
 \.old$
 \#$
-\b\.#
+/\.#
+^\.#
 \.bak$
+
+\b\.#
 
 # Ignore Devel::Cover and Devel::NYTProf files.
 ^cover_db/
@@ -46,3 +53,16 @@
 ^MYMETA\.json$
 /\.access\^$
 ^\.access\^$
+
+# Ignore more stuff
+^bl.b$
+^test_
+^test\.pl$
+^core$
+^core\.
+^debian/
+
+\.kml$
+\.fit$
+\.tcx$
+\.gpx$
