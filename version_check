@@ -1,6 +1,4 @@
 #!/usr/bin/perl -w
-# $HeadURL: http://subversion.bmsg.nl/repos/kpn/trunk/src/perl-modules/Otp-Provisioning-DNS/bin/prov-dns $
-# $Id: prov-dns 4841 2011-11-28 10:46:22Z hospelt $
 # Author: Ton Hospel
 
 use strict;

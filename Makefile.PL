@@ -4,8 +4,65 @@ use 5.008001;
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
+use Config qw(%Config);
 
+our $VERSION = '1.000';
+
+# Allows to suppress all program installation with -n (library only)
+use Getopt::Std;
+our ($opt_n, $opt_y);
+getopts("ny") || die "Usage: $0 [-n] [-y]\n";
+
+my @programs_to_install;
+
+if (!$opt_n || $opt_y) {
+    print <<EOT	## no critic (UselessNoCritic InputOutput::RequireCheckedSyscalls)
+
+This package comes with programs that I can try
+to install in $Config{installscript}.
+
+   Note that you can avoid this question by passing
+   the '-n' or '-y' option to 'Makefile.PL'.
+
+EOT
+        if !$opt_y;
+
+    # Only do this site_perl substitution for non binary extensions!
+    my $site_lib = "$ExtUtils::MakeMaker::Config{siteprefix}/lib/site_perl";
+    if ($ExtUtils::MakeMaker::Config{installsitelib} ne $site_lib &&
+        grep $_ eq $site_lib, @INC) {
+        print <<EOT	## no critic (UselessNoCritic InputOutput::RequireCheckedSyscalls)
+Your default perl library install directory is $ExtUtils::MakeMaker::Config{installsitelib}.
+This works fine but has the drawback that the library files will not be found
+anymore if the perl version gets upgraded. Since $site_lib is in
+your default library search path I can use that instead
+
+EOT
+            if !$opt_y;
+        # arch directories needed to get packlist into /usr/local/lib/site_perl
+        map $ExtUtils::MakeMaker::Config{$_} = $site_lib, qw(installsitelib sitelibexp sitearchexp installsitearch) if
+            $opt_y ||
+            prompt("Use $site_lib as default library install directory ?", "y") =~ /^y/i;
+    }
+
+    print <<EOT	## no critic (UselessNoCritic InputOutput::RequireCheckedSyscalls)
+This package comes with programs that I can try
+to install in $ExtUtils::MakeMaker::Config{installsitebin}.
+
+EOT
+        if !$opt_y;
 my @programs_to_install = qw(bin/fit_dump bin/tcx_from_fit bin/fit_from_tcx);
+    my %programs = (
+        "fit_dump"	=> "Decode a fit file",
+        "tcx_from_fit"	=> "Convert from fit to tcx",
+        "fit_from_tcx"	=> "Convert from tcx to fit",
+    );
+    for my $program (sort keys %programs) {
+        push @programs_to_install, "bin/$program" if
+            $opt_y ||
+            prompt("Install bin/$program, $programs{$program} ?", "y") =~ /^y/i;
+    }
+}
 
 settings();
 

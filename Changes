@@ -1,5 +1,5 @@
 Revision history for Perl extension Garmin::FIT::Streamer.
 
-1.000	2021-07-19 13:27:53 UT
+1.000	2021-07-19 13:43:56 UT
 	- original version; created by h2xs 1.23 with options
 		-v 1.000 -b 5.8.1 -A -X -n Garmin::FIT::Streamer
